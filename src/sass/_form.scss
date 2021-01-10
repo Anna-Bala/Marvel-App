@@ -1,0 +1,30 @@
+.form {
+  @include flex;
+  text-align: center;
+  border: white 1px solid;
+  margin: 0 5%;
+  padding: 2% 0 3% 0;
+  &__title {
+    width: 100%;
+    font-size: 130%;
+    margin: 2% 0 1% 0;
+  }
+  &__label {
+    width: 50%;
+    margin: 1% 0;
+    font-size: 100%;
+  }
+  &__input {
+    width: 35%;
+    margin: 1% 0;
+  }
+  &__button {
+    width: 45%;
+    padding: 2%;
+    border: white 1px solid;
+    background-color: black;
+    color: white;
+    margin-top: 4%;
+    font-size: 120%;
+  }
+}

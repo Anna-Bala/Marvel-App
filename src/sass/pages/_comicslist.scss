@@ -1,0 +1,7 @@
+.comics-list {
+  @include flex;
+  &__title {
+    font-weight: 100;
+    margin: 2% 0;
+  }
+}
