@@ -1,9 +1,59 @@
 import React, {Component} from "react";
+import Comic from "../components/Comic";
 
 class ComicsList extends Component {
-    state = [
+    
+    state = {
+        resultsnumber: 0,
+        results: [],
+        gowno: null,
+    };
 
-    ]
+    apiKey = '9b9a40427eb372f72b3775e4f456a370';
+    url = `https://gateway.marvel.com:443/v1/public/comics?ts=1&apikey=${this.apiKey}&hash=97a77a62ca6b19c0c250ad87841df189`;
+    fetchError = false;
+    apiData = null;
+
+    componentDidMount() {
+        fetch(this.url)
+        .then(response => {
+            if(response.ok) return response.json();
+            else this.fetchError = true;
+          })
+          .then(result => {this.apiData = result.data; this.manageData()})
+          .catch(error => this.fetchError = error)
+    }
+
+    // componentDidUpdate() {
+    //     console.log(this.state.results);
+    //     const results = this.state.results;
+    //     this.comics = results.map(comic => <Comic key={comic.id} img={comic.thumbnail.path} title={comic.title} description={comic.description}/>);
+    // }
+
+    manageData = () => {
+        if(!this.fetchError) {
+            const results = this.apiData.results;
+            const resultsnumber = this.apiData.total;
+
+            this.setState({
+                results,
+                resultsnumber,
+            })
+        }
+        this.displayComics();
+    }
+
+    displayComics = () => {
+        const results = this.state.results;
+        console.log(results);
+        const comics = results.map(comic => {
+        const index = comic.thumbnail.path.indexOf('image_not_available');
+        return <Comic key={comic.id} title={comic.title} description={comic.description} img={index === (-1)? comic.thumbnail.path : false} extension={comic.thumbnail.extension}/>
+        });
+        this.setState({
+            comics,
+        })
+    }
 
     render() {
         return(
@@ -38,6 +88,10 @@ class ComicsList extends Component {
 
                     <button className="form__button">Save</button>
                 </form>
+                <div className="comics-list__results results">
+                    <h1 className="results__title">Number of results: {this.state.resultsnumber}</h1>
+                    {this.state.comics}
+                </div>
             </div>
         )
     }
