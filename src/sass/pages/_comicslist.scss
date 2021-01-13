@@ -1,3 +1,5 @@
+@include fadeOut;
+
 .comics-list {
   @include flex;
   &__title {
@@ -15,10 +17,29 @@
 }
 
 .comic {
-  width: 80%;
+  @include flex;
+  align-items: flex-start;
   height: 60vh;
+  width: 80%;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
   background-position: center;
   margin-top: 4%;
+  padding-top: 4%;
+  animation-duration: 0.8s;
+  animation-fill-mode: both;
+  &__title {
+    font-size: 120%;
+    width: 90%;
+  }
+  &__description {
+    white-space: pre-wrap;
+    font-size: 90%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline;
+    width: 90%;
+    height: 30vh;
+    line-height: 1.5;
+  }
 }

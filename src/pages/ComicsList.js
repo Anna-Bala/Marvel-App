@@ -24,12 +24,6 @@ class ComicsList extends Component {
           .catch(error => this.fetchError = error)
     }
 
-    // componentDidUpdate() {
-    //     console.log(this.state.results);
-    //     const results = this.state.results;
-    //     this.comics = results.map(comic => <Comic key={comic.id} img={comic.thumbnail.path} title={comic.title} description={comic.description}/>);
-    // }
-
     manageData = () => {
         if(!this.fetchError) {
             const results = this.apiData.results;
@@ -48,7 +42,7 @@ class ComicsList extends Component {
         console.log(results);
         const comics = results.map(comic => {
         const index = comic.thumbnail.path.indexOf('image_not_available');
-        return <Comic key={comic.id} title={comic.title} description={comic.description} img={index === (-1)? comic.thumbnail.path : false} extension={comic.thumbnail.extension}/>
+        return <Comic id={comic.id} title={comic.title} description={comic.description} img={index === (-1)? comic.thumbnail.path : false} extension={comic.thumbnail.extension} data={comic}/>
         });
         this.setState({
             comics,

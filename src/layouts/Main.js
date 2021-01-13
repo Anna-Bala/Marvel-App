@@ -6,13 +6,15 @@ import CharactersList from "../pages/CharactersList";
 import CreatorsList from "../pages/CreatorsList";
 import SeriesList from "../pages/SeriesList";
 import EventsList from "../pages/EventsList";
+import SingleComic from "../pages/subpages/SingleComic";
 
 const Main = () => {
     return (
         <>
             <Switch>
                 <Route path='/' component={StartPage} exact />
-                <Route path='/comics' component={ComicsList} />
+                <Route path='/comics' component={ComicsList} exact/>
+                <Route path='/comics/:id' component={SingleComic} />
                 <Route path='/characters' component={CharactersList} />
                 <Route path='/creators' component={CreatorsList} />
                 <Route path='/series' component={SeriesList} />
