@@ -22,8 +22,12 @@ class Comic extends Component {
             <>
                 <h1 className="comic__title">{this.props.title}</h1>
                 <p className="comic__description">{this.props.description}</p>
-                {console.log(this.props.data)}
-                <Link to={`/comics/${this.props.id}`} className="button"><Button /></Link>
+                <Link to={{
+                    pathname: `/comics/${this.props.id}`, 
+                    state: {data: this.props.data}}} 
+                    className="button">
+                        <Button />
+                </Link>
             </>
         ),
         withoutCover: (
