@@ -8,4 +8,10 @@
   color: white;
   align-self: flex-end;
   text-decoration: none;
+  &--brd {
+    border: 1px solid white;
+    margin-top: 4%;
+    font-size: 100%;
+    width: 45%;
+  }
 }

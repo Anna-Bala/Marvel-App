@@ -5,12 +5,15 @@ import Button from "../../components/Button";
 
 class SingleComic extends Component {
     state = {
+        currentFetch: null,
         currentContent: null,
         previousContent: null,
         nextContent: null
     }
 
     data = this.props.location.state.data;
+    charactersResults = [];
+    
 
     printDate = this.data.dates.map(date => {
         if(date.type === "onsaleDate") return convertDate(date.date);
@@ -32,11 +35,19 @@ class SingleComic extends Component {
         else return null;
     });
 
-    charactersResults = [];
-
     apiKey = '9b9a40427eb372f72b3775e4f456a370';
     fetchError = false;
 
+    fetchCharactersData = (url) =>
+    {
+       fetch(url)
+        .then(response => {
+            if(response.ok) return response.json();
+            else this.fetchError = true;
+        })
+        .then(result => this.setState({currentFetch: result.data.results[0]}))
+        .catch(error => this.fetchError = error)
+    }
     
     componentDidMount() {
        const charactersUrls = this.data.characters.items.map(character => {
@@ -45,41 +56,43 @@ class SingleComic extends Component {
             return url + `?ts=1&apikey=${this.apiKey}&hash=97a77a62ca6b19c0c250ad87841df189`;
         });
 
-      const charactersData = (url) => fetch(url)
-        .then(response => {
-            if(response.ok) return response.json();
-            else this.fetchError = true;
-          })
-          .then(result => result.data.results)
-          .catch(error => this.fetchError = error)
-
-        this.charactersResults = charactersUrls.map(url => {
-           const singleCharacterData =  charactersData(url);
-        //    console.log(singleCharacterData);
+        charactersUrls.forEach(url => {
+           this.fetchCharactersData(url);
         });
     }
 
-    characters = (
-        <div className="single-comic__content">
-            <h1 className="single-comic__title">Characters</h1>
-            {this.data.characters.items.map(character => {
+
+    componentDidUpdate() {
+        this.charactersResults.push(this.state.currentFetch);
+
+        // CHARACTER MISSING !!!!!!!!!!!!!!!!!!!!!!!!!!1
+
+        this.characters = (
+            <div className="single-comic__content">
+                <h1 className="single-comic__title">Characters</h1>
+                {console.log(this.charactersResults)}
+                {this.charactersResults.map(result => {
+                    const imgPath = `${result.thumbnail.path}/standard_amazing.${result.thumbnail.extension}`;
+                    const titleIndex = result.name.indexOf('(');
+                    const name = result.name.slice(0, titleIndex);
                 return (
                     <div className="single-comic__character">
-                        {/* IMAGEEEEE!!!!!! */}
-                        <h1 className="single-comic__character-name">{character.name}</h1>
-                        <Button />
+                        <h1 className="single-comic__character-name">{titleIndex > -1? name : result.name}</h1>
+                        <img className="single-comic__image" src={imgPath} alt="character"/>
+                        {/* <Button /> */}
                     </div>
                 )
-            })}
-        </div>
-    )
+                })}
+            </div>
+        )
+    }
 
     series = (
         <div className="single-comic__content">
             <h1 className="single-comic__title">Series</h1>
-            <h2 className="single-comic__series-name">{this.data.series.name}</h2>
-            {/* DESCRIPTION!!!!!!!!!!!!!1 */}
-            <Button/>
+            <h2 className="single-comic__title">{this.data.series.name}</h2>
+            {/* DESCRIPTION!!!!!!1 */}
+            <Button nameOfClass="button button--brd"/>
         </div>
     )
 
@@ -91,18 +104,19 @@ class SingleComic extends Component {
             <p className="single-comic__description">Digital: {this.digitalDate} (&#36;{this.digitalPrice})</p>
 
             {/* DESCRIPTION!!!!!!!!!!!!!1 */}
-            <Button/>
+            <Button />
         </div>
     )
 
     render() {
-        console.log(this.data);
         const {title, description} = this.data;
+        console.log(this.charactersResults);
+        console.log(this.data);
         return(
             <div className="single-comic">
                 <h1 className="single-comic__title">{title}</h1>
                 <p className="single-comic__description">{description}</p>
-                {this.otherInfo}
+                {this.series}
             </div>
         )
     }

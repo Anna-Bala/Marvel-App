@@ -10,7 +10,7 @@ class ComicsList extends Component {
     };
 
     apiKey = '9b9a40427eb372f72b3775e4f456a370';
-    url = `https://gateway.marvel.com:443/v1/public/comics?offset=6000&ts=1&apikey=${this.apiKey}&hash=97a77a62ca6b19c0c250ad87841df189`;
+    url = `https://gateway.marvel.com:443/v1/public/comics?offset=3500&ts=1&apikey=${this.apiKey}&hash=97a77a62ca6b19c0c250ad87841df189`;
     fetchError = false;
     apiData = null;
 
@@ -39,7 +39,7 @@ class ComicsList extends Component {
 
     displayComics = () => {
         const results = this.state.results;
-        console.log(results);
+        console.log(JSON.stringify(results));
         const comics = results.map(comic => {
         const index = comic.thumbnail.path.indexOf('image_not_available');
         return <Comic id={comic.id} title={comic.title} description={comic.description} img={index === (-1)? comic.thumbnail.path : false} extension={comic.thumbnail.extension} data={comic}/>

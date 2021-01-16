@@ -26,6 +26,13 @@ body {
   text-decoration: none;
 }
 
+.button--brd {
+  border: 1px solid white;
+  margin-top: 4%;
+  font-size: 100%;
+  width: 45%;
+}
+
 .form {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -286,6 +293,12 @@ body {
 
 .single-comic__title {
   width: 90%;
+}
+
+.single-comic__image {
+  margin-top: 2%;
+  width: 75%;
+  height: auto;
 }
 
 .single-comic__character {
