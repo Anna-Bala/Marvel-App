@@ -17,8 +17,8 @@
   justify-content: center;
 }
 
-@mixin fadeOut {
-  @keyframes fadeOut {
+@mixin fadeIn {
+  @keyframes fadeIn {
     0% {
       opacity: 0;
     }

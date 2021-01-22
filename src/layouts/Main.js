@@ -10,7 +10,7 @@ import SingleComic from "../pages/subpages/SingleComic";
 
 const Main = () => {
     return (
-        <>
+        <div className='main'>
             <Switch>
                 <Route path='/' component={StartPage} exact />
                 <Route path='/comics' component={ComicsList} exact/>
@@ -22,7 +22,7 @@ const Main = () => {
 
                 {/* <Route component={ErrorPage} /> */}
             </Switch>
-        </>
+        </div>
     )
 }
 

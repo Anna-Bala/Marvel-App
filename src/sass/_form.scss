@@ -1,9 +1,40 @@
 .form {
   @include flex;
-  text-align: center;
-  border: white 1px solid;
-  margin: 0 5%;
-  padding: 2% 0 3% 0;
+  &__close {
+    width: 10%;
+    height: auto;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 2% 2% 0% 0%;
+  }
+  &__main {
+    display: none;
+    &--open {
+      @include flex;
+      text-align: center;
+      border: white 1px solid;
+      margin: 0 5%;
+      padding: 2% 0 3% 0;
+      position: relative;
+    }
+  }
+  &__search {
+    text-align: center;
+    display: inline-block;
+    width: 70%;
+    &--closed {
+      display: none;
+    }
+  }
+  &__icon {
+    display: inline-block;
+    width: 15%;
+    height: auto;
+    &--closed {
+      display: none;
+    }
+  }
   &__title {
     width: 100%;
     font-size: 130%;
