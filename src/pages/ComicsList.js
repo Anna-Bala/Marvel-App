@@ -12,7 +12,7 @@ class ComicsList extends Component {
     };
 
     apiKey = '9b9a40427eb372f72b3775e4f456a370';
-    url = `https://gateway.marvel.com:443/v1/public/comics?offset=5487&ts=1&apikey=${this.apiKey}&hash=97a77a62ca6b19c0c250ad87841df189`;
+    url = `https://gateway.marvel.com:443/v1/public/comics?events=227&offset=1&ts=1&apikey=${this.apiKey}&hash=97a77a62ca6b19c0c250ad87841df189`;
     fetchError = false;
     apiData = null;
 

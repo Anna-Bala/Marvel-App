@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router-dom';
 import changeUrl from "../../functions/changeUrl";
 import convertDate from "../../functions/convertDate";
 import prevContent from "../../functions/prevContent";
 import followingContent from "../../functions/followingContent";
+import fetchData from "../../functions/fetchData";
 import Button from "../../components/Button";
 import arrow from "../../img/arrow.png";
 
@@ -14,9 +16,10 @@ class SingleComic extends Component {
         eventsData: [], 
         currentContent: 0,
         previousContent: null,
-        nextContent: 1
+        nextContent: 1,
     }
 
+    apiKey = '9b9a40427eb372f72b3775e4f456a370';
     data = this.props.location.state.data;
     contentNames = ['characters', 'creators', 'series', 'events', 'other info'];
     
@@ -40,67 +43,57 @@ class SingleComic extends Component {
         else return null;
     });
 
-    apiKey = '9b9a40427eb372f72b3775e4f456a370';
-    fetchError = false;
-
-    fetchData = (url, dataFor) =>
-    {
-    fetch(url)
-        .then(response => {
-            if(response.ok) return response;
-            else this.fetchError = true;
-        })
-        .then(response => response.json())
-        .then(result => {
-            switch(dataFor) {
-                case 'characters': this.setState(prevState => ({charactersData: [...prevState.charactersData, result.data.results[0]]})); break;
-                case 'creators': this.setState(prevState => ({creatorsData: [...prevState.creatorsData, result.data.results[0]]})); break;
-                case 'series': this.setState(prevState => ({seriesData: [...prevState.seriesData, result.data.results[0]]})); break;
-                case 'events': this.setState(prevState => ({eventsData: [...prevState.eventsData, result.data.results[0]]})); break;
-                default: return null;
-            }
-        })
-        .catch(error => this.fetchError = error)
-    }
-
-    charactersUrls;
-    seriesUrl;
-    eventsUrls;
-
     componentDidMount() {
-        this.charactersUrls = this.data.characters.items.map(character => {
+        let charactersUrls = this.data.characters.items.map(character => {
             let url = changeUrl(character.resourceURI, 's', 4);
             url = changeUrl(url, ':443', 26);
             return url + `?ts=1&apikey=${this.apiKey}&hash=97a77a62ca6b19c0c250ad87841df189`;
         });
 
-        this.seriesUrl = changeUrl(this.data.series.resourceURI, 's', 4);
-        this.seriesUrl = changeUrl(this.seriesUrl, ':443', 26);
-        this.seriesUrl += `?ts=1&apikey=${this.apiKey}&hash=97a77a62ca6b19c0c250ad87841df189`;
+        let seriesUrl = changeUrl(this.data.series.resourceURI, 's', 4);
+        seriesUrl = changeUrl(seriesUrl, ':443', 26);
+        seriesUrl += `?ts=1&apikey=${this.apiKey}&hash=97a77a62ca6b19c0c250ad87841df189`;
 
-        this.eventsUrls = this.data.events.items.map(event => {
+        seriesUrl = new Array(seriesUrl);
+
+        let eventsUrls = this.data.events.items.map(event => {
             let url = changeUrl(event.resourceURI, 's', 4);
             url = changeUrl(url, ':443', 26);
             return url + `?ts=1&apikey=${this.apiKey}&hash=97a77a62ca6b19c0c250ad87841df189`;
         });
 
-        this.charactersUrls.forEach(url => {
-            this.fetchData(url, 'characters');
+        charactersUrls.forEach(url => {
+            const fetch = async () => {
+                const result = await fetchData(url);
+                this.setState(prevState => ({charactersData: [...prevState.charactersData, result]}));
+            }
+
+            fetch();
         });
 
-        this.fetchData(this.seriesUrl, 'series');
-        this.eventsUrls.forEach(url => {
-            this.fetchData(url, 'events');
+
+        seriesUrl.forEach(url => {
+            const fetch = async () => {
+                const result = await fetchData(url);
+                this.setState(prevState => ({seriesData: [...prevState.seriesData, result]}));
+            }
+
+            fetch();
+        });
+
+        eventsUrls.forEach(url => {
+            const fetch = async () => {
+                const result = await fetchData(url);
+                this.setState(prevState => ({eventsData: [...prevState.eventsData, result]}));
+            }
+
+            fetch();
         });
 
 
         this.setState({
             previousContent: this.contentNames.length - 1
         });
-    }
-
-    componentDidUpdate() {
-        
     }
 
     manageContent = (where) => {
@@ -121,7 +114,7 @@ class SingleComic extends Component {
             case 'characters': return this.characters();
             case 'creators': return this.creators;
             case 'series': return this.series();
-            case 'events': return this.events;
+            case 'events': return this.events();
             case 'other info': return this.otherInfo; 
             default: return null;
         }
@@ -136,11 +129,14 @@ class SingleComic extends Component {
                         const titleIndex = result.name.indexOf('(');
                         const name = result.name.slice(0, titleIndex);
                     return (
-                        <div className="single-comic__character">
-                            <h1 className="single-comic__character-name">{titleIndex > -1? name : result.name}</h1>
-                            <img className="single-comic__image" src={imgPath} alt="character"/>
-                            {/* <Button /> */}
-                        </div>
+
+                        <Link to={{
+                        pathname: `/characters/${result.id}`, 
+                        state: {data: result}}} className="single-comic__character">
+                                <h1 className="single-comic__character-name">{titleIndex > -1? name : result.name}</h1>
+                                <img className="single-comic__image" src={imgPath} alt="character"/>
+                        </Link>
+                      
                     )
                     })}
                 </div>
@@ -180,8 +176,8 @@ class SingleComic extends Component {
         if(this.state.eventsData.length !== 0) {
             return(
                 <div className="single-comic__content">
-                    <h2 className="single-comic__title">{this.data.series.name}</h2>
-                    <p className="single-comic__description">{this.state.seriesData[0].description}</p>
+                    <h2 className="single-comic__title">{this.data.events.name}</h2>
+                    <p className="single-comic__description">{this.state.eventsData[0].description}</p>
                     <Button nameOfClass="button button--brd"/>
                 </div>
             )
