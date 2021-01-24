@@ -11,24 +11,27 @@ class SingleCharacter extends Component {
     data = this.props.location.state.data;
 
     componentDidMount() {
-        let comicsUrls = this.data.comics.collectionURI;
-        comicsUrls = changeUrl(comicsUrls, 's', 4);
-        comicsUrls = changeUrl(comicsUrls, ':443', 26);
-        comicsUrls += `?ts=1&apikey=${this.apiKey}&hash=97a77a62ca6b19c0c250ad87841df189`;
+        // NOT WORKING!!!!!
+        // let comicsUrls = this.data.comics.collectionURI;
+        // comicsUrls = changeUrl(comicsUrls, 's', 4);
+        // comicsUrls = changeUrl(comicsUrls, ':443', 26);
+        // comicsUrls += `?ts=1&apikey=${this.apiKey}&hash=97a77a62ca6b19c0c250ad87841df189`;
 
-        comicsUrls = new Array(comicsUrls);
+        // comicsUrls = new Array(comicsUrls);
 
-        console.log(comicsUrls);
+        // console.log(comicsUrls);
 
-        comicsUrls.forEach(url => {
-            const fetch = async () => {
-                const result = await fetchData(url);
-                console.log(result);
-                this.setState(prevState => ({comicsData: [...prevState.comicsData, result]}));
-            }
+        // comicsUrls.forEach(url => {
+        //     const fetch = async () => {
+        //         const result = await fetchData(url);
+        //         console.log(result);
+        //         this.setState(prevState => ({comicsData: [...prevState.comicsData, result]}));
+        //     }
 
-            fetch();
-        });
+        //     fetch();
+        // });
+
+        /////////////////////
     }
 
     render() {

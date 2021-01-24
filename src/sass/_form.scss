@@ -39,6 +39,11 @@
     width: 100%;
     font-size: 130%;
     margin: 2% 0 1% 0;
+    &--small {
+      width: 50%;
+      margin-right: 4%;
+      margin-top: 12%;
+    }
   }
   &__label {
     width: 50%;
@@ -48,6 +53,20 @@
   &__input {
     width: 35%;
     margin: 1% 0;
+    background-color: black;
+    outline: none;
+    border: 0.1px solid white;
+    opacity: 0.7;
+    color: white;
+    padding: 0.5% 0;
+    &--small {
+      width: 15%;
+      margin-top: 12%;
+    }
+    &:focus {
+      opacity: 1;
+      outline: none;
+    }
   }
   &__button {
     width: 45%;
