@@ -5,33 +5,30 @@ let charactersNames = [];
 let charactersIds = [];
 
 let offset = 0;
-let url = "";    
 let apiKey = '9b9a40427eb372f72b3775e4f456a370';
+let url = "";    
 
 const fetch = async (url, what) => {
     const result = await fetchData(url);
-    // if(what === 'characters') {
+    if(what === 'characters') {
         result.forEach(single => {
-
+                console.log(single.name);
                 charactersNames.push(single.name);
                 charactersIds.push(single.id);
         });
-    
-    // console.log(charactersIds);
-    // console.log(charactersNames);
+    }
 }
 
-const generateCharactersUrls = () => {
-    for(let i=0; i<=1700; i+=100) {
-        offset = i;
-        url = `https://gateway.marvel.com:443/v1/public/characters?limit=100&offset=${offset}&ts=1&apikey=${apiKey}&hash=97a77a62ca6b19c0c250ad87841df189`;    
-        fetch(url, 'characters');
-    }
-    // console.log(charactersNames);
-}
+// const generateCharactersUrls = () => {
+//     for(let i=0; i<=1500; i+=100) {
+//         offset = i;
+//         url = `https://gateway.marvel.com:443/v1/public/characters?orderBy=name&limit=100&offset=${offset}&ts=1&apikey=${apiKey}&hash=97a77a62ca6b19c0c250ad87841df189`;    
+//         fetch(url, 'characters');
+//     }
+// }
 
 const Form = () => {
-    generateCharactersUrls();
+    // generateCharactersUrls();
     return (
         <>
         <img src={closeIcon} alt='close icon' className="form__close"/>

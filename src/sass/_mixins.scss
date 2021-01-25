@@ -31,3 +31,27 @@
     }
   }
 }
+
+@mixin listItemMain {
+  align-items: flex-start;
+  height: 60vh;
+  width: 80%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  margin-top: 4%;
+  padding-top: 4%;
+  animation-duration: 0.8s;
+  animation-fill-mode: both;
+}
+
+@mixin listItemDescription {
+  white-space: pre-wrap;
+  font-size: 90%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline;
+  width: 90%;
+  height: 30vh;
+  line-height: 1.5;
+}

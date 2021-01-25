@@ -538,4 +538,123 @@ body {
   margin-top: 4%;
   width: 100%;
 }
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  90% {
+    background-image: none;
+    opacity: 1;
+  }
+  100% {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+.characters-list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.characters-list__title {
+  font-weight: 100;
+  margin: 2% 0;
+}
+
+.results {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  text-align: center;
+}
+
+.results__title {
+  font-size: 180%;
+}
+
+.character {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  height: 60vh;
+  width: 80%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  margin-top: 4%;
+  padding-top: 4%;
+  -webkit-animation-duration: 0.8s;
+          animation-duration: 0.8s;
+  -webkit-animation-fill-mode: both;
+          animation-fill-mode: both;
+}
+
+.character__name {
+  font-size: 120%;
+  width: 90%;
+}
+
+.character__name-label {
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 1% 0;
+  -ms-flex-item-align: end;
+      align-self: flex-end;
+  width: 100%;
+}
+
+.character__name-label--closed {
+  display: none;
+}
+
+.character__description {
+  white-space: pre-wrap;
+  font-size: 90%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline;
+  width: 90%;
+  height: 30vh;
+  line-height: 1.5;
+}
 /*# sourceMappingURL=main.css.map */

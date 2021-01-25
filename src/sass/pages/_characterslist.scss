@@ -1,6 +1,6 @@
 @include fadeIn;
 
-.comics-list {
+.characters-list {
   @include flex;
   &__title {
     font-weight: 100;
@@ -16,12 +16,21 @@
   }
 }
 
-.comic {
+.character {
   @include flex;
   @include listItemMain;
-  &__title {
+  &__name {
     font-size: 120%;
     width: 90%;
+    &-label {
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 1% 0;
+      align-self: flex-end;
+      width: 100%;
+      &--closed {
+        display: none;
+      }
+    }
   }
   &__description {
     @include listItemDescription;

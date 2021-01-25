@@ -112,7 +112,7 @@ class ComicsList extends Component {
             <div className="comics-list">
                 <h1 className="comics-list__title">List of comics</h1>
                 <form className="comics-list__form form">
-                    <h2 className="form__search">Search options</h2>
+                    <h2 className="form__search">Search options:</h2>
                     <img src={icon} alt='settings icon' className="form__icon"/>
                     <div className="form__main">
                         <Form />

@@ -6,7 +6,7 @@ function fetchData(url)
             if(response.ok) return response;
         })
         .then(response => response.json())
-        .then(result => result.data.results)
+        .then(result => result.data)
         .catch(error => console.log(error));
         return fetchData;
     }
