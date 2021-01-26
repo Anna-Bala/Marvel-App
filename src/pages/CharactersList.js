@@ -18,16 +18,6 @@ class CharactersList extends Component {
     url = `https://gateway.marvel.com:443/v1/public/characters?limit=10&offset=0&ts=1&orderBy=${this.orderBy}&apikey=${this.apiKey}&hash=97a77a62ca6b19c0c250ad87841df189`;
 
     componentDidMount() {
-        // fetch(this.url)
-        // .then(response => {
-        //     if(response.ok) return response.json();
-        //     else this.fetchError = true;
-        //   })
-        //   .then(result => {this.apiData = result.data; this.manageData()})
-        //   .catch(error => this.fetchError = error);
-
-
-
         this.fetch();
 
           const icon = document.getElementsByClassName('form__icon');
@@ -46,10 +36,9 @@ class CharactersList extends Component {
           });
     }
 
-    displayComics = () => {
+    displayCharacters = () => {
         const result = this.state.charactersData;
         const characters = result.map(character => {
-        console.log('xd');
         const index = character.thumbnail.path.indexOf('image_not_available');
         return <Character id={character.id} name={character.name} description={character.description} img={index === (-1)? character.thumbnail.path : false} extension={character.thumbnail.extension} data={character}/>
         });
@@ -57,19 +46,39 @@ class CharactersList extends Component {
             characters
         })
 
-        const nameLabel = document.getElementsByClassName('character__name-label');
-        const character = document.getElementsByClassName('character');
-        character[0].addEventListener("click", () => {
-            nameLabel[0].classList.toggle('character__name-label--closed');
-            console.log(nameLabel[0]);
-          });
+        const nameLabel = [].slice.call(document.getElementsByClassName('character__name-label'));
+        const charactersDivs = [].slice.call(document.getElementsByClassName('character'));
+        for(let i = 0; i < charactersDivs.length; i++)
+        {
+            if((charactersDivs[i].innerText).indexOf('Learn more...') > -1) charactersDivs.splice(i, 1);
+        }
+        
+
+        charactersDivs.forEach((div, id)=> {
+            div.addEventListener("click", () => {
+                nameLabel[id].classList.toggle('character__name-label--closed');
+            });
+        })
     }
 
     fetch = async () => {
         const result = await fetchData(this.url);
-        console.log(result);
         this.setState({charactersData: result.results, resultsnumber: result.total});
-        this.displayComics();
+        this.displayCharacters();
+    }
+
+    changeUrl = (e) => {
+        e.preventDefault();
+        this.setState({
+            charactersData: null,
+            resultsnumber: null,
+            characters: null,
+        });
+
+        this.startsWith = document.getElementById('letter').value;
+        // this.url = `https://gateway.marvel.com:443/v1/public/comics?limit=10&offset=0&${this.format !== ""? '&format='+this.format : ""}${this.format}${this.releaseYear !== ""? '&startYear='+this.releaseYear : ""}${this.digitalIssue !== ""? '&hasDigitalIssue='+this.digitalIssue : ""}${this.issueNumber !== ""? '&issueNumber='+this.issueNumber : ""}${this.startsWith !== ""? '&titleStartsWith='+this.startsWith : ""}&orderBy=${this.orderBy}&ts=1&apikey=${this.apiKey}&hash=97a77a62ca6b19c0c250ad87841df189`;
+        this.url = `https://gateway.marvel.com:443/v1/public/characters?${this.startsWith !== ""? '&nameStartsWith='+this.startsWith : ""}&limit=10&offset=0&ts=1&orderBy=${this.orderBy}&apikey=${this.apiKey}&hash=97a77a62ca6b19c0c250ad87841df189`;
+        this.fetch();
     }
 
     render() {
@@ -80,7 +89,7 @@ class CharactersList extends Component {
                     <h2 className="form__search">Search options:</h2>
                     <img src={icon} alt='settings icon' className="form__icon"/>
                     <div className="form__main">
-                        <Form />
+                        <Form type="characters"/>
                         <button className="form__button" onClick={(e) =>this.changeUrl(e)}>Save</button>
                     </div>
                 </form>

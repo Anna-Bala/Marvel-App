@@ -1,9 +1,100 @@
 import React, {Component} from "react";
+import fetchData from "../functions/fetchData";
+import Series from "../components/Series";
+import Form from "../components/Form";
+import icon from "../img/settings-icon.png";
 
 class SeriesList extends Component {
+    state = {
+        resultsnumber: 0,
+        seriesData: [],
+        series: null,
+    };
+
+     //URL parameters:
+
+     orderBy = "title";
+     numberOfResults = 10;
+     startsWith = "";
+     type = "";
+     contains = "";
+     releaseYear = "";
+
+
+    apiKey = '9b9a40427eb372f72b3775e4f456a370';
+    url = `https://gateway.marvel.com:443/v1/public/series?limit=10&offset=1&ts=1&orderBy=${this.orderBy}&apikey=${this.apiKey}&hash=97a77a62ca6b19c0c250ad87841df189`;
+
+    componentDidMount() {
+        this.fetch();
+
+          const icon = document.getElementsByClassName('form__icon');
+          const text = document.getElementsByClassName('form__search');
+          const formPanel = document.getElementsByClassName('form__main');
+          const closeIcon = document.getElementsByClassName('form__close');
+          icon[0].addEventListener("click", () => {
+                formPanel[0].classList.toggle('form__main--open');
+                icon[0].classList.toggle('form__icon--closed');
+                text[0].classList.toggle('form__search--closed');
+          });
+            closeIcon[0].addEventListener("click", () => {
+            formPanel[0].classList.toggle('form__main--open');
+            icon[0].classList.toggle('form__icon--closed');
+            text[0].classList.toggle('form__search--closed');
+          });
+    }
+
+    displaySeries = () => {
+        const results = this.state.seriesData;
+        const series = results.map(series => {
+        const index = series.thumbnail.path.indexOf('image_not_available');
+        return <Series id={series.id} title={series.title} description={series.description} img={index === (-1)? series.thumbnail.path : false} extension={series.thumbnail.extension} data={series}/>
+        });
+        this.setState({
+            series,
+        })
+    }
+
+    fetch = async () => {
+        const result = await fetchData(this.url);
+        console.log(result.results);
+        this.setState({seriesData: result.results, resultsnumber: result.total});
+        this.displaySeries();
+    }
+
+    changeUrl = (e) => {
+        e.preventDefault();
+        this.setState({
+            series: null
+        });
+
+        this.orderBy = document.getElementById('order').value;
+        this.type = document.getElementById('type').value;
+        this.releaseYear = document.getElementById('releaseyear').value;
+        this.contains = document.getElementById('contains').value;
+        this.startsWith = document.getElementById('letter').value;
+
+        this.url = `https://gateway.marvel.com:443/v1/public/series?limit=10&offset=0&${this.type !== ""? '&seriesType='+this.type : ""}${this.releaseYear !== ""? '&startYear='+this.releaseYear : ""}${this.contains !== ""? '&contains='+this.contains : ""}${this.startsWith !== ""? '&titleStartsWith='+this.startsWith : ""}&orderBy=${this.orderBy}&ts=1&apikey=${this.apiKey}&hash=97a77a62ca6b19c0c250ad87841df189`;
+        console.log(this.url);
+        this.fetch();
+    }
+
     render() {
         return(
-            <h1>SeriesList</h1>
+            <div className="series-list">
+                <h1 className="series-list__title">List of series</h1>
+                <form className="series-list__form form">
+                    <h2 className="form__search">Search options:</h2>
+                    <img src={icon} alt='settings icon' className="form__icon"/>
+                    <div className="form__main">
+                        <Form type="series"/>
+                        <button className="form__button" onClick={(e) =>this.changeUrl(e)}>Save</button>
+                    </div>
+                </form>
+                <div className="series-list__results results">
+                    <h1 className="results__title">Number of results: {this.state.resultsnumber}</h1>
+                    {this.state.series}
+                </div>
+            </div>
         )
     }
 }
