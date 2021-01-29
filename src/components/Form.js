@@ -74,6 +74,23 @@ const letters = () => {
     );
 }
 
+const options = () => {
+    return(
+        <select id="options" name="options" className="form__input form__input--small">
+            <option value="10" selected>10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="40">40</option>
+            <option value="50">50</option>
+            <option value="60">60</option>
+            <option value="70">70</option>
+            <option value="80">80</option>
+            <option value="90">90</option>
+            <option value="100">100</option>
+        </select>
+    );
+}
+
 const comicsList = () => {
     return (
         <>
@@ -115,14 +132,12 @@ const comicsList = () => {
         <p className="form__title">Other options:</p>
         <label for="order" className="form__label">Order by:</label>
         <select id="order" name="order" className="form__input">
-            <option value="" selected></option>
-            <option value="title">Title</option>
+            <option value="title" selected>Title</option>
             <option value="onsaleDate">On sale date</option>
             <option value="issueNumber">Issue number</option>
         </select>
         <label for="results" className="form__label">&#8470; of results on page:</label>
-        <input type="text" id="results" name="results" className="form__input"/>
-
+        {options()}
     </>
     );
 }
@@ -144,7 +159,7 @@ const charactersList = () => {
 
         <p className="form__title">Other options:</p>
         <label for="results" className="form__label">&#8470; of results on page:</label>
-        <input type="text" id="results" name="results" className="form__input"/>
+        {options()}
     </>
     );
     
@@ -193,12 +208,11 @@ const seriesList = () => {
         <p className="form__title">Other options:</p>
         <label for="order" className="form__label">Order by:</label>
         <select id="order" name="order" className="form__input">
-            <option value="" selected></option>
-            <option value="title">Title</option>
+            <option value="title" selected>Title</option>
             <option value="startYear">Initial release year</option>
         </select>
         <label for="results" className="form__label">&#8470; of results on page:</label>
-        <input type="text" id="results" name="results" className="form__input"/>
+        {options()}
     </>
     );   
 }

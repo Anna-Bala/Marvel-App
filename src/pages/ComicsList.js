@@ -20,9 +20,12 @@ class ComicsList extends Component {
     releaseYear = "";
     digitalIssue = "";
     issueNumber = "";
+    currentPage = 0;
+    offset = 0;
+    goToPage = null;
     
     apiKey = '9b9a40427eb372f72b3775e4f456a370';
-    url = `https://gateway.marvel.com:443/v1/public/comics?limit=10&offset=1&ts=1&orderBy=${this.orderBy}&apikey=${this.apiKey}&hash=97a77a62ca6b19c0c250ad87841df189`;
+    url = `https://gateway.marvel.com:443/v1/public/comics?limit=${this.numberOfResults}&offset=${this.offset}${this.format !== ""? '&format='+this.format : ""}${this.format}${this.releaseYear !== ""? '&startYear='+this.releaseYear : ""}${this.digitalIssue !== ""? '&hasDigitalIssue='+this.digitalIssue : ""}${this.issueNumber !== ""? '&issueNumber='+this.issueNumber : ""}${this.startsWith !== ""? '&titleStartsWith='+this.startsWith : ""}&orderBy=${this.orderBy}&ts=1&apikey=${this.apiKey}&hash=97a77a62ca6b19c0c250ad87841df189`;
 
     componentDidMount() {
         this.fetch();
@@ -61,23 +64,46 @@ class ComicsList extends Component {
         this.displayComics();
     }
 
-    changeUrl = (e) => {
+    changeUrl = (e, where) => {
         e.preventDefault();
-        this.setState({
-            comics: null
-        });
 
-        console.log(document.getElementById('order').value);
+        const errorText = document.getElementsByClassName('results-nav__error');
+        errorText[0].innerHTML = "";
+        let totalPages = this.state.resultsnumber / this.numberOfResults;
+        totalPages = Math.floor(totalPages);
+        const whichPage = document.getElementById('page').value;
+        if(whichPage > totalPages) {
+            errorText[0].innerHTML = `There are ${totalPages} pages`;
+        } else {
+            if(where === "value") this.currentPage = whichPage;
+        } 
+
+        if(where === "next" && this.currentPage !== totalPages) this.currentPage += 1;
+        else if(where === "prev" && this.currentPage !== 0) this.currentPage -= 1;
+
+        // OFFEST SKIPS COMICS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+        console.log("page: " + this.currentPage);
+
         this.orderBy = document.getElementById('order').value;
         this.format = document.getElementById('format').value;
         this.releaseYear = document.getElementById('releaseyear').value;
         this.digitalIssue = document.getElementById('digitalissue').value;
         this.issueNumber = document.getElementById('issuenumber').value;
         this.startsWith = document.getElementById('letter').value;
-        this.url = `https://gateway.marvel.com:443/v1/public/comics?limit=10&offset=0&${this.format !== ""? '&format='+this.format : ""}${this.format}${this.releaseYear !== ""? '&startYear='+this.releaseYear : ""}${this.digitalIssue !== ""? '&hasDigitalIssue='+this.digitalIssue : ""}${this.issueNumber !== ""? '&issueNumber='+this.issueNumber : ""}${this.startsWith !== ""? '&titleStartsWith='+this.startsWith : ""}&orderBy=${this.orderBy}&ts=1&apikey=${this.apiKey}&hash=97a77a62ca6b19c0c250ad87841df189`;
-        console.log(this.url);
-        this.fetch();
+        this.offset = this.currentPage * this.numberOfResults;
+        this.numberOfResults = document.getElementById('options').value;
+        const newUrl = `https://gateway.marvel.com:443/v1/public/comics?limit=${this.numberOfResults}&offset=${this.offset}${this.format !== ""? '&format='+this.format : ""}${this.format}${this.releaseYear !== ""? '&startYear='+this.releaseYear : ""}${this.digitalIssue !== ""? '&hasDigitalIssue='+this.digitalIssue : ""}${this.issueNumber !== ""? '&issueNumber='+this.issueNumber : ""}${this.startsWith !== ""? '&titleStartsWith='+this.startsWith : ""}&orderBy=${this.orderBy}&ts=1&apikey=${this.apiKey}&hash=97a77a62ca6b19c0c250ad87841df189`;
+        if(newUrl !== this.url)
+        {
+            this.setState({
+                comics: null
+            });
+            this.url = newUrl;
+            this.fetch();
+        } 
     }
+
 
     render() {
         // console.log(this.state.results);
@@ -96,6 +122,14 @@ class ComicsList extends Component {
                 <div className="comics-list__results results">
                     <h1 className="results__title">Number of results: {this.state.resultsnumber}</h1>
                     {this.state.comics}
+                </div>
+                <div className="results-nav">
+                    <label for="page" className="results-nav__label">Choose page:</label>
+                    <input type="page" id="page" name="page" className="results-nav__input"/>
+                    <button className="results-nav__button results-nav__button--small" onClick={(e) => this.changeUrl(e,"value")}>Go</button>
+                    <p className="results-nav__error"></p>
+                    <button className="results-nav__button" onClick={(e) => this.changeUrl(e,"prev")}>Previous</button>
+                    <button className="results-nav__button"  onClick={(e) => this.changeUrl(e,"next")}>Next</button>
                 </div>
             </div>
         )
