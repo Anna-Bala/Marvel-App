@@ -50,6 +50,12 @@ class SingleComic extends Component {
             return url + `?ts=1&apikey=${this.apiKey}&hash=97a77a62ca6b19c0c250ad87841df189`;
         });
 
+        // let creatorsUrls = this.data.creators.items.map(creator => {
+        //     let url = changeUrl(creator.resourceURI, 's', 4);
+        //     url = changeUrl(url, ':443', 26);
+        //     return url + `?ts=1&apikey=${this.apiKey}&hash=97a77a62ca6b19c0c250ad87841df189`;
+        // });
+
         let seriesUrl = changeUrl(this.data.series.resourceURI, 's', 4);
         seriesUrl = changeUrl(seriesUrl, ':443', 26);
         seriesUrl += `?ts=1&apikey=${this.apiKey}&hash=97a77a62ca6b19c0c250ad87841df189`;
@@ -65,17 +71,26 @@ class SingleComic extends Component {
         charactersUrls.forEach(url => {
             const fetch = async () => {
                 const result = await fetchData(url);
-                this.setState(prevState => ({charactersData: [...prevState.charactersData, result]}));
+                this.setState(prevState => ({charactersData: [...prevState.charactersData, result.results[0]]}));
             }
-
             fetch();
+
         });
+
+        // creatorsUrls.forEach(url => {
+        //     const fetch = async () => {
+        //         const result = await fetchData(url);
+        //         this.setState(prevState => ({creatorsData: [...prevState.creatorsData, result.results[0]]}));
+        //     }
+        //     fetch();
+
+        // });
 
 
         seriesUrl.forEach(url => {
             const fetch = async () => {
                 const result = await fetchData(url);
-                this.setState(prevState => ({seriesData: [...prevState.seriesData, result]}));
+                this.setState(prevState => ({seriesData: [...prevState.seriesData, result.results[0]]}));
             }
 
             fetch();
@@ -84,7 +99,7 @@ class SingleComic extends Component {
         eventsUrls.forEach(url => {
             const fetch = async () => {
                 const result = await fetchData(url);
-                this.setState(prevState => ({eventsData: [...prevState.eventsData, result]}));
+                this.setState(prevState => ({eventsData: [...prevState.eventsData, result.results[0]]}));
             }
 
             fetch();
@@ -112,7 +127,7 @@ class SingleComic extends Component {
 
         switch(name) {
             case 'characters': return this.characters();
-            case 'creators': return this.creators;
+            case 'creators': return this.creators();
             case 'series': return this.series();
             case 'events': return this.events();
             case 'other info': return this.otherInfo; 
@@ -150,9 +165,34 @@ class SingleComic extends Component {
         }
     }
 
-    creators = (
-        <h2>creators</h2>
-    )
+    creators = () => {
+        if(this.data.creators.items.length !== 0) {
+            return(
+                <div className="single-comic__content">
+                    {this.data.creators.items.map(result => {
+                        const urlLength = result.resourceURI.length;
+                        const id = result.resourceURI.slice(45, urlLength);
+                        console.log(id);
+                        return (
+                        <Link to={{
+                        pathname: `/creators/${id}`, 
+                        state: {data: result}}} className="single-comic__creator">
+                                <h1 className="single-comic__creator-role">{result.role}</h1>
+                                <h1 className="single-comic__creator-name">{result.name}</h1>
+                        </Link>
+                      
+                    )
+                    })}
+                </div>
+            )
+        } else {
+            return(
+                <div className="single-comic__content">
+                    <p className="single-comic__description">There are no characters to display</p>
+                </div>
+            )
+        }
+    }
 
     series = () => {
         if(this.state.seriesData.length !== 0) {
@@ -175,10 +215,16 @@ class SingleComic extends Component {
     events = () => {
         if(this.state.eventsData.length !== 0) {
             return(
-                <div className="single-comic__content">
-                    <h2 className="single-comic__title">{this.data.events.name}</h2>
-                    <p className="single-comic__description">{this.state.eventsData[0].description}</p>
-                    <Button nameOfClass="button button--brd"/>
+                <div className="single-comic__content single-comic__content--border">
+                    {this.state.eventsData.map(result => {
+                    return (
+                        <>
+                            <h2 className="single-comic__title">{result.title}</h2>
+                            <p className="single-comic__description">{result.description}</p>
+                            <Button nameOfClass="button button--brd"/>
+                        </>
+                    )
+                    })}
                 </div>
             )
         } else {
@@ -192,12 +238,9 @@ class SingleComic extends Component {
 
     otherInfo = (
         <div className="single-comic__content">
-            <p className="single-comic__description">Dates of sales and prices</p>
-            <p className="single-comic__description">Print: {this.printDate} (&#36;{this.printPrice})</p>
-            <p className="single-comic__description">Digital: {this.digitalDate} (&#36;{this.digitalPrice})</p>
-
-            {/* DESCRIPTION!!!!!!!!!!!!!1 */}
-            <Button />
+            <p className="single-comic__title single-comic__title--small">Dates of sales and prices</p>
+            {this.printPrice[0] !== null? <p className="single-comic__description single-comic__description--border">Print: {this.printDate} (&#36;{this.printPrice})</p> : null}
+            {this.digitalPrice[0] !== null? <p className="single-comic__description single-comic__description--border">Digital: {this.digitalDate} (&#36;{this.digitalPrice})</p> : null}
         </div>
     )
 
