@@ -18,7 +18,6 @@ class Character extends Component {
     /*DESCRIPTION FROM textOBJECT!!!!!!!!!!*/
 
     content = {
-        
         withCover: (
             <>
                 <h1 className="character__name">{this.props.name}</h1>

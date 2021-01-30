@@ -1,6 +1,6 @@
 @include fadeIn;
 
-.comics-list {
+.events-list {
   @include flex;
   &__title {
     font-weight: 100;
@@ -11,15 +11,19 @@
 .results {
   @include flex;
   text-align: center;
+  width: 90%;
   &__title {
     font-size: 180%;
   }
 }
 
-.comic {
+.event {
   @include flex;
   @include listItemMain;
-
+  height: 50vh;
+  background-size: cover;
+  width: 100%;
+  border: 1px solid white;
   &__title {
     font-size: 120%;
     width: 90%;

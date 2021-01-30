@@ -7,7 +7,7 @@ class Event extends Component {
         display: false,
     }
 
-    imgPath = this.props.img + '/portrait_incredible.' + this.props.extension;
+    imgPath = this.props.img + '/standard_fantastic.' + this.props.extension;
 
     styles = {
         withBackground: {backgroundImage: `url(${this.imgPath})`},

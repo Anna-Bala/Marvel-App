@@ -1,6 +1,6 @@
 @include fadeIn;
 
-.comics-list {
+.series-list {
   @include flex;
   &__title {
     font-weight: 100;
@@ -16,10 +16,9 @@
   }
 }
 
-.comic {
+.series {
   @include flex;
   @include listItemMain;
-
   &__title {
     font-size: 120%;
     width: 90%;

@@ -1,0 +1,43 @@
+@include fadeIn;
+
+.creators-list {
+  @include flex;
+  &__title {
+    font-weight: 100;
+    margin: 2% 0;
+  }
+}
+
+.results {
+  @include flex;
+  text-align: center;
+  width: 80%;
+  &__title {
+    font-size: 180%;
+  }
+}
+
+.creator {
+  @include flex;
+  @include listItemMain;
+  width: 90%;
+  height: 30vh;
+  border: 1px solid white;
+  &__name {
+    font-size: 120%;
+    width: 90%;
+    &-label {
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 2% 0;
+      width: 100%;
+      font-size: 120%;
+      align-self: flex-end;
+    }
+  }
+  &--link {
+    background-size: cover;
+    background-position: bottom;
+    text-decoration: none;
+    color: white;
+  }
+}

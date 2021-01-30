@@ -71,12 +71,14 @@ class ComicsList extends Component {
         errorText[0].innerHTML = "";
         let totalPages = this.state.resultsnumber / this.numberOfResults;
         totalPages = Math.floor(totalPages);
-        const whichPage = document.getElementById('page').value;
+        const whichPage = parseInt(document.getElementById('page').value);
         if(whichPage > totalPages) {
             errorText[0].innerHTML = `There are ${totalPages} pages`;
         } else {
             if(where === "value") this.currentPage = whichPage;
         } 
+
+        this.currentPage = parseInt(this.currentPage);
 
         if(where === "next" && this.currentPage !== totalPages) this.currentPage += 1;
         else if(where === "prev" && this.currentPage !== 0) this.currentPage -= 1;

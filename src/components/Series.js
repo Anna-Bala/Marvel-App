@@ -20,8 +20,8 @@ class Series extends Component {
         
         withCover: (
             <>
-                <h1 className="comic__title">{this.props.title}</h1>
-                <p className="comic__description">{this.props.description}</p>
+                <h1 className="series__title">{this.props.title}</h1>
+                <p className="series__description">{this.props.description}</p>
                 <Link to={{
                     pathname: `/series/${this.props.id}`, 
                     state: {data: this.props.data}}} 
@@ -32,8 +32,8 @@ class Series extends Component {
         ),
         withoutCover: (
             <>
-                <h1 className="comic__title">{this.props.title}</h1>
-                <Link to={`/comics/${this.props.id}`} className="button"><Button /></Link>
+                <h1 className="series__title">{this.props.title}</h1>
+                <Link to={`/series/${this.props.id}`} className="button"><Button /></Link>
             </>
         )
     }
@@ -50,7 +50,7 @@ class Series extends Component {
         const {withBackground, withoutBackground} = this.styles;
         const {withCover, withoutCover} = this.content;
         return(
-        <div className="results__comic comic" 
+        <div className="results__series series" 
         key={id}
         style={img === false? withoutBackground : withBackground} 
         onClick={img === false? null : () => this.changingDisplay()}

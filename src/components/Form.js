@@ -3,6 +3,7 @@ import fetchData from "../functions/fetchData";
 import CharactersList from "../pages/CharactersList";
 import SeriesList from "../pages/SeriesList";
 import EventsList from "../pages/EventsList";
+import CreatorsList from "../pages/CreatorsList";
 
 let charactersNames = [];
 let charactersIds = [];
@@ -31,9 +32,9 @@ let url = `https://gateway.marvel.com:443/v1/public/characters?orderBy=name&limi
 //     }
 // }
 
-const letters = () => {
+const letters = (type) => {
     return(
-        <select id="letter" name="letter" className="form__input form__input--small">
+        <select id={type} name={type} className="form__input form__input--small">
             <option value="" selected></option>
             <option value="A">A</option>
             <option value="B">B</option>
@@ -96,7 +97,7 @@ const comicsList = () => {
         <>
         <img src={closeIcon} alt='close icon' className="form__close"/>
         <label for="letter" className="form__title form__title--small">Title starts with:</label>
-        {letters()}
+        {letters("letter")}
         <p className="form__title">Filter by:</p>
         <label for="format" className="form__label">Format:</label>
         <select id="format" name="format" className="form__input">
@@ -147,7 +148,7 @@ const charactersList = () => {
         <>
         <img src={closeIcon} alt='close icon' className="form__close"/>
         <label for="letter" className="form__title form__title--small">Title starts with:</label>
-        {letters()}
+        {letters("letter")}
 
         <p className="form__title">Search by:</p>
         <label for="comic" className="form__label">Comic:</label>
@@ -170,7 +171,7 @@ const seriesList = () => {
         <>
         <img src={closeIcon} alt='close icon' className="form__close"/>
         <label for="letter" className="form__title form__title--small">Name starts with:</label>
-        {letters()}
+        {letters("letter")}
 
         <p className="form__title">Filter by:</p>
         <label for="type" className="form__label">Type:</label>
@@ -222,7 +223,7 @@ const eventsList = () => {
         <>
         <img src={closeIcon} alt='close icon' className="form__close"/>
         <label for="letter" className="form__title form__title--small">Name starts with:</label>
-        {letters()}
+        {letters("letter")}
         <p className="form__title">Search by:</p>
         <label for="title" className="form__label">Title:</label>
         <input type="text" id="title" name="title" className="form__input"/>
@@ -234,13 +235,43 @@ const eventsList = () => {
         <p className="form__title">Other options:</p>
         <label for="order" className="form__label">Order by:</label>
         <select id="order" name="order" className="form__input">
-            <option value="" selected></option>
-            <option value="name">Name</option>
+            <option value="name" selected>Name</option>
             <option value="startDate">Initial release date</option>
         </select>
         <label for="results" className="form__label">&#8470; of results on page:</label>
-        <input type="text" id="results" name="results" className="form__input"/>
+        {options()}
+    </>
+    );
+}
 
+const creatorsList = () => {
+    return (
+        <>
+        <img src={closeIcon} alt='close icon' className="form__close"/>
+        <label for="firstNameLetter" className="form__title form__title--small">First name starts with:</label>
+        {letters("firstNameLetter")}
+        <label for="middleNameLetter" className="form__title form__title--small">Middle name starts with:</label>
+        {letters("middleNameLetter")}
+        <label for="lastNameLetter" className="form__title form__title--small">Last name starts with:</label>
+        {letters("lastNameLetter")}
+        <p className="form__title">Search by:</p>
+        <label for="title" className="form__label">Comic:</label>
+        <input type="text" id="comic" name="comic" className="form__input"/>
+        <label for="characters" className="form__label">Series:</label>
+        <input type="text" id="series" name="series" className="form__input"/>
+        <label for="creators" className="form__label">Event:</label>
+        <input type="text" id="event" name="event" className="form__input"/>
+
+        <p className="form__title">Other options:</p>
+        <label for="order" className="form__label">Order by:</label>
+        <select id="order" name="order" className="form__input">
+            <option value="firstName" selected>First name</option>
+            <option value="lastName">Last name</option>
+            <option value="middleName">Middle name</option>
+            <option value="suffix">Suffix</option>
+        </select>
+        <label for="results" className="form__label">&#8470; of results on page:</label>
+        {options()}
     </>
     );
 }
@@ -251,6 +282,7 @@ const Form = (props) => {
         case 'characters': return charactersList();
         case 'series': return seriesList();
         case 'events': return eventsList();
+        case 'creators': return creatorsList();
         default: return null;
     }
 }
