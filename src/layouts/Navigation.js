@@ -25,11 +25,24 @@ class Navigation extends Component {
         });
     }
 
-    nav = items.map(item => (
-        <li key={item.name} className="navigation__item">
-            <NavLink to={item.path} exact={item.exact ? item.exact : false} className="navigation__link">{item.name}</NavLink>
-        </li>
-    ))
+    nav = items.map(item => {
+        let singleNavItem = null;
+        if(item.name === 'comics') {
+            singleNavItem = <NavLink 
+            to={{
+                pathname: `/comics`, 
+                state: {data: null}}}
+            exact={item.exact ? item.exact : false} 
+            className="navigation__link">{item.name}
+                 </NavLink>;
+        } else singleNavItem = <NavLink to={item.path} exact={item.exact ? item.exact : false} className="navigation__link">{item.name}</NavLink>;
+        return(
+            <li key={item.name} className="navigation__item">
+                {singleNavItem}
+            </li>
+        )
+    })
+
     render() {
         return (
             <div className="navigation">
