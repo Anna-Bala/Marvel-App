@@ -116,7 +116,7 @@ class SingleCharacter extends Component {
     }
 
     render() {
-        const {name, description, comics, series} = this.data;
+        const {name, description, comics, series, events} = this.data;
         console.log(this.data);
         const nameIndex = name.indexOf('(');
         let shortName = '';
@@ -135,7 +135,7 @@ class SingleCharacter extends Component {
                      {this.state.comics}
                      <Link to={{
                     pathname: `/comics`, 
-                    state: {data: this.data.id}}} 
+                    state: {data: this.data.id, from: 'characters'}}} 
                     className="button">
                         <Button text="See all comics"/>
                     </Link>
@@ -157,7 +157,7 @@ class SingleCharacter extends Component {
                 </div>
                 <div className="single-character__events">
                 <h2  className="single-character__subtitle">Events</h2>
-                    {series.items.length === 0? <p className="single-character__description">There are no appearances of this character in events</p> : <>
+                    {events.items.length === 0? <p className="single-character__description">There are no appearances of this character in events</p> : <>
                      {this.state.events}
                      <Link to={{
                     pathname: `/events`, 

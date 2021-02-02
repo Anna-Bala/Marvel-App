@@ -1,46 +1,27 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
+import Comic from "../../components/Comic";
 import changeUrl from "../../functions/changeUrl";
-import convertDate from "../../functions/convertDate";
 import prevContent from "../../functions/prevContent";
 import followingContent from "../../functions/followingContent";
 import fetchData from "../../functions/fetchData";
 import Button from "../../components/Button";
 import arrow from "../../img/arrow.png";
 
-class SingleComic extends Component {
+class SingleSeries extends Component {
     state = {
         charactersData: [],
-        seriesData: [],
+        comicsData: [],
         eventsData: [], 
         currentContent: 0,
         previousContent: null,
         nextContent: 1,
+        comics: null,
     }
 
     apiKey = '9b9a40427eb372f72b3775e4f456a370';
     data = this.props.location.state.data;
-    contentNames = ['characters', 'creators', 'series', 'events', 'other info'];
-    
-    printDate = this.data.dates.map(date => {
-        if(date.type === "onsaleDate") return convertDate(date.date);
-        else return null;
-    });
-
-    digitalDate = this.data.dates.map(date => {
-        if(date.type === "digitalPurchaseDate") return convertDate(date.date);
-        else return null;
-    });
-
-    printPrice = this.data.prices.map(price => {
-        if(price.type === "printPrice") return price.price;
-        else return null;
-    });
-
-    digitalPrice = this.data.prices.map(price => {
-        if(price.type === "digitalPurchasePrice") return price.price;
-        else return null;
-    });
+    contentNames = ['comics', 'characters', 'creators', 'events'];
 
     componentDidMount() {
         let charactersUrls = this.data.characters.items.map(character => {
@@ -50,14 +31,14 @@ class SingleComic extends Component {
         });
 
 
-        let seriesUrl = changeUrl(this.data.series.resourceURI, 's', 4);
-        seriesUrl = changeUrl(seriesUrl, ':443', 26);
-        seriesUrl += `?ts=1&apikey=${this.apiKey}&hash=97a77a62ca6b19c0c250ad87841df189`;
-
-        seriesUrl = new Array(seriesUrl);
-
         let eventsUrls = this.data.events.items.map(event => {
             let url = changeUrl(event.resourceURI, 's', 4);
+            url = changeUrl(url, ':443', 26);
+            return url + `?ts=1&apikey=${this.apiKey}&hash=97a77a62ca6b19c0c250ad87841df189`;
+        });
+
+        let comicsUrls = this.data.comics.items.map(comic => {
+            let url = changeUrl(comic.resourceURI, 's', 4);
             url = changeUrl(url, ':443', 26);
             return url + `?ts=1&apikey=${this.apiKey}&hash=97a77a62ca6b19c0c250ad87841df189`;
         });
@@ -71,14 +52,16 @@ class SingleComic extends Component {
 
         });
 
-
-        seriesUrl.forEach(url => {
-            const fetch = async () => {
-                const result = await fetchData(url);
-                this.setState(prevState => ({seriesData: [...prevState.seriesData, result.results[0]]}));
+        comicsUrls.forEach((url, id) => {
+            console.log(id);
+            if(id <= 5) {
+                const fetch = async () => {
+                    const result = await fetchData(url);
+                    this.setState(prevState => ({comicsData: [...prevState.comicsData, result.results[0]]}));
+                }
+                fetch();
             }
 
-            fetch();
         });
 
         eventsUrls.forEach(url => {
@@ -113,9 +96,8 @@ class SingleComic extends Component {
         switch(name) {
             case 'characters': return this.characters();
             case 'creators': return this.creators();
-            case 'series': return this.series();
+            case 'comics': return this.comics();
             case 'events': return this.events();
-            case 'other info': return this.otherInfo; 
             default: return null;
         }
     }
@@ -123,7 +105,7 @@ class SingleComic extends Component {
     characters = () => {
         if(this.state.charactersData.length !== 0) {
             return(
-                <div className="single-comic__content">
+                <div className="single-series__content">
                     {this.state.charactersData.map(result => {
                         const imgPath = `${result.thumbnail.path}/standard_amazing.${result.thumbnail.extension}`;
                         const titleIndex = result.name.indexOf('(');
@@ -132,9 +114,9 @@ class SingleComic extends Component {
 
                         <Link to={{
                         pathname: `/characters/${result.id}`, 
-                        state: {data: result}}} className="single-comic__character">
-                                <h1 className="single-comic__character-name">{titleIndex > -1? name : result.name}</h1>
-                                <img className="single-comic__image" src={imgPath} alt="character"/>
+                        state: {data: result}}} className="single-series__character">
+                                <h1 className="single-series__character-name">{titleIndex > -1? name : result.name}</h1>
+                                <img className="single-series__image" src={imgPath} alt="character"/>
                         </Link>
                       
                     )
@@ -143,8 +125,8 @@ class SingleComic extends Component {
             )
         } else {
             return(
-                <div className="single-comic__content">
-                    <p className="single-comic__description">There are no characters to display</p>
+                <div className="single-series__content">
+                    <p className="single-series__description">There are no characters to display</p>
                 </div>
             )
         }
@@ -153,7 +135,7 @@ class SingleComic extends Component {
     creators = () => {
         if(this.data.creators.items.length !== 0) {
             return(
-                <div className="single-comic__content">
+                <div className="single-series__content">
                     {this.data.creators.items.map(result => {
                         const urlLength = result.resourceURI.length;
                         const id = result.resourceURI.slice(45, urlLength);
@@ -161,9 +143,9 @@ class SingleComic extends Component {
                         return (
                         <Link to={{
                         pathname: `/creators/${id}`, 
-                        state: {data: result}}} className="single-comic__creator">
-                                <h1 className="single-comic__creator-role">{result.role}</h1>
-                                <h1 className="single-comic__creator-name">{result.name}</h1>
+                        state: {data: result}}} className="single-series__creator">
+                                <h1 className="single-series__creator-role">{result.role}</h1>
+                                <h1 className="single-series__creator-name">{result.name}</h1>
                         </Link>
                       
                     )
@@ -172,31 +154,36 @@ class SingleComic extends Component {
             )
         } else {
             return(
-                <div className="single-comic__content">
-                    <p className="single-comic__description">There are no characters to display</p>
+                <div className="single-series__content">
+                    <p className="single-series__description">There are no characters to display</p>
                 </div>
             )
         }
     }
 
-    series = () => {
-        if(this.state.seriesData.length !== 0) {
+    comics = () => {
+        if(this.state.comicsData.length !== 0) {
+            const results = this.state.comicsData;
+            console.log(results);
+            const comics = results.map(comic => {
+            const index = comic.thumbnail.path.indexOf('image_not_available');
+            return <Comic id={comic.id} title={comic.title} description={comic.description} img={index === (-1)? comic.thumbnail.path : false} extension={comic.thumbnail.extension} data={comic}/>
+            });
             return(
-                <div className="single-comic__content">
-                    <h2 className="single-comic__title">{this.data.series.name}</h2>
-                    <p className="single-comic__description">{this.state.seriesData[0].description}</p>
-                    <Link to={{
-                        pathname: `/series/${this.state.seriesData[0].id}`, 
-                        state: {data: this.state.seriesData[0]}}}>
-                            <Button nameOfClass="button button--brd"/>
-                    </Link>
-
-                </div>
+                <>
+                    {comics}
+                    {<Link to={{
+                    pathname: `/comics`, 
+                    state: {data: this.data.id, from: 'series'}}} 
+                    className="button">
+                        <Button text="See all comics"/>
+                    </Link>}
+                </>
             )
         } else {
             return(
-                <div className="single-comic__content">
-                    <p className="single-comic__description">There are no series to display</p>
+                <div className="single-series__content">
+                    <p className="single-series__description">There are no comics to display</p>
                 </div>
             )
         }
@@ -205,12 +192,12 @@ class SingleComic extends Component {
     events = () => {
         if(this.state.eventsData.length !== 0) {
             return(
-                <div className="single-comic__content single-comic__content--border">
+                <div className="single-series__content single-series__content--border">
                     {this.state.eventsData.map(result => {
                     return (
                         <>
-                            <h2 className="single-comic__title">{result.title}</h2>
-                            <p className="single-comic__description">{result.description}</p>
+                            <h2 className="single-series__title">{result.title}</h2>
+                            <p className="single-series__description">{result.description}</p>
                             <Button nameOfClass="button button--brd"/>
                         </>
                     )
@@ -219,35 +206,28 @@ class SingleComic extends Component {
             )
         } else {
             return(
-                <div className="single-comic__content">
-                    <p className="single-comic__description">There are no events to display</p>
+                <div className="single-series__content">
+                    <p className="single-series__description">There are no events to display</p>
                 </div>
             )
         }
     }
 
-    otherInfo = (
-        <div className="single-comic__content">
-            <p className="single-comic__title single-comic__title--small">Dates of sales and prices</p>
-            {this.printPrice[0] !== null? <p className="single-comic__description single-comic__description--border">Print: {this.printDate} (&#36;{this.printPrice})</p> : null}
-            {this.digitalPrice[0] !== null? <p className="single-comic__description single-comic__description--border">Digital: {this.digitalDate} (&#36;{this.digitalPrice})</p> : null}
-        </div>
-    )
 
     render() {
         const {title, description} = this.data;
         console.log(this.data);
         return(
-            <div className="single-comic">
-                <h1 className=" single-comic__title single-comic__title--main">{title}</h1>
-                <p className="single-comic__description">{description}</p>
-                <div className="single-comic__panel">
-                    <div className="single-comic__button-container">
-                        <img src={arrow} alt="arrow" className="single-comic__button single-comic__button--left" onClick={() => this.manageContent('prev')} />
+            <div className="single-series">
+                <h1 className=" single-series__title single-series__title--main">{title}</h1>
+                <p className="single-series__description">{description}</p>
+                <div className="single-series__panel">
+                    <div className="single-series__button-container">
+                        <img src={arrow} alt="arrow" className="single-series__button single-series__button--left" onClick={() => this.manageContent('prev')} />
                     </div>
-                    <h1 className="single-comic__title single-comic__title--sub">{this.contentNames[this.state.currentContent]}</h1>
-                    <div className="single-comic__button-container">
-                        <img src={arrow} alt="arrow" className="single-comic__button single-comic__button--right" onClick={() => this.manageContent('next')} />
+                    <h1 className="single-series__title single-series__title--sub">{this.contentNames[this.state.currentContent]}</h1>
+                    <div className="single-series__button-container">
+                        <img src={arrow} alt="arrow" className="single-series__button single-series__button--right" onClick={() => this.manageContent('next')} />
                     </div>
                 </div>
                 {this.displayContent()}
@@ -256,4 +236,4 @@ class SingleComic extends Component {
     }
 }
 
-export default SingleComic;
+export default SingleSeries;

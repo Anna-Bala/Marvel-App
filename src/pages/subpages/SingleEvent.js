@@ -1,0 +1,216 @@
+import React, {Component} from "react";
+import Comic from "../../components/Comic";
+import Series from "../../components/Series";
+import Character from "../../components/Character";
+import Creator from "../../components/Creator";
+import changeUrl from "../../functions/changeUrl";
+import fetchData from "../../functions/fetchData";
+import prevContent from "../../functions/prevContent";
+import followingContent from "../../functions/followingContent";
+import {Link} from 'react-router-dom';
+import Button  from '../../components/Button';
+import arrow from "../../img/arrow.png";
+
+class SingleEvent extends Component {
+    state = {
+        comicsData: [],
+        seriesData: [],
+        charactersData: [],
+        creatorsData: [],
+        comics: null,
+        series: null,
+        characters : null,
+        creators: null,
+        currentContent: 0,
+        previousContent: null,
+        nextContent: 1,
+    }
+
+    apiKey = '9b9a40427eb372f72b3775e4f456a370';
+    data = this.props.location.state.data;
+    contentNames = ['comics', 'characters', 'creators', 'series', 'other info'];
+
+    fetch = async (what, url) => {
+
+        const result = await fetchData(url);
+        console.log(result);
+        if(what === 'comics') {
+            this.setState(prevState => ({comicsData: [...prevState.comicsData, result]}));
+            this.displayComics();
+        }
+        else if(what === 'series') {
+            this.setState(prevState => ({seriesData: [...prevState.seriesData, result]}));
+            this.displaySeries();
+        }
+        else if(what === 'characters') {
+            this.setState(prevState => ({charactersData: [...prevState.charactersData, result]}));
+            this.displayCharacters();
+        }
+        else if(what === 'creators') {
+            this.setState(prevState => ({creatorsData: [...prevState.creatorsData, result]}));
+            this.displayCreators();
+        }
+    }
+
+    componentDidMount() {
+        let comicsUrls = this.data.comics.collectionURI;
+        comicsUrls = changeUrl(comicsUrls, 's', 4);
+        comicsUrls = changeUrl(comicsUrls, ':443', 26);
+        comicsUrls += `?ts=1&apikey=${this.apiKey}&limit=6&orderBy=issueNumber&hash=97a77a62ca6b19c0c250ad87841df189`;
+
+        comicsUrls = new Array(comicsUrls);
+
+        console.log(comicsUrls);
+
+        comicsUrls.forEach(url => {
+            this.fetch("comics", url);
+        });
+
+        let seriesUrls = this.data.series.collectionURI;
+        seriesUrls = changeUrl(seriesUrls, 's', 4);
+        seriesUrls = changeUrl(seriesUrls, ':443', 26);
+        seriesUrls += `?ts=1&apikey=${this.apiKey}&limit=6&orderBy=title&hash=97a77a62ca6b19c0c250ad87841df189`;
+
+        seriesUrls = new Array(seriesUrls);
+
+        console.log(seriesUrls);
+
+        seriesUrls.forEach(url => {
+            this.fetch("series", url);
+        });
+
+        let charactersUrls = this.data.characters.collectionURI;
+        charactersUrls = changeUrl(charactersUrls, 's', 4);
+        charactersUrls = changeUrl(charactersUrls, ':443', 26);
+        charactersUrls += `?ts=1&apikey=${this.apiKey}&limit=6&orderBy=name&hash=97a77a62ca6b19c0c250ad87841df189`;
+
+        charactersUrls = new Array(charactersUrls);
+
+        console.log(charactersUrls);
+
+        charactersUrls.forEach(url => {
+            this.fetch("characters", url);
+        });
+
+        let creatorsUrls = this.data.creators.collectionURI;
+        creatorsUrls = changeUrl(creatorsUrls, 's', 4);
+        creatorsUrls = changeUrl(creatorsUrls, ':443', 26);
+        creatorsUrls += `?ts=1&apikey=${this.apiKey}&limit=6&orderBy=firstName&hash=97a77a62ca6b19c0c250ad87841df189`;
+
+        creatorsUrls = new Array(creatorsUrls);
+
+        console.log(creatorsUrls);
+
+        creatorsUrls.forEach(url => {
+            this.fetch("creators", url);
+        });
+
+        this.setState({
+            previousContent: this.contentNames.length - 1
+        });
+    }
+
+    manageContent = (where) => {
+        const {currentContent, previousContent, nextContent} = this.state;
+            const state = (where === 'next'? followingContent(currentContent, nextContent, this.contentNames.length - 1) : prevContent(currentContent, previousContent, this.contentNames.length - 1));
+            this.setState({
+                 currentContent: state.currentContent,
+                 previousContent: state.previousContent,
+                 nextContent: state.nextContent
+            })
+    }
+
+    
+    displayContent = () => {
+        const current = this.state.currentContent;
+        const name = this.contentNames[current];
+
+        console.log(name);
+
+        switch(name) {
+            case 'characters': return this.characters;
+            case 'creators': return this.creators;
+            case 'series': return this.series;
+            case 'comics': return this.comics;
+            case 'other info': return this.otherInfo; 
+            default: return null;
+        }
+    }
+
+    displayComics = () => {
+        const results = this.state.comicsData[0].results;
+        console.log(results);
+        const comics = results.map(comic => {
+        const index = comic.thumbnail.path.indexOf('image_not_available');
+        return <Comic id={comic.id} title={comic.title} description={comic.description} img={index === (-1)? comic.thumbnail.path : false} extension={comic.thumbnail.extension} data={comic}/>
+        });
+        this.setState({
+            comics,
+        })
+    }
+
+    displaySeries = () => {
+        const results = this.state.seriesData[0].results;
+        console.log(results);
+        const series = results.map(series => {
+        const index = 1;
+        return <Series id={series.id} title={series.title} description={series.description} img={index === (-1)? series.thumbnail.path : false} extension={series.thumbnail.extension} data={series}/>
+        });
+        this.setState({
+            series,
+        })
+    }
+
+    displayCharacters = () => {
+        const results = this.state.charactersData[0].results;
+        console.log(results);
+        const characters = results.map(character => {
+        const index = character.thumbnail.path.indexOf('image_not_available');
+        return <Character id={character.id} name={character.name} description={character.description} img={index === (-1)? character.thumbnail.path : false} extension={character.thumbnail.extension} data={character}/>
+        });
+        this.setState({
+            characters,
+        })
+    }
+
+    displayCreators = () => {
+        const results = this.state.creatorsData[0].results;
+        console.log(results);
+        const creators = results.map(creator => {
+        const index = creator.thumbnail.path.indexOf('image_not_available');
+        return <Creator id={creator.id} name={creator.fullName} img={index === (-1)? creator.thumbnail.path : false} extension={creator.thumbnail.extension} data={creator}/>
+        });
+        this.setState({
+            creators,
+        })
+    }
+
+    comics = (<>{this.state.comic}</>);
+    characters = (<>{this.state.characters}</>)
+    creators = (<>{this.state.creators}</>)
+    series = (<>{this.state.series}</>)
+    otherInfo = (<div>other</div>)
+
+    render() {
+        const {title, description} = this.data;
+        console.log(this.data);
+        return(
+            <div className="single-event">
+                <h1 className=" single-event__title single-event__title--main">{title}</h1>
+                <p className="single-event__description">{description}</p>
+                <div className="single-event__panel">
+                    <div className="single-event__button-container">
+                        <img src={arrow} alt="arrow" className="single-event__button single-event__button--left" onClick={() => this.manageContent('prev')} />
+                    </div>
+                    <h1 className="single-event__title single-event__title--sub">{this.contentNames[this.state.currentContent]}</h1>
+                    <div className="single-event__button-container">
+                        <img src={arrow} alt="arrow" className="single-event__button single-event__button--right" onClick={() => this.manageContent('next')} />
+                    </div>
+                </div>
+                {this.displayContent()}
+            </div>
+        )
+    }
+}
+
+export default SingleEvent;

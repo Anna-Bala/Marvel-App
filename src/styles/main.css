@@ -35,6 +35,7 @@ body {
   margin-top: 4%;
   font-size: 100%;
   width: 45%;
+  text-decoration: none;
 }
 
 .form {
@@ -1151,5 +1152,200 @@ body {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+}
+
+.single-series {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.single-series__title {
+  font-size: 140%;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.single-series__title--main {
+  width: 100%;
+}
+
+.single-series__title--sub {
+  width: 50%;
+}
+
+.single-series__title--small {
+  font-size: 120%;
+  margin-bottom: 2%;
+}
+
+.single-series__description {
+  font-size: 110%;
+  margin-top: 2%;
+  text-align: center;
+  line-height: 1.3;
+  width: 90%;
+}
+
+.single-series__description--border {
+  border: 0.5px solid white;
+  width: 60%;
+  padding: 2% 0;
+}
+
+.single-series__panel {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 100%;
+  margin-top: 4%;
+}
+
+.single-series__content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  text-align: center;
+  width: 100%;
+  margin-top: 4%;
+}
+
+.single-series__content--border {
+  width: 80%;
+  border: 1px solid white;
+  padding: 2% 0;
+}
+
+.single-series__button {
+  display: block;
+  width: 80%;
+  height: auto;
+}
+
+.single-series__button-container {
+  width: 10vh;
+  height: 10vh;
+}
+
+.single-series__button--left {
+  -webkit-transform: rotate(-90deg);
+          transform: rotate(-90deg);
+}
+
+.single-series__button--right {
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+}
+
+.single-series__image {
+  margin-top: 2%;
+  width: 75%;
+  height: auto;
+}
+
+.single-series__character {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  width: 45%;
+  height: 25vh;
+  margin-top: 4%;
+  border: 1px solid white;
+  text-decoration: none;
+  color: white;
+}
+
+.single-series__character-name {
+  font-size: 110%;
+  margin-top: 4%;
+  width: 100%;
+}
+
+.single-series__creator {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 45%;
+  height: 15vh;
+  margin-top: 4%;
+  border: 1px solid white;
+  text-decoration: none;
+  color: white;
+}
+
+.single-series__creator-name {
+  font-size: 110%;
+  width: 100%;
+}
+
+.single-series__creator-role {
+  font-size: 110%;
+  width: 100%;
+  text-transform: capitalize;
 }
 /*# sourceMappingURL=main.css.map */

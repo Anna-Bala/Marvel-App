@@ -8,6 +8,9 @@ import SeriesList from "../pages/SeriesList";
 import EventsList from "../pages/EventsList";
 import SingleComic from "../pages/subpages/SingleComic";
 import SingleCharacter from "../pages/subpages/SingleCharacter";
+import SingleSeries from "../pages/subpages/SingleSeries";
+import SingleEvent from "../pages/subpages/SingleEvent";
+
 
 const Main = () => {
     return (
@@ -19,8 +22,10 @@ const Main = () => {
                 <Route path='/characters' component={CharactersList} exact/>
                 <Route path='/characters/:id' component={SingleCharacter} />
                 <Route path='/creators' component={CreatorsList} />
-                <Route path='/series' component={SeriesList} />
-                <Route path='/events' component={EventsList} />
+                <Route path='/series' component={SeriesList} exact/>
+                <Route path='/series/:id' component={SingleSeries}/>
+                <Route path='/events' component={EventsList} exact/>
+                <Route path='/events/:id' component={SingleEvent} />
 
                 {/* <Route component={ErrorPage} /> */}
             </Switch>

@@ -62,7 +62,7 @@ class SeriesList extends Component {
         let result = null;
         if(this.props.location.state.data !== null)
         {
-            const propsUrl = this.url + "&characters=" + this.props.location.state.data;
+            const propsUrl = this.url + `&${this.props.location.state.from}=` + this.props.location.state.data;
             result = await fetchData(propsUrl);
         }
         else result = await fetchData(this.url);
@@ -102,7 +102,7 @@ class SeriesList extends Component {
         
         if(this.props.location.state.data !== null)
         {
-            newUrl = `https://gateway.marvel.com:443/v1/public/series?characters=${this.props.location.state.data}&limit=${this.numberOfResults}&offset=${this.offset}&${this.type !== ""? '&seriesType='+this.type : ""}${this.releaseYear !== ""? '&startYear='+this.releaseYear : ""}${this.contains !== ""? '&contains='+this.contains : ""}${this.startsWith !== ""? '&titleStartsWith='+this.startsWith : ""}&orderBy=${this.orderBy}&ts=1&apikey=${this.apiKey}&hash=97a77a62ca6b19c0c250ad87841df189`;
+            newUrl = `https://gateway.marvel.com:443/v1/public/series?${this.props.location.state.from}=${this.props.location.state.data}&limit=${this.numberOfResults}&offset=${this.offset}&${this.type !== ""? '&seriesType='+this.type : ""}${this.releaseYear !== ""? '&startYear='+this.releaseYear : ""}${this.contains !== ""? '&contains='+this.contains : ""}${this.startsWith !== ""? '&titleStartsWith='+this.startsWith : ""}&orderBy=${this.orderBy}&ts=1&apikey=${this.apiKey}&hash=97a77a62ca6b19c0c250ad87841df189`;
         }
 
         if(newUrl !== this.url)
