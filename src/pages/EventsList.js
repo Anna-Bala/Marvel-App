@@ -52,8 +52,15 @@ class EventsList extends Component {
     }
 
     fetch = async () => {
-        const result = await fetchData(this.url);
-        console.log(result.results);
+        console.log(this.props.location.state);
+        let result = null;
+        if(this.props.location.state.data !== null)
+        {
+            const propsUrl = this.url + "&characters=" + this.props.location.state.data;
+            result = await fetchData(propsUrl);
+        }
+        else result = await fetchData(this.url);
+        console.log(result);
         this.setState({eventsData: result.results, resultsnumber: result.total});
         this.displayEvents();
     }
@@ -82,8 +89,13 @@ class EventsList extends Component {
         this.offset = this.currentPage * this.numberOfResults;
         this.numberOfResults = document.getElementById('options').value;
 
-        const newUrl = `https://gateway.marvel.com:443/v1/public/events?limit=${this.numberOfResults}&offset=${this.offset}&${this.startsWith !== ""? '&nameStartsWith='+this.startsWith : ""}&orderBy=${this.orderBy}&ts=1&apikey=${this.apiKey}&hash=97a77a62ca6b19c0c250ad87841df189`;
-        
+        let newUrl = `https://gateway.marvel.com:443/v1/public/events?limit=${this.numberOfResults}&offset=${this.offset}&${this.startsWith !== ""? '&nameStartsWith='+this.startsWith : ""}&orderBy=${this.orderBy}&ts=1&apikey=${this.apiKey}&hash=97a77a62ca6b19c0c250ad87841df189`;
+       
+        if(this.props.location.state.data !== null)
+        {
+            newUrl = `https://gateway.marvel.com:443/v1/public/events?characters=${this.props.location.state.data}&limit=${this.numberOfResults}&offset=${this.offset}${this.format !== ""? '&format='+this.format : ""}${this.format}${this.releaseYear !== ""? '&startYear='+this.releaseYear : ""}${this.digitalIssue !== ""? '&hasDigitalIssue='+this.digitalIssue : ""}${this.issueNumber !== ""? '&issueNumber='+this.issueNumber : ""}${this.startsWith !== ""? '&titleStartsWith='+this.startsWith : ""}&orderBy=${this.orderBy}&ts=1&apikey=${this.apiKey}&hash=97a77a62ca6b19c0c250ad87841df189`;
+        }
+
         if(newUrl !== this.url)
         {
             this.setState({
