@@ -14,6 +14,8 @@ class Event extends Component {
         withoutBackground: {backgroundColor: `rgba(255, 255, 255, 0.1)`, height: '30vh'},
     }
 
+    currentData = this.props.data;
+
     /*DESCRIPTION FROM textOBJECT!!!!!!!!!!*/
 
     content = {

@@ -173,7 +173,7 @@ class SingleComic extends Component {
         } else {
             return(
                 <div className="single-comic__content">
-                    <p className="single-comic__description">There are no characters to display</p>
+                    <p className="single-comic__description">There are no creators to display</p>
                 </div>
             )
         }

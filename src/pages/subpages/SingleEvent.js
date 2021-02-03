@@ -3,9 +3,11 @@ import Comic from "../../components/Comic";
 import Series from "../../components/Series";
 import Character from "../../components/Character";
 import Creator from "../../components/Creator";
+import Event from "../../components/Event";
 import changeUrl from "../../functions/changeUrl";
 import fetchData from "../../functions/fetchData";
 import prevContent from "../../functions/prevContent";
+import convertDate from "../../functions/convertDate";
 import followingContent from "../../functions/followingContent";
 import {Link} from 'react-router-dom';
 import Button  from '../../components/Button';
@@ -17,6 +19,8 @@ class SingleEvent extends Component {
         seriesData: [],
         charactersData: [],
         creatorsData: [],
+        prevEventData: [],
+        nextEventData: [],
         comics: null,
         series: null,
         characters : null,
@@ -30,10 +34,12 @@ class SingleEvent extends Component {
     data = this.props.location.state.data;
     contentNames = ['comics', 'characters', 'creators', 'series', 'other info'];
 
+    startDate =  convertDate(this.data.start);
+    endDate =  convertDate(this.data.end);
+
     fetch = async (what, url) => {
 
         const result = await fetchData(url);
-        console.log(result);
         if(what === 'comics') {
             this.setState(prevState => ({comicsData: [...prevState.comicsData, result]}));
             this.displayComics();
@@ -50,6 +56,12 @@ class SingleEvent extends Component {
             this.setState(prevState => ({creatorsData: [...prevState.creatorsData, result]}));
             this.displayCreators();
         }
+        else if(what === 'prevEvent') {
+            this.setState(prevState => ({prevEventData: [...prevState.prevEventData, result.results[0]]}));
+        }
+        else if(what === 'nextEvent') {
+            this.setState(prevState => ({nextEventData: [...prevState.nextEventData, result.results[0]]}));
+        }
     }
 
     componentDidMount() {
@@ -59,8 +71,6 @@ class SingleEvent extends Component {
         comicsUrls += `?ts=1&apikey=${this.apiKey}&limit=6&orderBy=issueNumber&hash=97a77a62ca6b19c0c250ad87841df189`;
 
         comicsUrls = new Array(comicsUrls);
-
-        console.log(comicsUrls);
 
         comicsUrls.forEach(url => {
             this.fetch("comics", url);
@@ -73,8 +83,6 @@ class SingleEvent extends Component {
 
         seriesUrls = new Array(seriesUrls);
 
-        console.log(seriesUrls);
-
         seriesUrls.forEach(url => {
             this.fetch("series", url);
         });
@@ -85,8 +93,6 @@ class SingleEvent extends Component {
         charactersUrls += `?ts=1&apikey=${this.apiKey}&limit=6&orderBy=name&hash=97a77a62ca6b19c0c250ad87841df189`;
 
         charactersUrls = new Array(charactersUrls);
-
-        console.log(charactersUrls);
 
         charactersUrls.forEach(url => {
             this.fetch("characters", url);
@@ -99,11 +105,23 @@ class SingleEvent extends Component {
 
         creatorsUrls = new Array(creatorsUrls);
 
-        console.log(creatorsUrls);
-
         creatorsUrls.forEach(url => {
             this.fetch("creators", url);
         });
+
+        let prevEventUrl = this.data.previous.resourceURI;
+        prevEventUrl = changeUrl(prevEventUrl, 's', 4);
+        prevEventUrl = changeUrl(prevEventUrl, ':443', 26);
+        prevEventUrl += `?ts=1&apikey=${this.apiKey}&hash=97a77a62ca6b19c0c250ad87841df189`;
+
+        this.fetch("prevEvent", prevEventUrl);
+
+        let nextEventUrl = this.data.next.resourceURI;
+        nextEventUrl = changeUrl(nextEventUrl, 's', 4);
+        nextEventUrl = changeUrl(nextEventUrl, ':443', 26);
+        nextEventUrl += `?ts=1&apikey=${this.apiKey}&hash=97a77a62ca6b19c0c250ad87841df189`;
+
+        this.fetch("nextEvent", nextEventUrl);
 
         this.setState({
             previousContent: this.contentNames.length - 1
@@ -125,24 +143,21 @@ class SingleEvent extends Component {
         const current = this.state.currentContent;
         const name = this.contentNames[current];
 
-        console.log(name);
-
         switch(name) {
-            case 'characters': return this.characters;
-            case 'creators': return this.creators;
-            case 'series': return this.series;
-            case 'comics': return this.comics;
-            case 'other info': return this.otherInfo; 
+            case 'characters': return this.characters();
+            case 'creators': return this.creators();
+            case 'series': return this.series();
+            case 'comics': return this.comics();
+            case 'other info': return this.otherInfo(); 
             default: return null;
         }
     }
 
     displayComics = () => {
         const results = this.state.comicsData[0].results;
-        console.log(results);
         const comics = results.map(comic => {
         const index = comic.thumbnail.path.indexOf('image_not_available');
-        return <Comic id={comic.id} title={comic.title} description={comic.description} img={index === (-1)? comic.thumbnail.path : false} extension={comic.thumbnail.extension} data={comic}/>
+        return <Comic id={comic.id} title={comic.title} description={comic.description} img={index === (-1)? comic.thumbnail.path : false} extension={comic.thumbnail.extension} data={comic}/>;
         });
         this.setState({
             comics,
@@ -151,7 +166,6 @@ class SingleEvent extends Component {
 
     displaySeries = () => {
         const results = this.state.seriesData[0].results;
-        console.log(results);
         const series = results.map(series => {
         const index = 1;
         return <Series id={series.id} title={series.title} description={series.description} img={index === (-1)? series.thumbnail.path : false} extension={series.thumbnail.extension} data={series}/>
@@ -163,7 +177,6 @@ class SingleEvent extends Component {
 
     displayCharacters = () => {
         const results = this.state.charactersData[0].results;
-        console.log(results);
         const characters = results.map(character => {
         const index = character.thumbnail.path.indexOf('image_not_available');
         return <Character id={character.id} name={character.name} description={character.description} img={index === (-1)? character.thumbnail.path : false} extension={character.thumbnail.extension} data={character}/>
@@ -175,25 +188,79 @@ class SingleEvent extends Component {
 
     displayCreators = () => {
         const results = this.state.creatorsData[0].results;
-        console.log(results);
         const creators = results.map(creator => {
         const index = creator.thumbnail.path.indexOf('image_not_available');
-        return <Creator id={creator.id} name={creator.fullName} img={index === (-1)? creator.thumbnail.path : false} extension={creator.thumbnail.extension} data={creator}/>
+        return <Creator id={creator.id} name={creator.fullName} img={index === (-1)? creator.thumbnail.path : false} extension={creator.thumbnail.extension} data={creator}/>;
         });
         this.setState({
             creators,
         })
     }
 
-    comics = (<>{this.state.comic}</>);
-    characters = (<>{this.state.characters}</>)
-    creators = (<>{this.state.creators}</>)
-    series = (<>{this.state.series}</>)
-    otherInfo = (<div>other</div>)
+    comics = () => (<>
+    {this.state.comics}
+    {<Link to={{
+         pathname: `/comics`, 
+        state: {data: this.data.id, from: 'events'}}} 
+         className="button">
+         <Button text="See all comics"/>
+     </Link>}
+    </>);
+
+    characters = () => (<>
+    {this.state.characters}
+    {<Link to={{
+         pathname: `/characters`, 
+        state: {data: this.data.id, from: 'events'}}} 
+         className="button">
+         <Button text="See all characters"/>
+     </Link>}
+    </>);
+
+    creators = () => (<>
+    {this.state.creators}
+    {<Link to={{
+         pathname: `/creators`, 
+         state: {data: this.data.id, from: 'events'}}} 
+         className="button">
+         <Button text="See all creators"/>
+     </Link>}
+    </>);
+
+    series = () => (<>
+    {this.state.series}
+    {<Link to={{
+         pathname: `/series`, 
+        state: {data: this.data.id, from: 'events'}}} 
+         className="button">
+         <Button text="See all series"/>
+     </Link>}
+    </>);
+    
+    otherInfo = () => {
+    const {id, title, description, thumbnail} = this.state.nextEventData[0];
+    const index = this.state.nextEventData[0].thumbnail.path.indexOf('image_not_available');
+    const followingEvent = <Event id={id} title={title} description={description} img={index === (-1)? thumbnail.path : false} extension={thumbnail.extension} data={this.state.nextEventData[0]}/>;
+     return (
+     <div className="single-event__other">
+        <div className="single-event__dates">
+            <h2 className="single-event__title single-event__title--sub">Publication dates</h2>
+            <p className="single-event__description">First issue: {this.startDate}</p>
+            <p className="single-event__description">Last issue: {this.endDate}</p>
+         </div>
+         <div className="single-event__other-events">
+            <h2 className="single-event__title single-event__title--sub">Explore other events</h2>
+            <p className="single-event__description">Following event</p>
+                {followingEvent}
+            <p className="single-event__description">Previous event</p>
+         </div>
+    </div>
+        )
+    }
 
     render() {
-        const {title, description} = this.data;
         console.log(this.data);
+        const {title, description} = this.data;
         return(
             <div className="single-event">
                 <h1 className=" single-event__title single-event__title--main">{title}</h1>
