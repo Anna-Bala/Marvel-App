@@ -10,7 +10,7 @@ import SingleComic from "../pages/subpages/SingleComic";
 import SingleCharacter from "../pages/subpages/SingleCharacter";
 import SingleSeries from "../pages/subpages/SingleSeries";
 import SingleEvent from "../pages/subpages/SingleEvent";
-
+import SingleCreator from "../pages/subpages/SingleCreator";
 
 const Main = () => {
     return (
@@ -21,7 +21,8 @@ const Main = () => {
                 <Route path='/comics/:id' component={SingleComic} />
                 <Route path='/characters' component={CharactersList} exact/>
                 <Route path='/characters/:id' component={SingleCharacter} />
-                <Route path='/creators' component={CreatorsList} />
+                <Route path='/creators' component={CreatorsList} exact/>
+                <Route path='/creators/:id' component={SingleCreator} />
                 <Route path='/series' component={SeriesList} exact/>
                 <Route path='/series/:id' component={SingleSeries}/>
                 <Route path='/events' component={EventsList} exact/>

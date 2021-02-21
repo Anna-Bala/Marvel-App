@@ -4,26 +4,34 @@ import Series from "../../components/Series";
 import Event from "../../components/Event";
 import changeUrl from "../../functions/changeUrl";
 import fetchData from "../../functions/fetchData";
+import prevContent from "../../functions/prevContent";
+import followingContent from "../../functions/followingContent";
 import {Link} from 'react-router-dom';
 import Button  from '../../components/Button';
+import arrow from "../../img/arrow.png";
 
-class SingleCharacter extends Component {
+class SingleCreator extends Component {
     state = {
         comicsData: [],
         seriesData: [],
         eventsData: [],
+        prevEventData: [],
+        nextEventData: [],
         comics: null,
         series: null,
-        events : null,
+        events: null,
+        currentContent: 0,
+        previousContent: null,
+        nextContent: 1,
     }
 
     apiKey = '9b9a40427eb372f72b3775e4f456a370';
     data = this.props.location.state.data;
+    contentNames = ['comics', 'series', 'events'];
 
     fetch = async (what, url) => {
 
         const result = await fetchData(url);
-        console.log(result);
         if(what === 'comics') {
             this.setState(prevState => ({comicsData: [...prevState.comicsData, result]}));
             this.displayComics();
@@ -46,8 +54,6 @@ class SingleCharacter extends Component {
 
         comicsUrls = new Array(comicsUrls);
 
-        console.log(comicsUrls);
-
         comicsUrls.forEach(url => {
             this.fetch("comics", url);
         });
@@ -59,32 +65,55 @@ class SingleCharacter extends Component {
 
         seriesUrls = new Array(seriesUrls);
 
-        console.log(seriesUrls);
-
         seriesUrls.forEach(url => {
             this.fetch("series", url);
         });
 
-        let eventsUrls = this.data.events.collectionURI;
+
+        let  eventsUrls = this.data.events.collectionURI;
         eventsUrls = changeUrl(eventsUrls, 's', 4);
         eventsUrls = changeUrl(eventsUrls, ':443', 26);
-        eventsUrls += `?ts=1&apikey=${this.apiKey}&limit=6&orderBy=name&hash=97a77a62ca6b19c0c250ad87841df189`;
+        eventsUrls += `?ts=1&apikey=${this.apiKey}&limit=6&orderBy=startDate&hash=97a77a62ca6b19c0c250ad87841df189`;
 
         eventsUrls = new Array(eventsUrls);
-
-        console.log(eventsUrls);
 
         eventsUrls.forEach(url => {
             this.fetch("events", url);
         });
+
+        this.setState({
+            previousContent: this.contentNames.length - 1
+        });
+    }
+
+    manageContent = (where) => {
+        const {currentContent, previousContent, nextContent} = this.state;
+            const state = (where === 'next'? followingContent(currentContent, nextContent, this.contentNames.length - 1) : prevContent(currentContent, previousContent, this.contentNames.length - 1));
+            this.setState({
+                 currentContent: state.currentContent,
+                 previousContent: state.previousContent,
+                 nextContent: state.nextContent
+            })
+    }
+
+    
+    displayContent = () => {
+        const current = this.state.currentContent;
+        const name = this.contentNames[current];
+
+        switch(name) {
+            case 'series': return this.series();
+            case 'comics': return this.comics();
+            case 'events': return this.events(); 
+            default: return null;
+        }
     }
 
     displayComics = () => {
         const results = this.state.comicsData[0].results;
-        console.log(results);
         const comics = results.map(comic => {
         const index = comic.thumbnail.path.indexOf('image_not_available');
-        return <Comic id={comic.id} title={comic.title} description={comic.description} img={index === (-1)? comic.thumbnail.path : false} extension={comic.thumbnail.extension} data={comic}/>
+        return <Comic id={comic.id} title={comic.title} description={comic.description} img={index === (-1)? comic.thumbnail.path : false} extension={comic.thumbnail.extension} data={comic}/>;
         });
         this.setState({
             comics,
@@ -93,7 +122,6 @@ class SingleCharacter extends Component {
 
     displaySeries = () => {
         const results = this.state.seriesData[0].results;
-        console.log(results);
         const series = results.map(series => {
         const index = 1;
         return <Series id={series.id} title={series.title} description={series.description} img={index === (-1)? series.thumbnail.path : false} extension={series.thumbnail.extension} data={series}/>
@@ -105,7 +133,6 @@ class SingleCharacter extends Component {
 
     displayEvents = () => {
         const results = this.state.eventsData[0].results;
-        console.log(results);
         const events = results.map(event => {
         const index = event.thumbnail.path.indexOf('image_not_available');
         return <Event id={event.id} title={event.title} description={event.description} img={index === (-1)? event.thumbnail.path : false} extension={event.thumbnail.extension} data={event}/>
@@ -115,62 +142,55 @@ class SingleCharacter extends Component {
         })
     }
 
+    comics = () => (<>
+    {this.state.comics}
+    {<Link to={{
+         pathname: `/comics`, 
+        state: {data: this.data.id, from: 'creators'}}} 
+         className="button">
+         <Button text="See all comics"/>
+     </Link>}
+    </>);
+
+    series = () => (<>
+    {this.state.series}
+    {<Link to={{
+         pathname: `/series`, 
+        state: {data: this.data.id, from: 'creators'}}} 
+         className="button">
+         <Button text="See all series"/>
+     </Link>}
+    </>);
+
+    events = () => (<>
+    {this.state.events}
+    {<Link to={{
+         pathname: `/events`, 
+        state: {data: this.data.id, from: 'creators'}}} 
+         className="button">
+         <Button text="See all events"/>
+     </Link>}
+    </>);
+
     render() {
-        const {name, description, comics, series, events} = this.data;
         console.log(this.data);
-        const nameIndex = name.indexOf('(');
-        let shortName = '';
-        if(nameIndex > -1) shortName = name.slice(0, nameIndex);
-        else shortName = name;
-        const characterImg = this.data.thumbnail.path + '/portrait_incredible.' + this.data.thumbnail.extension;
-        return (
-            <div className="single-character">
-                <h1 className="single-character__name">{name}</h1>
-                <p className="single-character__description">{description}</p>
-                <img src={characterImg} alt="character" className="single-character__character-img"/>
-                <h2  className="single-character__title">Appearances of {shortName}</h2>
-                <div className="single-character__comics">
-                <h2  className="single-character__subtitle">Comics</h2>
-                    {comics.items.length === 0? <p className="single-character__description">There are no appearances of this character in comics</p> : <>
-                     {this.state.comics}
-                     <Link to={{
-                    pathname: `/comics`, 
-                    state: {data: this.data.id, from: 'characters'}}} 
-                    className="button">
-                        <Button text="See all comics"/>
-                    </Link>
-                    </>
-                    }
+        const {fullName} = this.data;
+        return(
+            <div className="single-creator">
+                <h1 className="single-creator__name single-creator__name--main">{fullName}</h1>
+                <div className="single-creator__panel">
+                    <div className="single-creator__button-container">
+                        <img src={arrow} alt="arrow" className="single-creator__button single-creator__button--left" onClick={() => this.manageContent('prev')} />
+                    </div>
+                    <h1 className="single-creator__title single-creator__title--sub">{this.contentNames[this.state.currentContent]}</h1>
+                    <div className="single-creator__button-container">
+                        <img src={arrow} alt="arrow" className="single-creator__button single-creator__button--right" onClick={() => this.manageContent('next')} />
+                    </div>
                 </div>
-                <div className="single-character__series">
-                <h2  className="single-character__subtitle">Series</h2>
-                    {series.items.length === 0? <p className="single-character__description">There are no appearances of this character in series</p> : <>
-                     {this.state.series}
-                     <Link to={{
-                    pathname: `/series`, 
-                    state: {data: this.data.id}}} 
-                    className="button">
-                        <Button text="See all series"/>
-                    </Link>
-                    </>
-                    }
-                </div>
-                <div className="single-character__events">
-                <h2  className="single-character__subtitle">Events</h2>
-                    {events.items.length === 0? <p className="single-character__description">There are no appearances of this character in events</p> : <>
-                     {this.state.events}
-                     {<Link to={{
-                        pathname: `/events`, 
-                        state: {data: this.data.id, from: 'characters'}}} 
-                        className="button">
-                        <Button text="See all events"/>
-                    </Link>}
-                    </>
-                    }
-                </div>
+                {this.displayContent()}
             </div>
         )
     }
 }
 
-export default SingleCharacter;
+export default SingleCreator;

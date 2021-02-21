@@ -56,7 +56,7 @@ class EventsList extends Component {
         let result = null;
         if(this.props.location.state.data !== null)
         {
-            const propsUrl = this.url + "&characters=" + this.props.location.state.data;
+            const propsUrl = this.url + `&${this.props.location.state.from}=` + this.props.location.state.data;
             result = await fetchData(propsUrl);
         }
         else result = await fetchData(this.url);

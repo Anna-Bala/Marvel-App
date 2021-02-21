@@ -1,36 +1,69 @@
 import closeIcon from "../img/close-icon.png";
-import fetchData from "../functions/fetchData";
-import CharactersList from "../pages/CharactersList";
-import SeriesList from "../pages/SeriesList";
-import EventsList from "../pages/EventsList";
-import CreatorsList from "../pages/CreatorsList";
+// import CharactersList from "../pages/CharactersList";
+// import SeriesList from "../pages/SeriesList";
+// import EventsList from "../pages/EventsList";
+// import CreatorsList from "../pages/CreatorsList";
 
-let charactersNames = [];
-let charactersIds = [];
+let charactersIds = [1011334, 1017100, 1009144];
+const charactersNames = ['3-D Man', 'A-Bomb (HAS)', 'A.I.M.'];
 
-let offset = 0;
-let apiKey = '9b9a40427eb372f72b3775e4f456a370';
-let url = `https://gateway.marvel.com:443/v1/public/characters?orderBy=name&limit=100&offset=${offset}&ts=1&apikey=${apiKey}&hash=97a77a62ca6b19c0c250ad87841df189`;   
+function search(str) {
+	let results = [];
+	const val = str.toLowerCase();
 
-// const fetch = async (url, what) => {
-//     const result = await fetchData(url);
-//     if(what === 'characters') {
-//         result.results.forEach(single => {
-//                 charactersNames.push(single.name);
-//                 charactersIds.push(single.id);
-//         });
-//         console.log(offset);
-//         offset += 100;
-//         url = `https://gateway.marvel.com:443/v1/public/characters?orderBy=name&limit=100&offset=${offset}&ts=1&apikey=${apiKey}&hash=97a77a62ca6b19c0c250ad87841df189`;    
-//     }
-// }
+	for (let i = 0; i < charactersNames.length; i++) {
+		if (charactersNames[i].toLowerCase().indexOf(val) > -1) {
+			results.push(charactersNames[i]);
+		}
+	}
 
-// const generateCharactersUrls = () => {
-//     for(let i=0; i<14; i++) {
-//         fetch(url, 'characters');
-//         console.log(i);
-//     }
-// }
+	return results;
+}
+
+function searchHandler(e, input, suggestions) {
+	const inputVal = e.currentTarget.value;
+	let results = [];
+	if (inputVal.length > 0) {
+		results = search(inputVal);
+	}
+	showSuggestions(results, inputVal, input, suggestions);
+}
+
+function showSuggestions(results, inputVal, input, suggestions) {
+    
+    suggestions.innerHTML = '';
+
+	if (results.length > 0) {
+		for (let i = 0; i < results.length; i++) {
+			let item = results[i];
+			// Highlights only the first match
+			// TODO: highlight all matches
+			const match = item.match(new RegExp(inputVal, 'i'));
+			item = item.replace(match[0], `<strong>${match[0]}</strong>`);
+			suggestions.innerHTML += `<li>${item}</li>`;
+		}
+		suggestions.classList.add('has-suggestions');
+	} else {
+		results = [];
+		suggestions.innerHTML = '';
+		suggestions.classList.remove('has-suggestions');
+	}
+}
+
+function useSuggestion(e, input, suggestions) {
+	input.value = e.target.innerText;
+	input.focus();
+	suggestions.innerHTML = '';
+	suggestions.classList.remove('has-suggestions');
+}
+
+const searchCharacters = () => {
+    const input = document.querySelector('#character');
+    const suggestions = document.querySelector('.form__suggestions-characters');
+
+    input.addEventListener('keyup', searchHandler(input, suggestions));
+    suggestions.addEventListener('click', () => useSuggestion(input, suggestions));
+}
 
 const letters = (type) => {
     return(
@@ -124,8 +157,13 @@ const comicsList = () => {
 
         <p className="form__title">Search by:</p>
         <label for="title" className="form__label">Title:</label>
-        <input type="text" id="title" name="title" className="form__input"/>
         <label for="characters" className="form__label">Character:</label>
+        <div class="form__search-characters">
+	        <input type="text" name="character" id="character" placeholder="Search character" />
+	            <div class="form__suggestions-characters">
+		            <ul></ul>
+	            </div>
+        </div>
         <input type="text" id="characters" name="characters" className="form__input"/>
         <label for="creators" className="form__label">Creator:</label>
         <input type="text" id="creators" name="creators" className="form__input"/>
