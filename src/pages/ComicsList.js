@@ -138,6 +138,7 @@ class ComicsList extends Component {
                     {this.state.comics}
                 </div>
                 <div className="results-nav">
+                    <hr className="results-nav__line"/>
                     <label for="page" className="results-nav__label">Choose page:</label>
                     <input type="page" id="page" name="page" className="results-nav__input"/>
                     <button className="results-nav__button results-nav__button--small" onClick={(e) => this.changeUrl(e,"value")}>Go</button>

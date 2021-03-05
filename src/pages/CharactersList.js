@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import fetchData from "../functions/fetchData";
 import Character from "../components/Character";
-import Form from "../components/Form";
+import Form from "../components/FormClass";
 import icon from "../img/settings-icon.png";
 
 class CharactersList extends Component {

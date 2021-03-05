@@ -1,5 +1,16 @@
 .form {
   @include flex;
+  font-size: 16px;
+  &__title {
+    width: 100%;
+    margin: 2% 0 1% 0;
+    font-size: 1.2em;
+    &--big {
+      z-index: -1;
+      font-size: 1.5em;
+      margin-top: 6%;
+    }
+  }
   &__close {
     width: 10%;
     height: auto;
@@ -22,33 +33,23 @@
   &__search {
     text-align: center;
     display: inline-block;
-    width: 70%;
+    width: 60%;
+    font-size: 1.5em;
     &--closed {
       display: none;
     }
   }
   &__icon {
     display: inline-block;
-    width: 15%;
+    width: 10%;
     height: auto;
     &--closed {
       display: none;
     }
   }
-  &__title {
-    width: 100%;
-    font-size: 130%;
-    margin: 2% 0 1% 0;
-    &--small {
-      width: 50%;
-      margin-right: 4%;
-      margin-top: 12%;
-    }
-  }
   &__label {
     width: 50%;
     margin: 1% 0;
-    font-size: 100%;
   }
   &__input {
     width: 35%;
@@ -59,9 +60,10 @@
     opacity: 0.7;
     color: white;
     padding: 0.5% 0;
+    text-align: center;
     &--small {
       width: 15%;
-      margin-top: 12%;
+      margin-top: 4%;
     }
     &:focus {
       opacity: 1;
@@ -75,6 +77,5 @@
     background-color: black;
     color: white;
     margin-top: 4%;
-    font-size: 120%;
   }
 }

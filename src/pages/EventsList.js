@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import fetchData from "../functions/fetchData";
 import Event from "../components/Event";
-import Form from "../components/Form";
+import Form from "../components/FormClass";
 import icon from "../img/settings-icon.png";
 
 class EventsList extends Component {

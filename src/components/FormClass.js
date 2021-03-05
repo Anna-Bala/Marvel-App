@@ -121,8 +121,9 @@ class Form extends Component {
     comicsList = () => {
         return (
             <>
+            <h2 className="form__title form__title--big">Search options: </h2>
             <img src={closeIcon} alt='close icon' className="form__close"/>
-            <label for="letter" className="form__title form__title--small">Title starts with:</label>
+            <label for="letter" className="form__label">Title starts with:</label>
             {this.letters("letter")}
             <p className="form__title">Filter by:</p>
             <label for="format" className="form__label">Format:</label>
@@ -177,8 +178,9 @@ class Form extends Component {
     charactersList = () => {
         return (
             <>
+            <h2 className="form__title form__title--big">Search options: </h2>
             <img src={closeIcon} alt='close icon' className="form__close"/>
-            <label for="letter" className="form__title form__title--small">Title starts with:</label>
+            <label for="letter" className="form__label">Title starts with:</label>
             {this.letters("letter")}
     
             <p className="form__title">Search by:</p>
@@ -199,8 +201,9 @@ class Form extends Component {
     seriesList = () => {
         return (
             <>
+            <h2 className="form__title form__title--big">Search options: </h2>
             <img src={closeIcon} alt='close icon' className="form__close"/>
-            <label for="letter" className="form__title form__title--small">Name starts with:</label>
+            <label for="letter" className="form__label">Name starts with:</label>
             {this.letters("letter")}
     
             <p className="form__title">Filter by:</p>
@@ -251,8 +254,9 @@ class Form extends Component {
     eventsList = () => {
         return (
             <>
+            <h2 className="form__title form__title--big">Search options: </h2>
             <img src={closeIcon} alt='close icon' className="form__close"/>
-            <label for="letter" className="form__title form__title--small">Name starts with:</label>
+            <label for="letter" className="form__label">Name starts with:</label>
             {this.letters("letter")}
             <p className="form__title">Search by:</p>
             <label for="title" className="form__label">Title:</label>
@@ -277,12 +281,13 @@ class Form extends Component {
     creatorsList = () => {
         return (
             <>
+            <h2 className="form__title form__title--big">Search options: </h2>
             <img src={closeIcon} alt='close icon' className="form__close"/>
-            <label for="firstNameLetter" className="form__title form__title--small">First name starts with:</label>
+            <label for="firstNameLetter" className="form__label">First name starts with:</label>
             {this.letters("firstNameLetter")}
-            <label for="middleNameLetter" className="form__title form__title--small">Middle name starts with:</label>
+            <label for="middleNameLetter" className="form__label">Middle name starts with:</label>
             {this.letters("middleNameLetter")}
-            <label for="lastNameLetter" className="form__title form__title--small">Last name starts with:</label>
+            <label for="lastNameLetter" className="form__label">Last name starts with:</label>
             {this.letters("lastNameLetter")}
             <p className="form__title">Search by:</p>
             <label for="title" className="form__label">Comic:</label>
@@ -306,9 +311,9 @@ class Form extends Component {
         );
     };
 
-    componentDidMount() {
-        this.searchCharacters();
-    }
+    // componentDidMount() {
+    //     this.searchCharacters();
+    // }
 
     render() {
         const {type} = this.props;

@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import fetchData from "../functions/fetchData";
 import Creator from "../components/Creator";
-import Form from "../components/Form";
+import Form from "../components/FormClass";
 import icon from "../img/settings-icon.png";
 
 class CreatorsList extends Component {

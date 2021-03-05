@@ -14,14 +14,12 @@ class Character extends Component {
         withoutBackground: {backgroundColor: `rgba(255, 255, 255, 0.1)`, height: '30vh'},
     }
 
-
-    /*DESCRIPTION FROM textOBJECT!!!!!!!!!!*/
+    nameLabel = document.getElementsByClassName('character__name-label');
 
     content = {
         withCover: (
             <>
-                <h1 className="character__name">{this.props.name}</h1>
-                <p className="character__name">{this.props.description}</p>
+                <p className="character__description">{this.props.description}</p>
                 <Link to={{
                     pathname: `/characters/${this.props.id}`, 
                     state: {data: this.props.data}}} 
@@ -32,7 +30,7 @@ class Character extends Component {
         ),
         withoutCover: (
             <>
-                <h1 className="character__name">{this.props.name}</h1>
+                <h1 className="character__name-label character__name-label--withoutcover">{this.props.name}</h1>
                 <Link to={`/characters/${this.props.id}`} className="button"><Button /></Link>
             </>
         )
@@ -40,7 +38,10 @@ class Character extends Component {
     
     changingDisplay = () => {
         this.setState({display: !this.state.display});
-        if(this.state.display === false) this.styles.withBackground = {animationName: 'fadeIn'};
+        if(this.state.display === false) {
+            this.styles.withBackground = {animationName: 'fadeIn'}
+            console.log(this.nameLabel);
+        }
         else this.styles.withBackground = {backgroundImage: `url(${this.imgPath})`};
     }
     
