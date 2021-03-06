@@ -35,6 +35,12 @@ body {
   text-decoration: none;
 }
 
+@media (min-width: 1200px) {
+  .button {
+    height: 5vh;
+  }
+}
+
 .button--brd {
   border: 1px solid white;
   margin-top: 4%;
@@ -470,8 +476,8 @@ body {
 
 @media (min-width: 640px) {
   .comics-list .comic {
-    height: 70vh;
-    width: 280px;
+    height: 50vh;
+    width: 260px;
   }
 }
 
@@ -492,7 +498,6 @@ body {
 
 @media (min-width: 1200px) {
   .comics-list .comic {
-    margin: 0.5%;
     width: 390px;
     height: 63vh;
   }
@@ -631,8 +636,8 @@ body {
 
 @media (min-width: 640px) {
   .characters-list .character {
-    height: 70vh;
-    width: 280px;
+    height: 50vh;
+    width: 260px;
   }
 }
 
@@ -653,7 +658,6 @@ body {
 
 @media (min-width: 1200px) {
   .characters-list .character {
-    margin: 0.5%;
     width: 390px;
     height: 63vh;
   }
@@ -672,6 +676,7 @@ body {
   background-color: rgba(255, 255, 255, 0.1);
   width: 100%;
   padding: 4% 2%;
+  pointer-events: none;
 }
 
 .characters-list .character__name-label {
@@ -687,16 +692,13 @@ body {
   display: none;
 }
 
-.characters-list .character__name-label--withoutcover {
-  background-color: transparent;
-}
-
 .characters-list .character__description {
   white-space: pre-wrap;
   font-size: 1em;
   display: inline;
   width: 90%;
   line-height: 1.5;
+  pointer-events: none;
 }
 
 @keyframes fadeIn {
@@ -732,8 +734,8 @@ body {
 }
 
 .events-list__title {
-  font-weight: 100;
   margin: 2% 0;
+  font-size: 2rem;
 }
 
 .results {
@@ -753,11 +755,19 @@ body {
       -ms-flex-pack: center;
           justify-content: center;
   text-align: center;
-  width: 90%;
+  width: 80%;
+}
+
+@media (min-width: 640px) {
+  .results {
+    width: 100%;
+  }
 }
 
 .results__title {
-  font-size: 180%;
+  width: 90%;
+  font-size: 1.5rem;
+  margin: 2% 0;
 }
 
 .event {
@@ -796,9 +806,39 @@ body {
   border: 1px solid white;
 }
 
+@media (min-width: 460px) {
+  .event {
+    width: 80%;
+  }
+}
+
+@media (min-width: 640px) {
+  .event {
+    width: 40%;
+  }
+}
+
+@media (min-width: 800px) {
+  .event {
+    width: 30%;
+    height: 40vh;
+    margin: 5px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .event {
+    margin: 1%;
+    width: 20%;
+    height: 30vh;
+  }
+}
+
 .event__title {
-  font-size: 120%;
-  width: 90%;
+  font-size: 1.2rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  width: 100%;
+  padding: 4% 2%;
 }
 
 .event__description {
@@ -842,8 +882,8 @@ body {
 }
 
 .series-list__title {
-  font-weight: 100;
   margin: 2% 0;
+  font-size: 2rem;
 }
 
 .results {
@@ -863,10 +903,19 @@ body {
       -ms-flex-pack: center;
           justify-content: center;
   text-align: center;
+  width: 80%;
+}
+
+@media (min-width: 640px) {
+  .results {
+    width: 100%;
+  }
 }
 
 .results__title {
-  font-size: 180%;
+  width: 90%;
+  font-size: 1.5rem;
+  margin: 2% 0;
 }
 
 .series {
@@ -901,9 +950,56 @@ body {
           animation-fill-mode: both;
 }
 
+@media (min-width: 460px) {
+  .series {
+    width: 250px;
+    height: 60vh;
+  }
+}
+
+@media (min-width: 640px) {
+  .series {
+    height: 50vh;
+    width: 260px;
+  }
+}
+
+@media (min-width: 800px) {
+  .series {
+    width: 315px;
+    height: 70vh;
+  }
+}
+
+@media (min-width: 1024px) {
+  .series {
+    margin: 0.5%;
+    width: 340px;
+    height: 60vh;
+  }
+}
+
+@media (min-width: 1200px) {
+  .series {
+    margin: 0.5%;
+    width: 390px;
+    height: 63vh;
+  }
+}
+
+@media (min-width: 1440px) {
+  .series {
+    margin: 5px;
+    width: 20%;
+    height: 400px;
+  }
+}
+
 .series__title {
-  font-size: 120%;
-  width: 90%;
+  font-size: 1.2rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  width: 100%;
+  padding: 4% 2%;
 }
 
 .series__description {
@@ -947,7 +1043,7 @@ body {
 }
 
 .creators-list__title {
-  font-weight: 100;
+  font-size: 2rem;
   margin: 2% 0;
 }
 
@@ -971,8 +1067,16 @@ body {
   width: 80%;
 }
 
+@media (min-width: 640px) {
+  .results {
+    width: 100%;
+  }
+}
+
 .results__title {
-  font-size: 180%;
+  width: 90%;
+  font-size: 1.5rem;
+  margin: 2% 0;
 }
 
 .creator {
@@ -1007,19 +1111,58 @@ body {
           animation-fill-mode: both;
   width: 90%;
   height: 30vh;
-  border: 1px solid white;
+  margin: 5px;
+  border: rgba(255, 255, 255, 0.2) solid 1px;
+}
+
+@media (min-width: 460px) {
+  .creator {
+    width: 70%;
+    height: 50vh;
+  }
+}
+
+@media (min-width: 640px) {
+  .creator {
+    width: 40%;
+  }
+}
+
+@media (min-width: 800px) {
+  .creator {
+    width: 30%;
+    height: 40vh;
+  }
+}
+
+@media (min-width: 1200px) {
+  .creator {
+    width: 20%;
+    height: 20vh;
+  }
+}
+
+.creator--nocover {
+  height: 30vh;
+}
+
+@media (min-width: 1200px) {
+  .creator--nocover {
+    height: 15vh;
+  }
 }
 
 .creator__name {
-  font-size: 120%;
-  width: 90%;
+  font-size: 1.2rem;
+  width: 100%;
+  padding: 4% 2%;
 }
 
 .creator__name-label {
   background-color: rgba(0, 0, 0, 0.8);
   padding: 2% 0;
   width: 100%;
-  font-size: 120%;
+  font-size: 1.2rem;
   -ms-flex-item-align: end;
       align-self: flex-end;
 }

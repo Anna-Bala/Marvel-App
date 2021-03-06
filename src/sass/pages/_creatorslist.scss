@@ -3,7 +3,7 @@
 .creators-list {
   @include flex;
   &__title {
-    font-weight: 100;
+    font-size: 2rem;
     margin: 2% 0;
   }
 }
@@ -12,8 +12,13 @@
   @include flex;
   text-align: center;
   width: 80%;
+  @include media(small) {
+    width: 100%;
+  }
   &__title {
-    font-size: 180%;
+    width: 90%;
+    font-size: 1.5rem;
+    margin: 2% 0;
   }
 }
 
@@ -22,15 +27,38 @@
   @include listItemMain;
   width: 90%;
   height: 30vh;
-  border: 1px solid white;
+  margin: 5px;
+  border: rgba(255, 255, 255, 0.2) solid 1px;
+  @include media(xsmall) {
+    width: 70%;
+    height: 50vh;
+  }
+  @include media(small) {
+    width: 40%;
+  }
+  @include media(medium) {
+    width: 30%;
+    height: 40vh;
+  }
+  @include media(xlarge) {
+    width: 20%;
+    height: 20vh;
+  }
+  &--nocover {
+    height: 30vh;
+    @include media(xlarge) {
+      height: 15vh;
+    }
+  }
   &__name {
-    font-size: 120%;
-    width: 90%;
+    font-size: 1.2rem;
+    width: 100%;
+    padding: 4% 2%;
     &-label {
       background-color: rgba(0, 0, 0, 0.8);
       padding: 2% 0;
       width: 100%;
-      font-size: 120%;
+      font-size: 1.2rem;
       align-self: flex-end;
     }
   }

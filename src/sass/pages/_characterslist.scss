@@ -30,8 +30,8 @@
       height: 60vh;
     }
     @include media(small) {
-      height: 70vh;
-      width: 280px;
+      height: 50vh;
+      width: 260px;
     }
     @include media(medium) {
       width: 315px;
@@ -43,12 +43,10 @@
       height: 60vh;
     }
     @include media(xlarge) {
-      margin: 0.5%;
       width: 390px;
       height: 63vh;
     }
     @include media(xxlarge) {
-      //working but not too good
       margin: 5px;
       width: 20%;
       height: 400px;
@@ -58,6 +56,7 @@
       background-color: rgba(255, 255, 255, 0.1);
       width: 100%;
       padding: 4% 2%;
+      pointer-events: none;
       &-label {
         background-color: rgba(0, 0, 0, 0.8);
         padding: 1% 0;
@@ -67,13 +66,11 @@
         &--closed {
           display: none;
         }
-        &--withoutcover {
-          background-color: transparent;
-        }
       }
     }
     &__description {
       @include listItemDescription;
+      pointer-events: none;
     }
   }
 }

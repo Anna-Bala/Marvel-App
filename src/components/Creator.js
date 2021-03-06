@@ -10,7 +10,7 @@ class Creator extends Component {
     imgPath = this.props.img + '/standard_fantastic.' + this.props.extension;
     styles = {
         withBackground: {backgroundImage: `url(${this.imgPath})`},
-        withoutBackground: {backgroundColor: `rgba(255, 255, 255, 0.1)`, height: '30vh'},
+        withoutBackground: {backgroundColor: `rgba(255, 255, 255, 0.1)`},
     }
 
 
@@ -32,7 +32,7 @@ class Creator extends Component {
         ),
         withoutCover: (
             <>
-                <div className="results__creator creator" 
+                <div className="results__creator creator creator--nocover" 
                 key={this.props.id}
                 style={this.props.img === false? this.styles.withoutBackground : this.styles.withBackground}>
                     <h1 className="creator__name">{this.props.name}</h1>

@@ -9,6 +9,9 @@
   color: white;
   align-self: flex-end;
   text-decoration: none;
+  @include media(xlarge) {
+    height: 5vh;
+  }
   &--brd {
     border: 1px solid white;
     margin-top: 4%;
