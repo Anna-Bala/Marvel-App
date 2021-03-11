@@ -127,13 +127,17 @@ class SingleComic extends Component {
                     {this.state.charactersData.map(result => {
                         const imgPath = `${result.thumbnail.path}/standard_amazing.${result.thumbnail.extension}`;
                         const titleIndex = result.name.indexOf('(');
-                        const name = result.name.slice(0, titleIndex);
+                        const name = result.name.slice(0, titleIndex) + "\n" + result.name.slice(titleIndex);
                     return (
 
                         <Link to={{
                         pathname: `/characters/${result.id}`, 
                         state: {data: result}}} className="single-comic__character">
-                                <h1 className="single-comic__character-name">{titleIndex > -1? name : result.name}</h1>
+                                <div className="single-comic__character-txtcontainer">
+                                    <h1 className="single-comic__character-name">
+                                    {titleIndex > -1? name : result.name}
+                                    </h1>
+                                </div>
                                 <img className="single-comic__image" src={imgPath} alt="character"/>
                         </Link>
                       
@@ -144,7 +148,7 @@ class SingleComic extends Component {
         } else {
             return(
                 <div className="single-comic__content">
-                    <p className="single-comic__description">There are no characters to display</p>
+                    <p className="single-comic__description single-comic__description--info">There are no characters to display</p>
                 </div>
             )
         }
@@ -162,8 +166,8 @@ class SingleComic extends Component {
                         <Link to={{
                         pathname: `/creators/${id}`, 
                         state: {data: result}}} className="single-comic__creator">
-                                <h1 className="single-comic__creator-role">{result.role}</h1>
-                                <h1 className="single-comic__creator-name">{result.name}</h1>
+                                <h1 className="single-comic__creator-role"><p className="single-comic__creator-text">{result.role}</p></h1>
+                                <h1 className="single-comic__creator-name"><p className="single-comic__creator-text">{result.name}</p></h1>
                         </Link>
                       
                     )
@@ -173,7 +177,7 @@ class SingleComic extends Component {
         } else {
             return(
                 <div className="single-comic__content">
-                    <p className="single-comic__description">There are no creators to display</p>
+                    <p className="single-comic__description single-comic__description--info">There are no creators to display</p>
                 </div>
             )
         }
@@ -183,12 +187,13 @@ class SingleComic extends Component {
         if(this.state.seriesData.length !== 0) {
             return(
                 <div className="single-comic__content">
-                    <h2 className="single-comic__title">{this.data.series.name}</h2>
+                    <h2 className="single-comic__title single-comic__title--small">{this.data.series.name}</h2>
                     <p className="single-comic__description">{this.state.seriesData[0].description}</p>
                     <Link to={{
                         pathname: `/series/${this.state.seriesData[0].id}`, 
-                        state: {data: this.state.seriesData[0]}}}>
-                            <Button nameOfClass="button button--brd"/>
+                        state: {data: this.state.seriesData[0]}}}
+                        className="button button--brd">
+                            <Button/>
                     </Link>
 
                 </div>
@@ -196,7 +201,7 @@ class SingleComic extends Component {
         } else {
             return(
                 <div className="single-comic__content">
-                    <p className="single-comic__description">There are no series to display</p>
+                    <p className="single-comic__description single-comic__description--info">There are no series to display</p>
                 </div>
             )
         }
@@ -220,7 +225,7 @@ class SingleComic extends Component {
         } else {
             return(
                 <div className="single-comic__content">
-                    <p className="single-comic__description">There are no events to display</p>
+                    <p className="single-comic__description single-comic__description--info">There are no events to display</p>
                 </div>
             )
         }
@@ -229,8 +234,8 @@ class SingleComic extends Component {
     otherInfo = (
         <div className="single-comic__content">
             <p className="single-comic__title single-comic__title--small">Dates of sales and prices</p>
-            {this.printPrice[0] !== null? <p className="single-comic__description single-comic__description--border">Print: {this.printDate} (&#36;{this.printPrice})</p> : null}
-            {this.digitalPrice[0] !== null? <p className="single-comic__description single-comic__description--border">Digital: {this.digitalDate} (&#36;{this.digitalPrice})</p> : null}
+            {this.printPrice[0] !== null? <p className="single-comic__description single-comic__description--border">Print:<br/>{this.printDate}, (&#36;{this.printPrice})</p> : null}
+            {this.digitalPrice[0] !== null? <p className="single-comic__description single-comic__description--border">Digital:<br/>{this.digitalDate}, (&#36;{this.digitalPrice})</p> : null}
         </div>
     )
 
