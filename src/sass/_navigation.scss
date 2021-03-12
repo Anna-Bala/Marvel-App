@@ -3,28 +3,53 @@
 .navigation {
   &__list {
     display: none;
+    @include media(large) {
+      display: flex;
+      flex-wrap: nowrap;
+      flex-direction: row;
+      text-transform: uppercase;
+      align-items: center;
+      list-style-type: none;
+      font-size: 1.1rem;
+      background-color: $mainGray;
+    }
   }
   &__list--open {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
-    justify-content: space-around;
+    align-items: center;
+    list-style-type: none;
     width: 100%;
     padding: 2% 5%;
     text-transform: uppercase;
     font-size: 120%;
-    background-color: rgba(255, 255, 255, 0.1);
-    align-items: center;
-    list-style-type: none;
+    background-color: $mainGray;
     animation-name: fadeIn;
     animation-duration: 0.5s;
   }
   &__item {
-    margin: 1.5% 0;
+    margin: 2% 0;
+    height: 30px;
+    @include media(large) {
+      height: auto;
+      width: 16.6%;
+      margin: 0;
+      text-align: center;
+      padding: 2% 0;
+      &:hover {
+        cursor: pointer;
+        transition-timing-function: ease-in;
+        transition-duration: 0.3s;
+        background-color: $mainRed;
+      }
+    }
   }
   &__link {
     text-decoration: none;
     color: white;
+    width: 100%;
+    height: 100%;
   }
   &__icon {
     width: 50px;
@@ -34,6 +59,9 @@
     top: 15px;
     transform: rotate(0deg);
     transition: 0.5s ease-in-out;
+    @include media(large) {
+      display: none;
+    }
     & span {
       display: block;
       position: absolute;

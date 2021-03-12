@@ -180,7 +180,7 @@ class Form extends Component {
             <>
             <h2 className="form__title form__title--big">Search options: </h2>
             <img src={closeIcon} alt='close icon' className="form__close"/>
-            <label for="letter" className="form__label">Title starts with:</label>
+            <label for="letter" className="form__label">Name starts with:</label>
             {this.letters("letter")}
     
             <p className="form__title">Search by:</p>

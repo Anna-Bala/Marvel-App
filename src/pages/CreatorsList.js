@@ -47,8 +47,7 @@ class CreatorsList extends Component {
     displayCreators = () => {
         const results = this.state.creatorsData;
         const creators = results.map(creator => {
-        const index = creator.thumbnail.path.indexOf('image_not_available');
-        return <Creator id={creator.id} name={creator.fullName} img={index === (-1)? creator.thumbnail.path : false} extension={creator.thumbnail.extension} data={creator}/>
+        return <Creator id={creator.id} name={creator.fullName} extension={creator.thumbnail.extension} data={creator}/>
         });
         this.setState({
             creators,

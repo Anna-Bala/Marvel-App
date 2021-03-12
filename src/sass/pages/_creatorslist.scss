@@ -11,7 +11,7 @@
 .results {
   @include flex;
   text-align: center;
-  width: 80%;
+  width: 100%;
   @include media(small) {
     width: 100%;
   }
@@ -24,36 +24,23 @@
 
 .creator {
   @include flex;
-  @include listItemMain;
-  width: 90%;
-  height: 30vh;
+
+  width: 200px;
+  height: 200px;
   margin: 5px;
-  border: rgba(255, 255, 255, 0.2) solid 1px;
-  @include media(xsmall) {
-    width: 70%;
-    height: 50vh;
-  }
-  @include media(small) {
-    width: 40%;
-  }
-  @include media(medium) {
-    width: 30%;
-    height: 40vh;
-  }
-  @include media(xlarge) {
-    width: 20%;
-    height: 20vh;
-  }
-  &--nocover {
-    height: 30vh;
-    @include media(xlarge) {
-      height: 15vh;
-    }
-  }
+  position: relative;
+  border: rgba(255, 255, 255, 1) solid 1px;
+  background-color: $mainGray;
   &__name {
     font-size: 1.2rem;
     width: 100%;
     padding: 4% 2%;
+    height: 30%;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(240, 19, 30, 0.5);
     &-label {
       background-color: rgba(0, 0, 0, 0.8);
       padding: 2% 0;

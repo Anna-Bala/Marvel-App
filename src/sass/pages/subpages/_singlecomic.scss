@@ -14,8 +14,15 @@
       font-size: 1.2rem;
     }
     &--small {
-      font-size: 120%;
+      font-size: 1.2rem;
       margin-bottom: 2%;
+      width: 100%;
+    }
+    &--color {
+      background-color: $mainGray;
+      margin: 0;
+      padding: 10px 0;
+      width: 100%;
     }
   }
   &__description {
@@ -26,11 +33,17 @@
     width: 90%;
     &--border {
       border: 0.5px solid white;
-      width: 60%;
+      width: 200px;
       padding: 2%;
+      @include media(large) {
+        width: 300px;
+      }
     }
     &--info {
       margin-top: 4%;
+      @include media(large) {
+        margin-top: 1%;
+      }
     }
   }
   &__panel {
@@ -43,9 +56,11 @@
     text-align: center;
     width: 90%;
     &--border {
-      width: 80%;
+      width: 250px;
       border: 1px solid white;
-      padding: 2% 0;
+      @include media(large) {
+        width: 350px;
+      }
     }
   }
   &__button {
@@ -68,7 +83,7 @@
     height: 80%;
     width: auto;
     @include media(large) {
-      width: 80%;
+      width: 90%;
       height: auto;
     }
   }
@@ -76,27 +91,24 @@
     @include flex;
     align-items: flex-start;
     width: 220px;
-    height: 36vh;
+    height: 40vh;
     margin: 2% 2% 0 2%;
     border: 1px solid white;
     text-decoration: none;
     color: white;
     @include media(xsmall) {
-      width: 180px;
-      height: 35vh;
+      width: 200px;
     }
     @include media(small) {
-      width: 170px;
-      height: 32vh;
+      width: 210px;
     }
     @include media(medium) {
       margin: 1% 1% 0 1%;
       width: 220px;
-      height: 35vh;
     }
     @include media(large) {
-      width: 210px;
-      height: 30vh;
+      width: 250px;
+      height: 40vh;
     }
     @include media(xlarge) {
       width: 240px;
@@ -104,7 +116,7 @@
     &-txtcontainer {
       position: relative;
       width: 100%;
-      height: 30px;
+      height: 40px;
       @include media(large) {
         height: 52px;
       }
@@ -122,25 +134,37 @@
 
   &__creator {
     @include flex;
-    width: 45%;
+    width: 130px;
     height: 15vh;
     margin: 2% 2% 0 2%;
     border: 1px solid white;
     text-decoration: none;
     color: white;
+    @include media(xsmall) {
+      width: 150px;
+    }
+    @include media(small) {
+      margin: 1% 1% 0 1%;
+    }
+    @include media(large) {
+      width: 200px;
+      height: 15vh;
+    }
+    @include media(xlarge) {
+      width: 230px;
+    }
     &-name {
       font-size: 1rem;
       width: 100%;
       height: 50%;
       position: relative;
-      background-color: rgba(255, 255, 255, 0.1);
     }
     &-role {
       font-size: 110%;
       width: 100%;
       text-transform: capitalize;
       position: relative;
-      background-color: rgba(240, 19, 30, 0.4);
+      background-color: $mainRed;
       height: 50%;
     }
     &-text {

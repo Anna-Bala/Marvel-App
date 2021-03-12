@@ -1,3 +1,6 @@
 .main {
   margin-top: 60px;
+  @include media(large) {
+    margin-top: 10px;
+  }
 }

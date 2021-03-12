@@ -2,14 +2,15 @@
 
 .characters-list {
   @include flex;
+  text-align: center;
   &__title {
     font-size: 2rem;
     margin: 2% 0;
+    width: 100%;
   }
 
   .results {
     @include flex;
-    text-align: center;
     width: 80%;
     @include media(small) {
       width: 100%;
@@ -26,7 +27,7 @@
     @include flex;
     @include listItemMain;
     @include media(xsmall) {
-      width: 250px;
+      width: 270px;
       height: 60vh;
     }
     @include media(small) {
@@ -39,8 +40,14 @@
     }
     @include media(large) {
       margin: 0.5%;
-      width: 340px;
+      width: 320px;
       height: 60vh;
+      &:hover {
+        background-color: $mainRed;
+        cursor: pointer;
+        transition-timing-function: ease-in;
+        transition-duration: 0.3s;
+      }
     }
     @include media(xlarge) {
       width: 390px;
@@ -53,7 +60,7 @@
     }
     &__name {
       font-size: 1.2rem;
-      background-color: rgba(255, 255, 255, 0.1);
+      background-color: $mainGray;
       width: 100%;
       padding: 4% 2%;
       pointer-events: none;

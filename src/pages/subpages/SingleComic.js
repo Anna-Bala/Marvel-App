@@ -186,16 +186,14 @@ class SingleComic extends Component {
     series = () => {
         if(this.state.seriesData.length !== 0) {
             return(
-                <div className="single-comic__content">
-                    <h2 className="single-comic__title single-comic__title--small">{this.data.series.name}</h2>
-                    <p className="single-comic__description">{this.state.seriesData[0].description}</p>
+                <div className="single-comic__content single-comic__content--border">
+                    <h2 className="single-comic__title single-comic__title--small single-comic__title--color">{this.data.series.name}</h2>
                     <Link to={{
                         pathname: `/series/${this.state.seriesData[0].id}`, 
                         state: {data: this.state.seriesData[0]}}}
-                        className="button button--brd">
+                        className="button">
                             <Button/>
                     </Link>
-
                 </div>
             )
         } else {

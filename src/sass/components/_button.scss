@@ -9,8 +9,16 @@
   color: white;
   align-self: flex-end;
   text-decoration: none;
+  @include media(large) {
+    &:hover {
+      background-color: darken($color: $mainRed, $amount: 25);
+      cursor: pointer;
+      transition-timing-function: ease-in;
+      transition-duration: 0.3s;
+    }
+  }
   @include media(xlarge) {
-    height: 5vh;
+    height: 8vh;
   }
   &--brd {
     border: 1px solid white;

@@ -11,7 +11,7 @@ class Character extends Component {
 
     styles = {
         withBackground: {backgroundImage: `url(${this.imgPath})`},
-        withoutBackground: {backgroundColor: `rgba(255, 255, 255, 0.05)`, height: '30vh'},
+        withoutBackground: {backgroundColor: `rgba(255, 255, 255, 0.05)`, height: '30vh', cursor: 'default'},
     }
 
     content = {
@@ -40,7 +40,7 @@ class Character extends Component {
         console.log(e);
         const nameLabel = e.target.childNodes[0];
         if(this.state.display === false) {
-            this.styles.withBackground = {animationName: 'fadeIn'}
+            this.styles.withBackground = {animationName: 'fadeIn', backgroundColor: 'transparent'}
             nameLabel.style.display = 'none';
         }
         else {
