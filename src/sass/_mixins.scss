@@ -34,8 +34,8 @@
 
 @mixin listItemMain {
   align-items: flex-start;
-  height: 50vh;
-  width: 310px;
+  height: 55vh;
+  width: 250px;
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
@@ -51,4 +51,29 @@
   display: inline;
   width: 90%;
   line-height: 1.5;
+}
+
+@mixin listItemBreakpoints {
+  @include media(small) {
+    height: 60vh;
+    width: 260px;
+  }
+  @include media(medium) {
+    width: 315px;
+    height: 70vh;
+  }
+  @include media(large) {
+    margin: 0.5%;
+    width: 290px;
+    height: 65vh;
+  }
+  @include media(xlarge) {
+    width: 280px;
+    height: 55vh;
+  }
+  @include media(xxlarge) {
+    margin: 5px;
+    width: 20%;
+    height: 400px;
+  }
 }

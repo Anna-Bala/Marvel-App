@@ -117,7 +117,7 @@ class SingleCharacter extends Component {
 
     render() {
         const {name, description, comics, series, events} = this.data;
-        console.log(this.data);
+        console.log(this.props.location.state.data);
         const nameIndex = name.indexOf('(');
         let shortName = '';
         if(nameIndex > -1) shortName = name.slice(0, nameIndex);

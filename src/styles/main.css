@@ -23,6 +23,11 @@ body {
   color: white;
 }
 
+a {
+  color: white;
+  text-decoration: none;
+}
+
 .main {
   margin-top: 60px;
 }
@@ -35,6 +40,7 @@ body {
 
 .button {
   display: block;
+  z-index: 5;
   background-color: rgba(0, 0, 0, 0.8);
   width: 100%;
   height: 10vh;
@@ -387,20 +393,20 @@ body {
           animation-duration: 0.5s;
 }
 
-.navigation__item {
+.navigation__link {
   margin: 2% 0;
   height: 30px;
 }
 
 @media (min-width: 1024px) {
-  .navigation__item {
+  .navigation__link {
     height: auto;
     width: 16.6%;
     margin: 0;
     text-align: center;
     padding: 2% 0;
   }
-  .navigation__item:hover {
+  .navigation__link:hover {
     cursor: pointer;
     -webkit-transition-timing-function: ease-in;
             transition-timing-function: ease-in;
@@ -410,9 +416,7 @@ body {
   }
 }
 
-.navigation__link {
-  text-decoration: none;
-  color: white;
+.navigation__item {
   width: 100%;
   height: 100%;
 }
@@ -577,8 +581,8 @@ body {
   -webkit-box-align: start;
       -ms-flex-align: start;
           align-items: flex-start;
-  height: 50vh;
-  width: 310px;
+  height: 55vh;
+  width: 250px;
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
@@ -590,16 +594,9 @@ body {
           animation-fill-mode: both;
 }
 
-@media (min-width: 460px) {
-  .comics-list .comic {
-    width: 250px;
-    height: 60vh;
-  }
-}
-
 @media (min-width: 640px) {
   .comics-list .comic {
-    height: 50vh;
+    height: 60vh;
     width: 260px;
   }
 }
@@ -614,15 +611,15 @@ body {
 @media (min-width: 1024px) {
   .comics-list .comic {
     margin: 0.5%;
-    width: 340px;
-    height: 60vh;
+    width: 290px;
+    height: 65vh;
   }
 }
 
 @media (min-width: 1200px) {
   .comics-list .comic {
-    width: 390px;
-    height: 63vh;
+    width: 280px;
+    height: 55vh;
   }
 }
 
@@ -635,12 +632,14 @@ body {
 }
 
 .comics-list .comic:hover {
-  background-color: rgba(240, 19, 30, 0.4);
+  -webkit-filter: grayscale(70%);
+          filter: grayscale(70%);
   cursor: pointer;
-  -webkit-transition-timing-function: ease-out;
-          transition-timing-function: ease-out;
-  -webkit-transition-duration: 0.3s;
-          transition-duration: 0.3s;
+  background-color: rgba(255, 4, 16, 0.4);
+  -webkit-transition-timing-function: linear;
+          transition-timing-function: linear;
+  -webkit-transition-duration: 0.1s;
+          transition-duration: 0.1s;
 }
 
 .comics-list .comic__title {
@@ -746,8 +745,8 @@ body {
   -webkit-box-align: start;
       -ms-flex-align: start;
           align-items: flex-start;
-  height: 50vh;
-  width: 310px;
+  height: 55vh;
+  width: 250px;
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
@@ -759,16 +758,9 @@ body {
           animation-fill-mode: both;
 }
 
-@media (min-width: 460px) {
-  .characters-list .character {
-    width: 270px;
-    height: 60vh;
-  }
-}
-
 @media (min-width: 640px) {
   .characters-list .character {
-    height: 50vh;
+    height: 60vh;
     width: 260px;
   }
 }
@@ -783,23 +775,15 @@ body {
 @media (min-width: 1024px) {
   .characters-list .character {
     margin: 0.5%;
-    width: 320px;
-    height: 60vh;
-  }
-  .characters-list .character:hover {
-    background-color: rgba(240, 19, 30, 0.4);
-    cursor: pointer;
-    -webkit-transition-timing-function: ease-in;
-            transition-timing-function: ease-in;
-    -webkit-transition-duration: 0.3s;
-            transition-duration: 0.3s;
+    width: 290px;
+    height: 65vh;
   }
 }
 
 @media (min-width: 1200px) {
   .characters-list .character {
-    width: 390px;
-    height: 63vh;
+    width: 280px;
+    height: 55vh;
   }
 }
 
@@ -809,6 +793,15 @@ body {
     width: 20%;
     height: 400px;
   }
+}
+
+.characters-list .character:hover {
+  background-color: rgba(240, 19, 30, 0.4);
+  cursor: pointer;
+  -webkit-transition-timing-function: ease-in;
+          transition-timing-function: ease-in;
+  -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
 }
 
 .characters-list .character__name {
@@ -870,14 +863,16 @@ body {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  text-align: center;
 }
 
 .events-list__title {
   margin: 2% 0;
   font-size: 2rem;
+  width: 100%;
 }
 
-.results {
+.events-list .results {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -893,23 +888,22 @@ body {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  text-align: center;
   width: 80%;
 }
 
 @media (min-width: 640px) {
-  .results {
+  .events-list .results {
     width: 100%;
   }
 }
 
-.results__title {
+.events-list .results__title {
   width: 90%;
   font-size: 1.5rem;
   margin: 2% 0;
 }
 
-.event {
+.events-list .event {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -928,8 +922,8 @@ body {
   -webkit-box-align: start;
       -ms-flex-align: start;
           align-items: flex-start;
-  height: 50vh;
-  width: 310px;
+  height: 55vh;
+  width: 250px;
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
@@ -941,51 +935,68 @@ body {
           animation-fill-mode: both;
   height: 50vh;
   background-size: cover;
-  width: 100%;
+  width: 290px;
   border: 1px solid white;
 }
 
 @media (min-width: 460px) {
-  .event {
-    width: 80%;
+  .events-list .event {
+    width: 320px;
   }
 }
 
 @media (min-width: 640px) {
-  .event {
-    width: 40%;
+  .events-list .event {
+    width: 300px;
   }
 }
 
 @media (min-width: 800px) {
-  .event {
-    width: 30%;
+  .events-list .event {
+    width: 250px;
     height: 40vh;
     margin: 5px;
   }
 }
 
-@media (min-width: 1440px) {
-  .event {
-    margin: 1%;
-    width: 20%;
-    height: 30vh;
+@media (min-width: 1024px) {
+  .events-list .event {
+    width: 300px;
+    height: 50vh;
   }
 }
 
-.event__title {
+@media (min-width: 1440px) {
+  .events-list .event {
+    width: 320px;
+    height: 400px;
+  }
+}
+
+.events-list .event__title {
   font-size: 1.2rem;
   background-color: rgba(255, 255, 255, 0.09);
   width: 100%;
   padding: 4% 2%;
 }
 
-.event__description {
+.events-list .event__description {
   white-space: pre-wrap;
   font-size: 1em;
   display: inline;
   width: 90%;
   line-height: 1.5;
+}
+
+.events-list .event:hover {
+  -webkit-filter: grayscale(70%);
+          filter: grayscale(70%);
+  cursor: pointer;
+  border-width: 5px;
+  -webkit-transition-timing-function: linear;
+          transition-timing-function: linear;
+  -webkit-transition-duration: 0.1s;
+          transition-duration: 0.1s;
 }
 
 @keyframes fadeIn {
@@ -1075,8 +1086,8 @@ body {
   -webkit-box-align: start;
       -ms-flex-align: start;
           align-items: flex-start;
-  height: 50vh;
-  width: 310px;
+  height: 55vh;
+  width: 250px;
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
@@ -1088,16 +1099,9 @@ body {
           animation-fill-mode: both;
 }
 
-@media (min-width: 460px) {
-  .series {
-    width: 250px;
-    height: 60vh;
-  }
-}
-
 @media (min-width: 640px) {
   .series {
-    height: 50vh;
+    height: 60vh;
     width: 260px;
   }
 }
@@ -1112,16 +1116,15 @@ body {
 @media (min-width: 1024px) {
   .series {
     margin: 0.5%;
-    width: 340px;
-    height: 60vh;
+    width: 290px;
+    height: 65vh;
   }
 }
 
 @media (min-width: 1200px) {
   .series {
-    margin: 0.5%;
-    width: 390px;
-    height: 63vh;
+    width: 280px;
+    height: 55vh;
   }
 }
 
@@ -1265,8 +1268,6 @@ body {
 .creator--link {
   background-size: cover;
   background-position: bottom;
-  text-decoration: none;
-  color: white;
 }
 
 .single-comic {
@@ -1404,6 +1405,14 @@ body {
   height: auto;
 }
 
+.single-comic__button:hover {
+  -webkit-filter: drop-shadow(0px -15px 0 rgba(240, 19, 30, 0.4));
+          filter: drop-shadow(0px -15px 0 rgba(240, 19, 30, 0.4));
+  cursor: pointer;
+  -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
+}
+
 .single-comic__button-container {
   width: 10vh;
   height: 10vh;
@@ -1421,15 +1430,8 @@ body {
 
 .single-comic__image {
   margin-top: 1%;
-  height: 80%;
-  width: auto;
-}
-
-@media (min-width: 1024px) {
-  .single-comic__image {
-    width: 90%;
-    height: auto;
-  }
+  width: 80%;
+  height: auto;
 }
 
 .single-comic__character {
@@ -1452,11 +1454,9 @@ body {
       -ms-flex-align: start;
           align-items: flex-start;
   width: 220px;
-  height: 40vh;
+  height: 230px;
   margin: 2% 2% 0 2%;
   border: 1px solid white;
-  text-decoration: none;
-  color: white;
 }
 
 @media (min-width: 460px) {
@@ -1480,14 +1480,14 @@ body {
 
 @media (min-width: 1024px) {
   .single-comic__character {
-    width: 250px;
-    height: 40vh;
+    width: 200px;
   }
 }
 
 @media (min-width: 1200px) {
   .single-comic__character {
-    width: 240px;
+    width: 250px;
+    height: 270px;
   }
 }
 
@@ -1499,7 +1499,7 @@ body {
 
 @media (min-width: 1024px) {
   .single-comic__character-txtcontainer {
-    height: 52px;
+    height: 50px;
   }
 }
 
@@ -1512,6 +1512,17 @@ body {
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
   white-space: pre-wrap;
+}
+
+.single-comic__character:hover {
+  -webkit-filter: grayscale(70%);
+          filter: grayscale(70%);
+  cursor: pointer;
+  border-width: 5px;
+  -webkit-transition-timing-function: linear;
+          transition-timing-function: linear;
+  -webkit-transition-duration: 0.1s;
+          transition-duration: 0.1s;
 }
 
 .single-comic__creator {
@@ -1534,8 +1545,6 @@ body {
   height: 15vh;
   margin: 2% 2% 0 2%;
   border: 1px solid white;
-  text-decoration: none;
-  color: white;
 }
 
 @media (min-width: 460px) {
@@ -1793,8 +1802,6 @@ body {
   height: 25vh;
   margin-top: 4%;
   border: 1px solid white;
-  text-decoration: none;
-  color: white;
 }
 
 .single-series__character-name {
@@ -1823,8 +1830,6 @@ body {
   height: 15vh;
   margin-top: 4%;
   border: 1px solid white;
-  text-decoration: none;
-  color: white;
 }
 
 .single-series__creator-name {

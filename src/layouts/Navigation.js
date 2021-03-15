@@ -27,15 +27,15 @@ class Navigation extends Component {
 
     nav = items.map(item => {
         return(
-            <li key={item.name} className="navigation__item">
+            
                 <NavLink 
             to={{
                 pathname: `/${item.name}`, 
                 state: {data: null}}}
             exact={item.exact ? item.exact : false} 
             className="navigation__link">{item.name}
+            <li key={item.name} className=" navigation__item"></li>
                  </NavLink>
-            </li>
         )
     })
 

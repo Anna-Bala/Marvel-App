@@ -27,37 +27,15 @@
   .comic {
     @include flex;
     @include listItemMain;
-    @include media(xsmall) {
-      width: 250px;
-      height: 60vh;
-    }
-    @include media(small) {
-      height: 50vh;
-      width: 260px;
-    }
-    @include media(medium) {
-      width: 315px;
-      height: 70vh;
-    }
-    @include media(large) {
-      margin: 0.5%;
-      width: 340px;
-      height: 60vh;
-    }
-    @include media(xlarge) {
-      width: 390px;
-      height: 63vh;
-    }
-    @include media(xxlarge) {
-      margin: 5px;
-      width: 20%;
-      height: 400px;
-    }
+    @include listItemBreakpoints;
     &:hover {
-      background-color: $mainRed;
+      filter: grayscale(70%);
       cursor: pointer;
-      transition-timing-function: ease-out;
-      transition-duration: 0.3s;
+      background-color: saturate($mainRed, 80%);
+
+      // border: rgba(255, 255, 255, 0.3) solid 2px;
+      transition-timing-function: linear;
+      transition-duration: 0.1s;
     }
     &__title {
       font-size: 1.2rem;

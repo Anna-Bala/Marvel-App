@@ -30,7 +30,12 @@ class Character extends Component {
         withoutCover: (
             <>
                 <h1 className="character__name">{this.props.name}</h1>
-                <Link to={`/characters/${this.props.id}`} className="button"><Button /></Link>
+                <Link to={{
+                    pathname: `/characters/${this.props.id}`, 
+                    state: {data: this.props.data}}} 
+                    className="button">
+                        <Button />
+                </Link>
             </>
         )
     }
@@ -39,11 +44,17 @@ class Character extends Component {
         this.setState({display: !this.state.display});
         console.log(e);
         const nameLabel = e.target.childNodes[0];
-        if(this.state.display === false) {
+        let isDiv = true;
+        e.target.classList.forEach(item => {
+            if(item === 'button') isDiv = false;
+        });
+
+        console.log(isDiv);
+        if(this.state.display === false && isDiv) {
             this.styles.withBackground = {animationName: 'fadeIn', backgroundColor: 'transparent'}
             nameLabel.style.display = 'none';
         }
-        else {
+        else if (isDiv)  {
             this.styles.withBackground = {backgroundImage: `url(${this.imgPath})`}
             nameLabel.style.display = 'block';
         };
@@ -54,6 +65,7 @@ class Character extends Component {
         const {img, id} = this.props;
         const {withBackground, withoutBackground} = this.styles;
         const {withCover, withoutCover} = this.content;
+        console.log(this.props.data);
         return(
         <div className="results__character character" 
         key={id}

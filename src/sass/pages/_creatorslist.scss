@@ -24,7 +24,6 @@
 
 .creator {
   @include flex;
-
   width: 200px;
   height: 200px;
   margin: 5px;
@@ -52,7 +51,5 @@
   &--link {
     background-size: cover;
     background-position: bottom;
-    text-decoration: none;
-    color: white;
   }
 }

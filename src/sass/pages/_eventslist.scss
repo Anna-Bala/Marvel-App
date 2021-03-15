@@ -2,56 +2,67 @@
 
 .events-list {
   @include flex;
+  text-align: center;
   &__title {
     margin: 2% 0;
     font-size: 2rem;
-  }
-}
-
-.results {
-  @include flex;
-  text-align: center;
-  width: 80%;
-  @include media(small) {
     width: 100%;
   }
-  &__title {
-    width: 90%;
-    font-size: 1.5rem;
-    margin: 2% 0;
-  }
-}
 
-.event {
-  @include flex;
-  @include listItemMain;
-  height: 50vh;
-  background-size: cover;
-  width: 100%;
-  border: 1px solid white;
-  @include media(xsmall) {
+  .results {
+    @include flex;
     width: 80%;
+    @include media(small) {
+      width: 100%;
+    }
+    &__title {
+      width: 90%;
+      font-size: 1.5rem;
+      margin: 2% 0;
+    }
   }
-  @include media(small) {
-    width: 40%;
-  }
-  @include media(medium) {
-    width: 30%;
-    height: 40vh;
-    margin: 5px;
-  }
-  @include media(xxlarge) {
-    margin: 1%;
-    width: 20%;
-    height: 30vh;
-  }
-  &__title {
-    font-size: 1.2rem;
-    background-color: $mainGray;
-    width: 100%;
-    padding: 4% 2%;
-  }
-  &__description {
-    @include listItemDescription;
+
+  .event {
+    @include flex;
+    @include listItemMain;
+    height: 50vh;
+    background-size: cover;
+    width: 290px;
+    border: 1px solid white;
+    @include media(xsmall) {
+      width: 320px;
+    }
+    @include media(small) {
+      width: 300px;
+    }
+    @include media(medium) {
+      width: 250px;
+      height: 40vh;
+      margin: 5px;
+    }
+    @include media(large) {
+      width: 300px;
+      height: 50vh;
+    }
+    @include media(xxlarge) {
+      width: 320px;
+      height: 400px;
+    }
+    &__title {
+      font-size: 1.2rem;
+      background-color: $mainGray;
+      width: 100%;
+      padding: 4% 2%;
+    }
+    &__description {
+      @include listItemDescription;
+    }
+    &:hover {
+      filter: grayscale(70%);
+      cursor: pointer;
+      border-width: 5px;
+      transition-timing-function: linear;
+      transition-duration: 0.1s;
+    }
   }
 }

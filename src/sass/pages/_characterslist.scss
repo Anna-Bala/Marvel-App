@@ -26,37 +26,12 @@
   .character {
     @include flex;
     @include listItemMain;
-    @include media(xsmall) {
-      width: 270px;
-      height: 60vh;
-    }
-    @include media(small) {
-      height: 50vh;
-      width: 260px;
-    }
-    @include media(medium) {
-      width: 315px;
-      height: 70vh;
-    }
-    @include media(large) {
-      margin: 0.5%;
-      width: 320px;
-      height: 60vh;
-      &:hover {
-        background-color: $mainRed;
-        cursor: pointer;
-        transition-timing-function: ease-in;
-        transition-duration: 0.3s;
-      }
-    }
-    @include media(xlarge) {
-      width: 390px;
-      height: 63vh;
-    }
-    @include media(xxlarge) {
-      margin: 5px;
-      width: 20%;
-      height: 400px;
+    @include listItemBreakpoints;
+    &:hover {
+      background-color: $mainRed;
+      cursor: pointer;
+      transition-timing-function: ease-in;
+      transition-duration: 0.3s;
     }
     &__name {
       font-size: 1.2rem;
