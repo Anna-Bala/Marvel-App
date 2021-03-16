@@ -1,7 +1,6 @@
 .results-nav {
   @include flex;
   margin-top: 4%;
-  text-align: center;
   &__line {
     width: 90%;
     border-color: rgba(255, 255, 255, 0.2);

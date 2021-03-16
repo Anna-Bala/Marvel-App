@@ -1,50 +1,37 @@
 @include fadeIn;
+@include fadeOut;
 
 .comics-list {
   @include flex;
-  text-align: center;
   &__title {
-    margin: 2% 0;
+    margin: 2rem 0;
     font-size: 2rem;
     width: 100%;
   }
+}
 
-  .results {
-    @include flex;
-    text-align: center;
-    width: 80%;
-    @include media(small) {
-      width: 100%;
-    }
+.comic {
+  @include flex;
+  @include listItemMain;
+  @include listItemBreakpoints;
+  &:hover {
+    filter: grayscale(70%);
+    cursor: pointer;
+    background-color: saturate($mainRed, 80%);
 
-    &__title {
-      width: 90%;
-      font-size: 1.5rem;
-      margin: 2% 0;
-    }
+    // border: rgba(255, 255, 255, 0.3) solid 2px;
+    transition-timing-function: linear;
+    transition-duration: 0.1s;
   }
-
-  .comic {
-    @include flex;
-    @include listItemMain;
-    @include listItemBreakpoints;
-    &:hover {
-      filter: grayscale(70%);
-      cursor: pointer;
-      background-color: saturate($mainRed, 80%);
-
-      // border: rgba(255, 255, 255, 0.3) solid 2px;
-      transition-timing-function: linear;
-      transition-duration: 0.1s;
-    }
-    &__title {
-      font-size: 1.2rem;
-      background-color: $mainGray;
-      width: 100%;
-      padding: 4% 2%;
-    }
-    &__description {
-      @include listItemDescription;
-    }
+  &__title {
+    font-size: 1.2rem;
+    background-color: $mainGray;
+    width: 100%;
+    padding: 4% 2%;
+  }
+  &__description {
+    @include listItemDescription;
   }
 }
+
+@include results;

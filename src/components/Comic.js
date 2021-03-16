@@ -41,7 +41,7 @@ class Comic extends Component {
     changingDisplay = () => {
         this.setState({display: !this.state.display});
         if(this.state.display === false) this.styles.withBackground = {animationName: 'fadeIn', backgroundColor: 'transparent'};
-        else this.styles.withBackground = {backgroundImage: `url(${this.imgPath})`};
+        else this.styles.withBackground = {backgroundImage: `url(${this.imgPath})`, animationName: 'fadeOut'};
     }
     
     

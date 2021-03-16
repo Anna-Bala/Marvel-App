@@ -8,20 +8,6 @@
   }
 }
 
-.results {
-  @include flex;
-  text-align: center;
-  width: 100%;
-  @include media(small) {
-    width: 100%;
-  }
-  &__title {
-    width: 90%;
-    font-size: 1.5rem;
-    margin: 2% 0;
-  }
-}
-
 .creator {
   @include flex;
   width: 200px;
@@ -53,3 +39,5 @@
     background-position: bottom;
   }
 }
+
+@include results;

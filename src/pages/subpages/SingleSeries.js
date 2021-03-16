@@ -115,7 +115,11 @@ class SingleSeries extends Component {
                         <Link to={{
                         pathname: `/characters/${result.id}`, 
                         state: {data: result}}} className="single-series__character">
-                                <h1 className="single-series__character-name">{titleIndex > -1? name : result.name}</h1>
+                                <div className="single-series__character-txtcontainer">
+                                    <h1 className="single-series__character-name">
+                                    {titleIndex > -1? name : result.name}
+                                    </h1>
+                                </div>
                                 <img className="single-series__image" src={imgPath} alt="character"/>
                         </Link>
                       
@@ -221,13 +225,13 @@ class SingleSeries extends Component {
             <div className="single-series">
                 <h1 className=" single-series__title single-series__title--main">{title}</h1>
                 <p className="single-series__description">{description}</p>
-                <div className="single-series__panel">
-                    <div className="single-series__button-container">
-                        <img src={arrow} alt="arrow" className="single-series__button single-series__button--left" onClick={() => this.manageContent('prev')} />
+                <div className="single-series__panel panel">
+                    <div className="panel__button-container">
+                        <img src={arrow} alt="arrow" className="panel__button panel__button--left" onClick={() => this.manageContent('prev')} />
                     </div>
-                    <h1 className="single-series__title single-series__title--sub">{this.contentNames[this.state.currentContent]}</h1>
-                    <div className="single-series__button-container">
-                        <img src={arrow} alt="arrow" className="single-series__button single-series__button--right" onClick={() => this.manageContent('next')} />
+                    <h1 className="panel__title">{this.contentNames[this.state.currentContent]}</h1>
+                    <div className="panel__button-container">
+                        <img src={arrow} alt="arrow" className="panel__button panel__button--right" onClick={() => this.manageContent('next')} />
                     </div>
                 </div>
                 {this.displayContent()}

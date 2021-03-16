@@ -55,7 +55,7 @@ class Character extends Component {
             nameLabel.style.display = 'none';
         }
         else if (isDiv)  {
-            this.styles.withBackground = {backgroundImage: `url(${this.imgPath})`}
+            this.styles.withBackground = {backgroundImage: `url(${this.imgPath})`, animationName: 'fadeOut'}
             nameLabel.style.display = 'block';
         };
     }

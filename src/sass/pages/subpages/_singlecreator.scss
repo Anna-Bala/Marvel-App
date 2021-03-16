@@ -1,39 +1,9 @@
 .single-creator {
   @include flex;
   &__name {
-    font-size: 140%;
-    text-align: center;
     text-transform: capitalize;
-    &--main {
-      width: 100%;
-    }
-    &--sub {
-      width: 50%;
-    }
-  }
-  &__panel {
-    @include flex;
+    margin: 1rem 0 0.5rem 0;
+    font-size: 2rem;
     width: 100%;
-    margin-top: 4%;
-  }
-  &__button {
-    display: block;
-    width: 80%;
-    height: auto;
-    &-container {
-      width: 10vh;
-      height: 10vh;
-    }
-    &--left {
-      transform: rotate(-90deg);
-    }
-    &--right {
-      transform: rotate(90deg);
-    }
-  }
-  &__image {
-    margin-top: 2%;
-    width: 75%;
-    height: auto;
   }
 }

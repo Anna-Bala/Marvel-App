@@ -13,7 +13,9 @@ class Creator extends Component {
     render() {
         return(
             <>
-            <Link to={`/creators/${this.props.id}`}>
+            <Link to={{
+                    pathname: `/creators/${this.props.id}`, 
+                    state: {data: this.props.data}}}>
                 <div className="results__creator creator" 
                 key={this.props.id}>
                     <h1 className="creator__name">{this.props.name}</h1>

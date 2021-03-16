@@ -265,13 +265,13 @@ class SingleEvent extends Component {
             <div className="single-event">
                 <h1 className=" single-event__title single-event__title--main">{title}</h1>
                 <p className="single-event__description">{description}</p>
-                <div className="single-event__panel">
-                    <div className="single-event__button-container">
-                        <img src={arrow} alt="arrow" className="single-event__button single-event__button--left" onClick={() => this.manageContent('prev')} />
+                <div className="single-event__panel panel">
+                    <div className="panel__button-container">
+                        <img src={arrow} alt="arrow" className="panel__button panel__button--left" onClick={() => this.manageContent('prev')} />
                     </div>
-                    <h1 className="single-event__title single-event__title--sub">{this.contentNames[this.state.currentContent]}</h1>
-                    <div className="single-event__button-container">
-                        <img src={arrow} alt="arrow" className="single-event__button single-event__button--right" onClick={() => this.manageContent('next')} />
+                    <h1 className="panel__title">{this.contentNames[this.state.currentContent]}</h1>
+                    <div className="panel__button-container">
+                        <img src={arrow} alt="arrow" className="panel__button panel__button--right" onClick={() => this.manageContent('next')} />
                     </div>
                 </div>
                 {this.displayContent()}

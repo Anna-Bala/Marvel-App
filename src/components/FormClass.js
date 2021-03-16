@@ -315,6 +315,7 @@ class Form extends Component {
     //     this.searchCharacters();
     // }
 
+ 
     render() {
         const {type} = this.props;
             switch(type) {

@@ -177,14 +177,14 @@ class SingleCreator extends Component {
         const {fullName} = this.data;
         return(
             <div className="single-creator">
-                <h1 className="single-creator__name single-creator__name--main">{fullName}</h1>
-                <div className="single-creator__panel">
-                    <div className="single-creator__button-container">
-                        <img src={arrow} alt="arrow" className="single-creator__button single-creator__button--left" onClick={() => this.manageContent('prev')} />
+                <h1 className="single-creator__name">{fullName}</h1>
+                <div className="single-creator__panel panel">
+                    <div className="panel__button-container">
+                        <img src={arrow} alt="arrow" className="panel__button panel__button--left" onClick={() => this.manageContent('prev')} />
                     </div>
-                    <h1 className="single-creator__title single-creator__title--sub">{this.contentNames[this.state.currentContent]}</h1>
-                    <div className="single-creator__button-container">
-                        <img src={arrow} alt="arrow" className="single-creator__button single-creator__button--right" onClick={() => this.manageContent('next')} />
+                    <h1 className="panel__title">{this.contentNames[this.state.currentContent]}</h1>
+                    <div className="panel__button-container">
+                        <img src={arrow} alt="arrow" className="panel__button panel__button--right" onClick={() => this.manageContent('next')} />
                     </div>
                 </div>
                 {this.displayContent()}

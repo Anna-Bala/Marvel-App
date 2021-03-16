@@ -244,13 +244,13 @@ class SingleComic extends Component {
             <div className="single-comic">
                 <h1 className=" single-comic__title single-comic__title--main">{title}</h1>
                 <p className="single-comic__description">{description}</p>
-                <div className="single-comic__panel">
-                    <div className="single-comic__button-container">
-                        <img src={arrow} alt="arrow" className="single-comic__button single-comic__button--left" onClick={() => this.manageContent('prev')} />
+                <div className="single-comic__panel panel">
+                    <div className="panel__button-container">
+                        <img src={arrow} alt="arrow" className="panel__button panel__button--left" onClick={() => this.manageContent('prev')} />
                     </div>
-                    <h1 className="single-comic__title single-comic__title--sub">{this.contentNames[this.state.currentContent]}</h1>
-                    <div className="single-comic__button-container">
-                        <img src={arrow} alt="arrow" className="single-comic__button single-comic__button--right" onClick={() => this.manageContent('next')} />
+                    <h1 className="panel__title">{this.contentNames[this.state.currentContent]}</h1>
+                    <div className="panel__button-container">
+                        <img src={arrow} alt="arrow" className="panel__button panel__button--right" onClick={() => this.manageContent('next')} />
                     </div>
                 </div>
                 {this.displayContent()}

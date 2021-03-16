@@ -23,7 +23,6 @@ class SingleCharacter extends Component {
     fetch = async (what, url) => {
 
         const result = await fetchData(url);
-        console.log(result);
         if(what === 'comics') {
             this.setState(prevState => ({comicsData: [...prevState.comicsData, result]}));
             this.displayComics();
@@ -45,8 +44,6 @@ class SingleCharacter extends Component {
         comicsUrls += `?ts=1&apikey=${this.apiKey}&limit=6&orderBy=issueNumber&hash=97a77a62ca6b19c0c250ad87841df189`;
 
         comicsUrls = new Array(comicsUrls);
-
-        console.log(comicsUrls);
 
         comicsUrls.forEach(url => {
             this.fetch("comics", url);
@@ -72,8 +69,6 @@ class SingleCharacter extends Component {
 
         eventsUrls = new Array(eventsUrls);
 
-        console.log(eventsUrls);
-
         eventsUrls.forEach(url => {
             this.fetch("events", url);
         });
@@ -81,7 +76,6 @@ class SingleCharacter extends Component {
 
     displayComics = () => {
         const results = this.state.comicsData[0].results;
-        console.log(results);
         const comics = results.map(comic => {
         const index = comic.thumbnail.path.indexOf('image_not_available');
         return <Comic id={comic.id} title={comic.title} description={comic.description} img={index === (-1)? comic.thumbnail.path : false} extension={comic.thumbnail.extension} data={comic}/>
@@ -105,7 +99,6 @@ class SingleCharacter extends Component {
 
     displayEvents = () => {
         const results = this.state.eventsData[0].results;
-        console.log(results);
         const events = results.map(event => {
         const index = event.thumbnail.path.indexOf('image_not_available');
         return <Event id={event.id} title={event.title} description={event.description} img={index === (-1)? event.thumbnail.path : false} extension={event.thumbnail.extension} data={event}/>
@@ -117,12 +110,11 @@ class SingleCharacter extends Component {
 
     render() {
         const {name, description, comics, series, events} = this.data;
-        console.log(this.props.location.state.data);
         const nameIndex = name.indexOf('(');
         let shortName = '';
         if(nameIndex > -1) shortName = name.slice(0, nameIndex);
         else shortName = name;
-        const characterImg = this.data.thumbnail.path + '/portrait_incredible.' + this.data.thumbnail.extension;
+        const characterImg = this.data.thumbnail.path + '/standard_fantastic.' + this.data.thumbnail.extension;
         return (
             <div className="single-character">
                 <h1 className="single-character__name">{name}</h1>
@@ -133,10 +125,11 @@ class SingleCharacter extends Component {
                 <h2  className="single-character__subtitle">Comics</h2>
                     {comics.items.length === 0? <p className="single-character__description">There are no appearances of this character in comics</p> : <>
                      {this.state.comics}
+                     <hr className="single-character__break"/>
                      <Link to={{
                     pathname: `/comics`, 
                     state: {data: this.data.id, from: 'characters'}}} 
-                    className="button">
+                    className="button button--brd">
                         <Button text="See all comics"/>
                     </Link>
                     </>
@@ -146,10 +139,11 @@ class SingleCharacter extends Component {
                 <h2  className="single-character__subtitle">Series</h2>
                     {series.items.length === 0? <p className="single-character__description">There are no appearances of this character in series</p> : <>
                      {this.state.series}
+                     <hr className="single-character__break"/>
                      <Link to={{
                     pathname: `/series`, 
-                    state: {data: this.data.id}}} 
-                    className="button">
+                    state: {data: this.data.id, from: 'characters'}}} 
+                    className="button button--brd">
                         <Button text="See all series"/>
                     </Link>
                     </>
@@ -159,10 +153,11 @@ class SingleCharacter extends Component {
                 <h2  className="single-character__subtitle">Events</h2>
                     {events.items.length === 0? <p className="single-character__description">There are no appearances of this character in events</p> : <>
                      {this.state.events}
+                     <hr className="single-character__break"/>
                      {<Link to={{
                         pathname: `/events`, 
                         state: {data: this.data.id, from: 'characters'}}} 
-                        className="button">
+                        className="button button--brd">
                         <Button text="See all events"/>
                     </Link>}
                     </>

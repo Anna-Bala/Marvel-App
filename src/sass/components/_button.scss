@@ -1,6 +1,5 @@
 .button {
   display: block;
-  z-index: 5;
   background-color: rgba(0, 0, 0, 0.8);
   width: 100%;
   height: 10vh;
@@ -10,14 +9,12 @@
   color: white;
   align-self: flex-end;
   text-decoration: none;
-  @include media(large) {
     &:hover {
       background-color: darken($color: $mainRed, $amount: 25);
       cursor: pointer;
       transition-timing-function: ease-in;
       transition-duration: 0.3s;
     }
-  }
   @include media(xlarge) {
     height: 8vh;
   }

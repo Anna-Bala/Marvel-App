@@ -33,7 +33,12 @@ class Series extends Component {
         withoutCover: (
             <>
                 <h1 className="series__title">{this.props.title}</h1>
-                <Link to={`/series/${this.props.id}`} className="button"><Button /></Link>
+                <Link to={{
+                    pathname: `/series/${this.props.id}`, 
+                    state: {data: this.props.data}}} 
+                    className="button">
+                        <Button />
+                </Link>
             </>
         )
     }

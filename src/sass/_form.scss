@@ -1,3 +1,5 @@
+@include fadeIn;
+@include fadeOut;
 .form {
   @include flex;
   &__title {
