@@ -3,8 +3,7 @@
 .series-list {
   @include flex;
   &__title {
-    margin: 2% 0;
-    font-size: 2rem;
+    @include listTitle;
   }
 }
 
@@ -13,13 +12,15 @@
   @include listItemMain;
   @include listItemBreakpoints;
   &__title {
-    font-size: 1.2rem;
-    background-color: $mainGray;
-    width: 100%;
-    padding: 4% 2%;
+    @include singleListItemTitle;
   }
   &__description {
     @include listItemDescription;
+  }
+  &--hover {
+    &:hover {
+      @include singleListItemHover;
+    }
   }
 }
 

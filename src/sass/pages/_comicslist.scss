@@ -4,9 +4,7 @@
 .comics-list {
   @include flex;
   &__title {
-    margin: 2rem 0;
-    font-size: 2rem;
-    width: 100%;
+@include listTitle;
   }
 }
 
@@ -14,23 +12,16 @@
   @include flex;
   @include listItemMain;
   @include listItemBreakpoints;
-  &:hover {
-    filter: grayscale(70%);
-    cursor: pointer;
-    background-color: saturate($mainRed, 80%);
-
-    // border: rgba(255, 255, 255, 0.3) solid 2px;
-    transition-timing-function: linear;
-    transition-duration: 0.1s;
-  }
   &__title {
-    font-size: 1.2rem;
-    background-color: $mainGray;
-    width: 100%;
-    padding: 4% 2%;
+@include singleListItemTitle;
   }
   &__description {
     @include listItemDescription;
+  }
+  &--hover {
+    &:hover {
+      @include singleListItemHover;
+        }
   }
 }
 

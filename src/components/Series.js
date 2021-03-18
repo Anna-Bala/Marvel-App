@@ -45,8 +45,8 @@ class Series extends Component {
     
     changingDisplay = () => {
         this.setState({display: !this.state.display});
-        if(this.state.display === false) this.styles.withBackground = {animationName: 'fadeIn'};
-        else this.styles.withBackground = {backgroundImage: `url(${this.imgPath})`};
+        if(this.state.display === false) this.styles.withBackground = {animationName: 'fadeIn', backgroundColor: 'transparent', filter: 'grayscale(0%)'};
+        else this.styles.withBackground = {backgroundImage: `url(${this.imgPath})`, animationName: 'fadeOut'};
     }
     
     
@@ -54,8 +54,10 @@ class Series extends Component {
         const {img, id} = this.props;
         const {withBackground, withoutBackground} = this.styles;
         const {withCover, withoutCover} = this.content;
+        let className = 'results__series series'; 
+        if(img !== false) className += ' series--hover';
         return(
-        <div className="results__series series" 
+        <div className={className} 
         key={id}
         style={img === false? withoutBackground : withBackground} 
         onClick={img === false? null : () => this.changingDisplay()}

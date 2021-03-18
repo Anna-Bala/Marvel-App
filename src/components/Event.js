@@ -41,7 +41,7 @@ class Event extends Component {
     
     changingDisplay = () => {
         this.setState({display: !this.state.display});
-        if(this.state.display === false) this.styles.withBackground = {animationName: 'fadeIn'};
+        if(this.state.display === false) this.styles.withBackground = {animationName: 'fadeIn', backgroundColor: 'transparent', filter: 'grayscale(0%)'};
         else this.styles.withBackground = {backgroundImage: `url(${this.imgPath})`, animationName: 'fadeOut'};
     }
 

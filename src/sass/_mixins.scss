@@ -258,3 +258,30 @@
     }
   }
 }
+
+//lists mixins
+@mixin listTitle {
+  margin: 2rem 0;
+  font-size: 2rem;
+  width: 100%;
+}
+
+@mixin singleListItemTitle {
+  font-size: 1.2rem;
+  background-color: $mainGray;
+  width: 100%;
+  padding: 4% 2%;
+}
+
+@mixin singleListItemHover {
+    filter: grayscale(70%);
+    cursor: pointer;
+    background-color: saturate($mainRed, 80%);
+    border: rgba(255, 255, 255, 0.8) solid 5px;
+    transition-timing-function:ease-out;
+    transition-duration: 0.17s;
+    
+}
+
+//single pages mixins
+

@@ -4,9 +4,7 @@
 .events-list {
   @include flex;
   &__title {
-    margin: 2% 0;
-    font-size: 2rem;
-    width: 100%;
+    @include listTitle;
   }
 }
 
@@ -37,20 +35,13 @@
     height: 400px;
   }
   &__title {
-    font-size: 1.2rem;
-    background-color: $mainGray;
-    width: 100%;
-    padding: 4% 2%;
+    @include singleListItemTitle;
   }
   &__description {
     @include listItemDescription;
   }
   &:hover {
-    filter: grayscale(70%);
-    cursor: pointer;
-    border-width: 5px;
-    transition-timing-function: linear;
-    transition-duration: 0.1s;
+    @include singleListItemHover;
   }
 }
 

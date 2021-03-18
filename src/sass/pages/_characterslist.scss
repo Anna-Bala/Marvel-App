@@ -4,9 +4,7 @@
 .characters-list {
   @include flex;
   &__title {
-    font-size: 2rem;
-    margin: 2% 0;
-    width: 100%;
+    @include listTitle;
   }
 }
 
@@ -14,17 +12,8 @@
   @include flex;
   @include listItemMain;
   @include listItemBreakpoints;
-  &:hover {
-    background-color: $mainRed;
-    cursor: pointer;
-    transition-timing-function: ease-in;
-    transition-duration: 0.3s;
-  }
   &__name {
-    font-size: 1.2rem;
-    background-color: $mainGray;
-    width: 100%;
-    padding: 4% 2%;
+ @include singleListItemTitle;
     pointer-events: none;
     &-label {
       background-color: rgba(0, 0, 0, 0.8);
@@ -40,6 +29,11 @@
   &__description {
     @include listItemDescription;
     pointer-events: none;
+  }
+  &--hover {
+    &:hover {
+      @include singleListItemHover;
+    }
   }
 }
 

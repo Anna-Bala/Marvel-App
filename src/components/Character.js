@@ -51,7 +51,7 @@ class Character extends Component {
 
         console.log(isDiv);
         if(this.state.display === false && isDiv) {
-            this.styles.withBackground = {animationName: 'fadeIn', backgroundColor: 'transparent'}
+            this.styles.withBackground = {animationName: 'fadeIn', backgroundColor: 'transparent', filter: 'grayscale(0%)'}
             nameLabel.style.display = 'none';
         }
         else if (isDiv)  {
@@ -66,8 +66,10 @@ class Character extends Component {
         const {withBackground, withoutBackground} = this.styles;
         const {withCover, withoutCover} = this.content;
         console.log(this.props.data);
+        let className = "results__character character";
+        if(img !== false) className += ' character--hover';
         return(
-        <div className="results__character character" 
+        <div className={className}
         key={id}
         style={img === false? withoutBackground : withBackground} 
         onClick={img === false? null : (e) => this.changingDisplay(e)}
