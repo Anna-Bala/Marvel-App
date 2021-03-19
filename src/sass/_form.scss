@@ -6,10 +6,16 @@
     width: 100%;
     margin: 10px 0 5px 0;
     font-size: 1.2rem;
+    background-color: $mainRed;
+    padding: 0.5rem 0;
+    @include media(large) {
+      margin-top: 20px;
+      width: 850px;
+    }
     &--big {
       z-index: -1;
       font-size: 1.5rem;
-      margin-top: 20px;
+      margin-top: 0;
     }
   }
   &__close {
@@ -24,22 +30,28 @@
       cursor: pointer;
       transition-duration: 0.3s;
     }
+    @include media(large) {
+      display: none;
+    }
   }
   &__main {
     display: none;
+    @include media(large) {
+      @include flex;
+      border: white solid 1px;
+      width: 850px;
+      padding-bottom: 0.5rem;
+    }
     &--open {
       @include flex;
       text-align: center;
       border: white 1px solid;
       margin: 0 5%;
-      padding: 2% 0 3% 0;
+      padding: 0 0 3% 0;
       position: relative;
       width: 300px;
       @include media(small) {
         width: 400px;
-      }
-      @include media(large) {
-        width: 500px;
       }
     }
   }
@@ -48,6 +60,9 @@
     display: inline-block;
     width: 60%;
     font-size: 1.5rem;
+    @include media(large) {
+      display: none;
+    }
     &--closed {
       display: none;
     }
@@ -56,6 +71,9 @@
     display: inline-block;
     width: 10%;
     height: auto;
+    @include media(large) {
+      display: none;
+    }
     &:hover {
       filter: drop-shadow(7px -8px 0 $mainRed);
       cursor: pointer;
@@ -68,6 +86,10 @@
   &__label {
     width: 50%;
     margin: 2px 0;
+    @include media(large) {
+      width: auto;
+      margin: 0 1rem;
+    }
   }
   &__input {
     width: 35%;
@@ -78,13 +100,15 @@
     opacity: 0.7;
     color: white;
     padding: 3px 0;
-    text-align: center;
+    @include media(large) {
+      width: 150px;
+    }
     &:hover {
       cursor: pointer;
     }
     &--small {
       width: 50px;
-      margin-top: 4%;
+
       margin-left: 2px;
     }
     &:focus {
@@ -107,5 +131,9 @@
         transition-duration: 0.3s;
       }
     }
+  }
+  &__break {
+    width: 100%;
+    border: none;
   }
 }

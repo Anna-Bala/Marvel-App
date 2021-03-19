@@ -4,7 +4,7 @@
 .comics-list {
   @include flex;
   &__title {
-@include listTitle;
+    @include listTitle;
   }
 }
 
@@ -13,15 +13,16 @@
   @include listItemMain;
   @include listItemBreakpoints;
   &__title {
-@include singleListItemTitle;
+    @include singleListItemTitle;
   }
   &__description {
     @include listItemDescription;
+    text-overflow: clip;
   }
   &--hover {
     &:hover {
       @include singleListItemHover;
-        }
+    }
   }
 }
 

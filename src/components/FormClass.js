@@ -122,10 +122,13 @@ class Form extends Component {
         return (
             <>
             <h2 className="form__title form__title--big">Search options: </h2>
+            <hr className="form__break"/>
             <img src={closeIcon} alt='close icon' className="form__close"/>
             <label for="letter" className="form__label">Title starts with:</label>
             {this.letters("letter")}
+            <hr className="form__break"/>
             <p className="form__title">Filter by:</p>
+            <hr className="form__break"/>
             <label for="format" className="form__label">Format:</label>
             <select id="format" name="format" className="form__input">
                 <option value="" selected></option>
@@ -140,6 +143,7 @@ class Form extends Component {
             </select>
             <label for="releaseyear" className="form__label">Initial release year:</label>
             <input type="text" id="releaseyear" name="releaseyear" className="form__input"/>
+            <hr className="form__break"/>
             <label for="digitalissue" className="form__label">Has digital issue:</label>
             <select id="digitalissue" name="digitalissue" className="form__input">
                 <option value="" selected></option>
@@ -150,6 +154,7 @@ class Form extends Component {
             <input type="text" id="issuenumber" name="issuenumber" className="form__input"/>
     
             <p className="form__title">Search by:</p>
+            <hr className="form__break"/>
             <label for="title" className="form__label">Title:</label>
             <input type="text" id="title" name="title" className="form__input"/>
             <label for="characters" className="form__label">Character:</label>
@@ -159,10 +164,12 @@ class Form extends Component {
 		            <ul></ul>
 	            </div>
             </div>
+            <hr className="form__break"/>
             <label for="creators" className="form__label">Creator:</label>
             <input type="text" id="creators" name="creators" className="form__input"/>
-    
+            <hr className="form__break"/>
             <p className="form__title">Other options:</p>
+            <hr className="form__break"/>
             <label for="order" className="form__label">Order by:</label>
             <select id="order" name="order" className="form__input">
                 <option value="title" selected>Title</option>
@@ -171,6 +178,7 @@ class Form extends Component {
             </select>
             <label for="results" className="form__label">&#8470; of results on page:</label>
             {this.options()}
+            <hr className="form__break"/>
         </>
         );
     }
@@ -194,6 +202,7 @@ class Form extends Component {
             <p className="form__title">Other options:</p>
             <label for="results" className="form__label">&#8470; of results on page:</label>
             {this.options()}
+            <hr className="form__break"/>
         </>
         );
     };
@@ -228,6 +237,7 @@ class Form extends Component {
                 <option value="digital comic">Digital comic</option>
                 <option value="infinite comic">Infinite comic</option>
             </select>
+            <hr className="form__break"/>
             <label for="releaseyear" className="form__label">Initial release year:</label>
             <input type="text" id="releaseyear" name="releaseyear" className="form__input"/>
     
@@ -285,10 +295,13 @@ class Form extends Component {
             <img src={closeIcon} alt='close icon' className="form__close"/>
             <label for="firstNameLetter" className="form__label">First name starts with:</label>
             {this.letters("firstNameLetter")}
+            <hr className="form__break"/>
             <label for="middleNameLetter" className="form__label">Middle name starts with:</label>
             {this.letters("middleNameLetter")}
+            <hr className="form__break"/>
             <label for="lastNameLetter" className="form__label">Last name starts with:</label>
             {this.letters("lastNameLetter")}
+            <hr className="form__break"/>
             <p className="form__title">Search by:</p>
             <label for="title" className="form__label">Comic:</label>
             <input type="text" id="comic" name="comic" className="form__input"/>
