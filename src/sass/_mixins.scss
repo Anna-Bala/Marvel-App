@@ -38,7 +38,6 @@
       opacity: 0;
     }
     100% {
-
       opacity: 1;
     }
   }
@@ -58,7 +57,6 @@
 }
 
 @mixin listItemDescription {
-  white-space: pre-wrap;
   font-size: 1em;
   display: inline;
   width: 90%;
@@ -72,7 +70,6 @@
   }
   @include media(medium) {
     width: 315px;
-
   }
   @include media(large) {
     margin: 0.5%;
@@ -250,7 +247,7 @@
     @include media(small) {
       width: 100%;
     }
-  
+
     &__title {
       width: 90%;
       font-size: 1.5rem;
@@ -274,14 +271,12 @@
 }
 
 @mixin singleListItemHover {
-    filter: grayscale(70%);
-    cursor: pointer;
-    background-color: saturate($mainRed, 80%);
-    border: rgba(255, 255, 255, 0.8) solid 5px;
-    transition-timing-function:ease-out;
-    transition-duration: 0.17s;
-    
+  filter: grayscale(70%);
+  cursor: pointer;
+  background-color: saturate($mainRed, 80%);
+  border: rgba(255, 255, 255, 0.8) solid 5px;
+  transition-timing-function: ease-out;
+  transition-duration: 0.17s;
 }
 
 //single pages mixins
-

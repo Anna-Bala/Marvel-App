@@ -17,7 +17,6 @@
   }
   &__description {
     @include listItemDescription;
-    text-overflow: clip;
   }
   &--hover {
     &:hover {

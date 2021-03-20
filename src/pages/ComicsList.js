@@ -121,7 +121,6 @@ class ComicsList extends Component {
 
 
     render() {
-        // console.log(this.state.results);
         return(
             <div className="comics-list">
                 <h1 className="comics-list__title">List of comics</h1>

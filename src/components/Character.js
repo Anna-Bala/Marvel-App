@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import Button  from './Button';
+import {decode} from 'html-entities';
+import cutText from "../functions/cutText";
 
 class Character extends Component {
     state = {
@@ -14,11 +16,13 @@ class Character extends Component {
         withoutBackground: {backgroundColor: `rgba(255, 255, 255, 0.05)`, height: '30vh', cursor: 'default'},
     }
 
+    description = decode(`${this.props.description}`, {level: 'html5', mode: 'specialChars'});
+    
     content = {
         withCover: (
             <>
             <h1 className="character__name">{this.props.name}</h1>
-                <p className="character__description">{this.props.description}</p>
+                <p className="character__description">{this.description === 'null'? '' : cutText(this.description, 25)}</p>
                 <Link to={{
                     pathname: `/characters/${this.props.id}`, 
                     state: {data: this.props.data}}} 

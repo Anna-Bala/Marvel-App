@@ -5,10 +5,6 @@ class Creator extends Component {
     state = {
         display: false,
     }
-
-
-    /*DESCRIPTION FROM textOBJECT!!!!!!!!!!*/
-    
     
     render() {
         return(

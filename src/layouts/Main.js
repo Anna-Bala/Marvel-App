@@ -17,7 +17,7 @@ const Main = () => {
         <div className='main'>
             <Switch>
                 <Route path='/' component={StartPage} exact />
-                <Route path='/comics' component={ComicsList} exact/>
+                <Route path='/comics' component={ComicsList} exact/> 
                 <Route path='/comics/:id' component={SingleComic} />
                 <Route path='/characters' component={CharactersList} exact/>
                 <Route path='/characters/:id' component={SingleCharacter} />
