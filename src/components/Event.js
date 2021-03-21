@@ -41,21 +41,28 @@ class Event extends Component {
         )
     }
     
-    changingDisplay = () => {
+    changingDisplay = (e) => {
+        let target = e.target;
+        if(e.target.classList[0] === 'results__event') target = e.target;
+        console.log(target.classList[0]);
         this.setState({display: !this.state.display});
-        if(this.state.display === false) this.styles.withBackground = {animationName: 'fadeIn', backgroundColor: 'transparent', filter: 'grayscale(0%)'};
-        else this.styles.withBackground = {backgroundImage: `url(${this.imgPath})`, animationName: 'fadeOut'};
+        const stateDisplayFalse = {animationName: 'fadeIn', backgroundColor: 'transparent', filter: 'grayscale(0%)'};
+        const stateDisplayTrue = {backgroundImage: `url(${this.imgPath})`, animationName: 'fadeOut'};
+        if(this.state.display === false) {this.styles.withBackground = stateDisplayFalse; target.classList.remove('event--hover')}
+        else {this.styles.withBackground = stateDisplayTrue; target.classList.add('event--hover')}
     }
 
     render() {
         const {img, id} = this.props;
         const {withBackground, withoutBackground} = this.styles;
         const {withCover, withoutCover} = this.content;
+        let className = "results__event event"; 
+        if(img !== false) className += ' event--hover';
         return(
-        <div className="results__event event" 
+        <div className={className} 
         key={id}
         style={img === false? withoutBackground : withBackground} 
-        onClick={img === false? null : () => this.changingDisplay()}
+        onClick={img === false? null : (e) => this.changingDisplay(e)}
         >
             {!img? withoutCover : null}
             {this.state.display? withCover : null}

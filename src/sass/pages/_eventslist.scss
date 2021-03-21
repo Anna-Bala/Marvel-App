@@ -40,8 +40,10 @@
   &__description {
     @include listItemDescription;
   }
-  &:hover {
-    @include singleListItemHover;
+  &--hover {
+    &:hover {
+      @include singleListItemHover;
+    }
   }
 }
 

@@ -3,20 +3,19 @@ import { BrowserRouter as Router } from "react-router-dom";
 import "../styles/main.css";
 import Navigation from "./Navigation";
 import Main from "./Main";
-import Particles from "../components/Particles";
+import Footer from "./Footer";
 
 class App extends Component {
   render() {
     return(
       <>
-      <Particles/>
       <Router >
         <div className="app">
           {<Navigation />} 
           {<Main/>}
+          {<Footer/>}
         </div>
       </Router>
-
       </>
     )
   }

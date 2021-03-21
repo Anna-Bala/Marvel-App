@@ -70,19 +70,24 @@ class EventsList extends Component {
 
         const errorText = document.getElementsByClassName('results-nav__error');
         errorText[0].innerHTML = "";
-        let totalPages = this.state.resultsnumber / this.numberOfResults;
-        totalPages = Math.floor(totalPages);
-        const whichPage = parseInt(document.getElementById('page').value);
-        if(whichPage > totalPages) {
+        let totalPages = (this.state.resultsnumber / this.numberOfResults);
+        totalPages = Math.floor(totalPages) +1;
+        const whichPage = parseInt(document.getElementById('page').value) -1;
+        if(whichPage +1 > totalPages) {
             errorText[0].innerHTML = `There are ${totalPages} pages`;
-        } else {
+        } else if (whichPage <= -1){
+            errorText[0].innerHTML = `Wrong value`;
+        }
+        else {
             if(where === "value") this.currentPage = whichPage;
         } 
 
         this.currentPage = parseInt(this.currentPage);
 
-        if(where === "next" && this.currentPage !== totalPages) this.currentPage += 1;
+        if(where === "next" && this.currentPage +1 < totalPages) this.currentPage += 1;
         else if(where === "prev" && this.currentPage !== 0) this.currentPage -= 1;
+
+        document.querySelector('.results-nav__input').value = null;
 
         this.orderBy = document.getElementById('order').value;
         this.startsWith = document.getElementById('letter').value;
@@ -115,7 +120,7 @@ class EventsList extends Component {
                     <img src={icon} alt='settings icon' className="form__icon"/>
                     <div className="form__main">
                         <Form type="events"/>
-                        <button className="form__button" onClick={(e) =>this.changeUrl(e)}>Save</button>
+                        <button className="form__button" onClick={(e) =>{this.currentPage = 0; this.changeUrl(e)}}>Save</button>
                     </div>
                 </form>
                 <div className="events-list__results results">

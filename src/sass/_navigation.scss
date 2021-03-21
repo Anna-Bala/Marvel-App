@@ -1,6 +1,7 @@
 @include fadeIn;
 
 .navigation {
+  width: 100%;
   &__list {
     display: none;
     @include media(large) {

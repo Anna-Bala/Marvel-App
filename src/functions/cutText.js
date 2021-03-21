@@ -1,5 +1,9 @@
 const cutText = (text, length) => {
-    console.log(text.split(" ").splice(0,length).length);
+    const markers = ['<br>', '<li>', '<ul>', '</ul>', '</li>', '<br/>'];
+    markers.forEach(marker => {
+        text = text.replace(marker, '');
+    });
+
     if(text.split(" ").splice(0,length).length < 25) {
         return text
     }

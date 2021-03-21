@@ -29,6 +29,19 @@ a {
   text-decoration: none;
 }
 
+.app {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  height: 100vh;
+}
+
 .main {
   margin-top: 60px;
 }
@@ -37,6 +50,47 @@ a {
   .main {
     margin-top: 10px;
   }
+}
+
+.footer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 100%;
+  line-height: 1.5;
+  background-color: rgba(240, 19, 30, 0.4);
+  height: 10vh;
+  margin-top: 60px;
+  -ms-flex-item-align: end;
+      align-self: flex-end;
+}
+
+.footer > p {
+  width: 100%;
+}
+
+.footer__title {
+  font-size: 0.6rem;
+}
+
+.footer__text {
+  font-size: 0.8rem;
+}
+
+.footer__link {
+  text-decoration: underline;
 }
 
 .button {
@@ -475,6 +529,11 @@ a {
   padding: 0.5%;
 }
 
+.results-nav__error {
+  width: 100%;
+  font-size: 1rem;
+}
+
 @keyframes fadeIn {
   0% {
     opacity: 0;
@@ -486,6 +545,10 @@ a {
   100% {
     background-color: rgba(255, 255, 255, 0.09);
   }
+}
+
+.navigation {
+  width: 100%;
 }
 
 .navigation__list {
@@ -755,6 +818,7 @@ a {
   background-color: rgba(255, 255, 255, 0.09);
   width: 100%;
   padding: 4% 2%;
+  pointer-events: none;
 }
 
 .comic__description {
@@ -762,6 +826,7 @@ a {
   display: inline;
   width: 90%;
   line-height: 1.5;
+  pointer-events: none;
 }
 
 .comic--hover:hover {
@@ -926,6 +991,7 @@ a {
   width: 100%;
   padding: 4% 2%;
   pointer-events: none;
+  pointer-events: none;
 }
 
 .character__name-label {
@@ -946,6 +1012,7 @@ a {
   display: inline;
   width: 90%;
   line-height: 1.5;
+  pointer-events: none;
   pointer-events: none;
 }
 
@@ -1113,6 +1180,7 @@ a {
   background-color: rgba(255, 255, 255, 0.09);
   width: 100%;
   padding: 4% 2%;
+  pointer-events: none;
 }
 
 .event__description {
@@ -1120,9 +1188,10 @@ a {
   display: inline;
   width: 90%;
   line-height: 1.5;
+  pointer-events: none;
 }
 
-.event:hover {
+.event--hover:hover {
   -webkit-filter: grayscale(70%);
           filter: grayscale(70%);
   cursor: pointer;
@@ -1274,6 +1343,7 @@ a {
   background-color: rgba(255, 255, 255, 0.09);
   width: 100%;
   padding: 4% 2%;
+  pointer-events: none;
 }
 
 .series__description {
@@ -1281,6 +1351,7 @@ a {
   display: inline;
   width: 90%;
   line-height: 1.5;
+  pointer-events: none;
 }
 
 .series--hover:hover {
@@ -1392,6 +1463,7 @@ a {
   background-color: rgba(255, 255, 255, 0.09);
   width: 100%;
   padding: 4% 2%;
+  pointer-events: none;
   height: 30%;
   position: absolute;
   top: 40%;
@@ -1636,17 +1708,6 @@ a {
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
   white-space: pre-wrap;
-}
-
-.single-comic__character:hover {
-  -webkit-filter: grayscale(70%);
-          filter: grayscale(70%);
-  cursor: pointer;
-  border-width: 5px;
-  -webkit-transition-timing-function: linear;
-          transition-timing-function: linear;
-  -webkit-transition-duration: 0.1s;
-          transition-duration: 0.1s;
 }
 
 .single-comic__creator {
@@ -2001,17 +2062,6 @@ a {
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
   white-space: pre-wrap;
-}
-
-.single-series__character:hover {
-  -webkit-filter: grayscale(70%);
-          filter: grayscale(70%);
-  cursor: pointer;
-  border-width: 5px;
-  -webkit-transition-timing-function: linear;
-          transition-timing-function: linear;
-  -webkit-transition-duration: 0.1s;
-          transition-duration: 0.1s;
 }
 
 .single-series__creator {

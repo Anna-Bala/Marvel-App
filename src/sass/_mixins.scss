@@ -61,6 +61,7 @@
   display: inline;
   width: 90%;
   line-height: 1.5;
+  pointer-events: none;
 }
 
 @mixin listItemBreakpoints {
@@ -188,13 +189,6 @@
       transform: translate(-50%, -50%);
       white-space: pre-wrap;
     }
-    &:hover {
-      filter: grayscale(70%);
-      cursor: pointer;
-      border-width: 5px;
-      transition-timing-function: linear;
-      transition-duration: 0.1s;
-    }
   }
 
   &__creator {
@@ -268,6 +262,7 @@
   background-color: $mainGray;
   width: 100%;
   padding: 4% 2%;
+  pointer-events: none;
 }
 
 @mixin singleListItemHover {

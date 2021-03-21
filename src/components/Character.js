@@ -46,21 +46,27 @@ class Character extends Component {
     
     changingDisplay = (e) => {
         this.setState({display: !this.state.display});
-        console.log(e);
+        let target = e.target;
+        if(e.target.classList[0] === 'results__character') target = e.target;
         const nameLabel = e.target.childNodes[0];
         let isDiv = true;
         e.target.classList.forEach(item => {
             if(item === 'button') isDiv = false;
         });
 
+        const stateDisplayFalse = {animationName: 'fadeIn', backgroundColor: 'transparent', filter: 'grayscale(0%)'};
+        const stateDisplayTrue = {backgroundImage: `url(${this.imgPath})`, animationName: 'fadeOut'};
+
         console.log(isDiv);
         if(this.state.display === false && isDiv) {
-            this.styles.withBackground = {animationName: 'fadeIn', backgroundColor: 'transparent', filter: 'grayscale(0%)'}
+            this.styles.withBackground = stateDisplayFalse;
             nameLabel.style.display = 'none';
+            target.classList.remove('character--hover');
         }
         else if (isDiv)  {
-            this.styles.withBackground = {backgroundImage: `url(${this.imgPath})`, animationName: 'fadeOut'}
+            this.styles.withBackground = stateDisplayTrue;
             nameLabel.style.display = 'block';
+            target.classList.add('character--hover');
         };
     }
     
