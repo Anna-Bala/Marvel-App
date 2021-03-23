@@ -3,10 +3,12 @@
 @import "mixins";
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap");
 @import "app";
+@import "startpage";
 @import "mainContent";
 @import "footer";
 @import "./components/button";
 @import "./components/panel";
+@import "./components/loader";
 @import "form";
 @import "resultsNav";
 @import "navigation";

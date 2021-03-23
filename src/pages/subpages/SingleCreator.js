@@ -173,7 +173,6 @@ class SingleCreator extends Component {
     </>);
 
     render() {
-        console.log(this.data);
         const {fullName} = this.data;
         return(
             <div className="single-creator">

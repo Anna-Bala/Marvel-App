@@ -161,7 +161,6 @@ class SingleComic extends Component {
                     {this.data.creators.items.map(result => {
                         const urlLength = result.resourceURI.length;
                         const id = result.resourceURI.slice(45, urlLength);
-                        console.log(id);
                         return (
                         <Link to={{
                         pathname: `/creators/${id}`, 
@@ -239,7 +238,6 @@ class SingleComic extends Component {
 
     render() {
         const {title, description} = this.data;
-        console.log(this.data);
         return(
             <div className="single-comic">
                 <h1 className=" single-comic__title single-comic__title--main">{title}</h1>

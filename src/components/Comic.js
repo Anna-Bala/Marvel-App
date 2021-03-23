@@ -23,7 +23,7 @@ class Comic extends Component {
         withCover: (
             <>
                 <h1 className="comic__title">{this.props.title}</h1>
-                <p className="comic__description">{this.description === 'null'? '' : cutText(this.description, 25)}</p>
+                <p className="comic__description">{this.description === 'null'? '' : cutText(this.description, 20)}</p>
                 <Link to={{
                     pathname: `/comics/${this.props.id}`, 
                     state: {data: this.props.data}}} 
@@ -43,7 +43,6 @@ class Comic extends Component {
     changingDisplay = (e) => {
         let target = e.target;
         if(e.target.classList[0] === 'results__comic') target = e.target;
-        console.log(target.classList[0]);
         this.setState({display: !this.state.display});
         const stateDisplayFalse = {animationName: 'fadeIn', backgroundColor: 'transparent', filter: 'grayscale(0%)'};
         const stateDisplayTrue = {backgroundImage: `url(${this.imgPath})`, animationName: 'fadeOut'};

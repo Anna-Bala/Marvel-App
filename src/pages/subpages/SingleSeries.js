@@ -53,7 +53,6 @@ class SingleSeries extends Component {
         });
 
         comicsUrls.forEach((url, id) => {
-            console.log(id);
             if(id <= 5) {
                 const fetch = async () => {
                     const result = await fetchData(url);
@@ -143,7 +142,6 @@ class SingleSeries extends Component {
                     {this.data.creators.items.map(result => {
                         const urlLength = result.resourceURI.length;
                         const id = result.resourceURI.slice(45, urlLength);
-                        console.log(id);
                         return (
                         <Link to={{
                         pathname: `/creators/${id}`, 
@@ -168,7 +166,6 @@ class SingleSeries extends Component {
     comics = () => {
         if(this.state.comicsData.length !== 0) {
             const results = this.state.comicsData;
-            console.log(results);
             const comics = results.map(comic => {
             const index = comic.thumbnail.path.indexOf('image_not_available');
             return <Comic id={comic.id} title={comic.title} description={comic.description} img={index === (-1)? comic.thumbnail.path : false} extension={comic.thumbnail.extension} data={comic}/>
@@ -220,7 +217,6 @@ class SingleSeries extends Component {
 
     render() {
         const {title, description} = this.data;
-        console.log(this.data);
         return(
             <div className="single-series">
                 <h1 className=" single-series__title single-series__title--main">{title}</h1>

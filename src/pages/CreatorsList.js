@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import fetchData from "../functions/fetchData";
 import Creator from "../components/Creator";
 import Form from "../components/FormClass";
+import Loader from "../components/Loader";
 import icon from "../img/settings-icon.png";
 
 class CreatorsList extends Component {
@@ -9,6 +10,7 @@ class CreatorsList extends Component {
         resultsnumber: 0,
         creatorsData: [],
         creators: null,
+        isLoaded: false
     };
 
     //URL parameters:
@@ -46,12 +48,15 @@ class CreatorsList extends Component {
 
     displayCreators = () => {
         const results = this.state.creatorsData;
+        const scrollElement = document.querySelector('.results__title');
         const creators = results.map(creator => {
         return <Creator id={creator.id} name={creator.fullName} extension={creator.thumbnail.extension} data={creator}/>
         });
         this.setState({
             creators,
-        })
+            isLoaded: true
+        });
+        scrollElement.scrollIntoView();
     }
 
     fetch = async () => {
@@ -62,7 +67,6 @@ class CreatorsList extends Component {
             result = await fetchData(propsUrl);
         }
         else result = await fetchData(this.url);
-        console.log(result);
         this.setState({creatorsData: result.results, resultsnumber: result.total});
         this.displayCreators();
     }
@@ -75,7 +79,10 @@ class CreatorsList extends Component {
         let totalPages = (this.state.resultsnumber / this.numberOfResults);
         totalPages = Math.floor(totalPages) +1;
         const whichPage = parseInt(document.getElementById('page').value) -1;
-        if(whichPage +1 > totalPages) {
+        if(totalPages === 1) {
+            errorText[0].innerHTML = `There is only one page`;
+        }
+        else if(whichPage +1 > totalPages) {
             errorText[0].innerHTML = `There are ${totalPages} pages`;
         } else if (whichPage <= -1){
             errorText[0].innerHTML = `Wrong value`;
@@ -109,7 +116,8 @@ class CreatorsList extends Component {
         if(newUrl !== this.url)
         {
             this.setState({
-                creators: null
+                creators: null,
+                isLoaded: false
             });
             this.url = newUrl;
             this.fetch();
@@ -130,7 +138,7 @@ class CreatorsList extends Component {
                 </form>
                 <div className="creators-list__results results">
                     <h1 className="results__title">Number of results: {this.state.resultsnumber}</h1>
-                    {this.state.creators}
+                    {this.state.isLoaded? <>{this.state.creators}</> : <Loader/>}
                 </div>
                 <div className="results-nav">
                     <label for="page" className="results-nav__label">Choose page:</label>

@@ -259,7 +259,6 @@ class SingleEvent extends Component {
     }
 
     render() {
-        console.log(this.data);
         const {title, description} = this.data;
         return(
             <div className="single-event">

@@ -56,8 +56,6 @@ class SingleCharacter extends Component {
 
         seriesUrls = new Array(seriesUrls);
 
-        console.log(seriesUrls);
-
         seriesUrls.forEach(url => {
             this.fetch("series", url);
         });
@@ -87,7 +85,6 @@ class SingleCharacter extends Component {
 
     displaySeries = () => {
         const results = this.state.seriesData[0].results;
-        console.log(results);
         const series = results.map(series => {
         const index = 1;
         return <Series id={series.id} title={series.title} description={series.description} img={index === (-1)? series.thumbnail.path : false} extension={series.thumbnail.extension} data={series}/>

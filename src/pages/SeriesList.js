@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import fetchData from "../functions/fetchData";
 import Series from "../components/Series";
 import Form from "../components/FormClass";
+import Loader from "../components/Loader";
 import icon from "../img/settings-icon.png";
 
 class SeriesList extends Component {
@@ -9,6 +10,7 @@ class SeriesList extends Component {
         resultsnumber: 0,
         seriesData: [],
         series: null,
+        isLoaded: false
     };
 
      //URL parameters:
@@ -48,17 +50,19 @@ class SeriesList extends Component {
 
     displaySeries = () => {
         const results = this.state.seriesData;
+        const scrollElement = document.querySelector('.results__title');
         const series = results.map(series => {
         const index = series.thumbnail.path.indexOf('image_not_available');
         return <Series id={series.id} title={series.title} description={series.description} img={index === (-1)? series.thumbnail.path : false} extension={series.thumbnail.extension} data={series}/>
         });
         this.setState({
             series,
-        })
+            isLoaded: true
+        });
+        scrollElement.scrollIntoView();
     }
 
     fetch = async () => {
-        console.log(this.props.location.state);
         let result = null;
         if(this.props.location.state.data !== null)
         {
@@ -66,7 +70,6 @@ class SeriesList extends Component {
             result = await fetchData(propsUrl);
         }
         else result = await fetchData(this.url);
-        console.log(result);
         this.setState({seriesData: result.results, resultsnumber: result.total});
         this.displaySeries();
     }
@@ -79,7 +82,10 @@ class SeriesList extends Component {
         let totalPages = (this.state.resultsnumber / this.numberOfResults);
         totalPages = Math.floor(totalPages);
         const whichPage = parseInt(document.getElementById('page').value) -1;
-        if(whichPage +1 > totalPages) {
+        if(totalPages === 1) {
+            errorText[0].innerHTML = `There is only one page`;
+        }
+        else if(whichPage +1 > totalPages) {
             errorText[0].innerHTML = `There are ${totalPages} pages`;
         } else if (whichPage <= -1){
             errorText[0].innerHTML = `Wrong value`;
@@ -113,7 +119,8 @@ class SeriesList extends Component {
         if(newUrl !== this.url)
         {
             this.setState({
-                series: null
+                series: null,
+                isLoaded: false
             });
             this.url = newUrl;
             this.fetch();
@@ -134,7 +141,7 @@ class SeriesList extends Component {
                 </form>
                 <div className="series-list__results results">
                     <h1 className="results__title">Number of results: {this.state.resultsnumber}</h1>
-                    {this.state.series}
+                    {this.state.isLoaded? <>{this.state.series}</> : <Loader/>}
                 </div>
                 <div className="results-nav">
                     <label for="page" className="results-nav__label">Choose page:</label>

@@ -44,7 +44,6 @@ class Event extends Component {
     changingDisplay = (e) => {
         let target = e.target;
         if(e.target.classList[0] === 'results__event') target = e.target;
-        console.log(target.classList[0]);
         this.setState({display: !this.state.display});
         const stateDisplayFalse = {animationName: 'fadeIn', backgroundColor: 'transparent', filter: 'grayscale(0%)'};
         const stateDisplayTrue = {backgroundImage: `url(${this.imgPath})`, animationName: 'fadeOut'};

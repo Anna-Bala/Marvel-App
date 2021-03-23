@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import fetchData from "../functions/fetchData";
 import Comic from "../components/Comic";
 import Form from "../components/FormClass";
+import Loader from "../components/Loader";
 import icon from "../img/settings-icon.png";
 
 class ComicsList extends Component {
@@ -9,6 +10,7 @@ class ComicsList extends Component {
         resultsnumber: 0,
         comicData: [],
         comics: null,
+        isLoaded: false
     };
 
     //URL parameters:
@@ -48,13 +50,16 @@ class ComicsList extends Component {
 
     displayComics = () => {
         const results = this.state.comicData;
+        const scrollElement = document.querySelector('.results__title');
         const comics = results.map(comic => {
         const index = comic.thumbnail.path.indexOf('image_not_available');
         return <Comic id={comic.id} title={comic.title} description={comic.description} img={index === (-1)? comic.thumbnail.path : false} extension={comic.thumbnail.extension} data={comic}/>
         });
         this.setState({
             comics,
+            isLoaded: true
         })
+        scrollElement.scrollIntoView();
     }
 
     fetch = async () => {
@@ -77,7 +82,10 @@ class ComicsList extends Component {
         let totalPages = (this.state.resultsnumber / this.numberOfResults);
         totalPages = Math.floor(totalPages) +1;
         const whichPage = parseInt(document.getElementById('page').value) -1;
-        if(whichPage +1 > totalPages) {
+        if(totalPages === 1) {
+            errorText[0].innerHTML = `There is only one page`;
+        }
+        else if(whichPage +1 > totalPages) {
             errorText[0].innerHTML = `There are ${totalPages} pages`;
         } else if (whichPage <= -1){
             errorText[0].innerHTML = `Wrong value`;
@@ -110,10 +118,10 @@ class ComicsList extends Component {
         if(newUrl !== this.url)
         {
             this.setState({
-                comics: null
+                comics: null,
+                isLoaded: false
             });
             this.url = newUrl;
-            console.log(this.url);
             this.fetch();
         } 
     }
@@ -133,7 +141,7 @@ class ComicsList extends Component {
                 </form>
                 <div className="comics-list__results results">
                     <h1 className="results__title">Number of results: {this.state.resultsnumber}</h1>
-                    {this.state.comics}
+                    {this.state.isLoaded? <>{this.state.comics}</> : <Loader/>}
                 </div>
                 <div className="results-nav">
                     <hr className="results-nav__line"/>

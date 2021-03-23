@@ -57,7 +57,6 @@ class Character extends Component {
         const stateDisplayFalse = {animationName: 'fadeIn', backgroundColor: 'transparent', filter: 'grayscale(0%)'};
         const stateDisplayTrue = {backgroundImage: `url(${this.imgPath})`, animationName: 'fadeOut'};
 
-        console.log(isDiv);
         if(this.state.display === false && isDiv) {
             this.styles.withBackground = stateDisplayFalse;
             nameLabel.style.display = 'none';
@@ -75,7 +74,6 @@ class Character extends Component {
         const {img, id} = this.props;
         const {withBackground, withoutBackground} = this.styles;
         const {withCover, withoutCover} = this.content;
-        console.log(this.props.data);
         let className = "results__character character";
         if(img !== false) className += ' character--hover';
         return(

@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import fetchData from "../functions/fetchData";
 import Character from "../components/Character";
 import Form from "../components/FormClass";
+import Loader from "../components/Loader";
 import icon from "../img/settings-icon.png";
 
 class CharactersList extends Component {
@@ -9,6 +10,7 @@ class CharactersList extends Component {
         resultsnumber: 0,
         charactersData: [],
         characters: null,
+        isLoaded: false
     }
 
 
@@ -43,14 +45,16 @@ class CharactersList extends Component {
 
     displayCharacters = () => {
         const result = this.state.charactersData;
+        const scrollElement = document.querySelector('.results__title');
         const characters = result.map(character => {
         const index = character.thumbnail.path.indexOf('image_not_available');
         return <Character id={character.id} name={character.name} description={character.description} img={index === (-1)? character.thumbnail.path : false} extension={character.thumbnail.extension} data={character}/>
         });
         this.setState({
-            characters
+            characters,
+            isLoaded: true
         })
-
+        scrollElement.scrollIntoView();
         const nameLabel = [].slice.call(document.getElementsByClassName('character__name-label'));
         const charactersDivs = [].slice.call(document.getElementsByClassName('character'));
         for(let i = 0; i < charactersDivs.length; i++)
@@ -67,7 +71,6 @@ class CharactersList extends Component {
     }
 
     fetch = async () => {
-        console.log(this.props.location.state);
         let result = null;
         if(this.props.location.state.data !== null)
         {
@@ -75,7 +78,6 @@ class CharactersList extends Component {
             result = await fetchData(propsUrl);
         }
         else result = await fetchData(this.url);
-        console.log(result);
         this.setState({charactersData: result.results, resultsnumber: result.total});
         this.displayCharacters();
     }
@@ -88,7 +90,10 @@ class CharactersList extends Component {
         let totalPages = (this.state.resultsnumber / this.numberOfResults);
         totalPages = Math.floor(totalPages) +1;
         const whichPage = parseInt(document.getElementById('page').value) -1;
-        if(whichPage +1 > totalPages) {
+        if(totalPages === 1) {
+            errorText[0].innerHTML = `There is only one page`;
+        }
+        else if(whichPage +1 > totalPages) {
             errorText[0].innerHTML = `There are ${totalPages} pages`;
         } else if (whichPage <= -1){
             errorText[0].innerHTML = `Wrong value`;
@@ -118,7 +123,8 @@ class CharactersList extends Component {
         if(newUrl !== this.url)
         {
             this.setState({
-                characters: null
+                characters: null,
+                isLoaded: false
             });
             this.url = newUrl;
             this.fetch();
@@ -139,7 +145,7 @@ class CharactersList extends Component {
                 </form>
                 <div className="characters-list__results results">
                     <h1 className="results__title">Number of results: {this.state.resultsnumber}</h1>
-                    {this.state.characters}
+                    {this.state.isLoaded? <>{this.state.characters}</> : <Loader/>}
                 </div>
                 <div className="results-nav">
                     <label for="page" className="results-nav__label">Choose page:</label>

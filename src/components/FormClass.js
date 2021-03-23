@@ -2,62 +2,6 @@ import React, {Component} from 'react';
 import closeIcon from "../img/close-icon.png";
 
 class Form extends Component {
-    search(str) {
-        let results = [];
-        const val = str.toLowerCase();
-    
-        for (let i = 0; i < this.charactersNames.length; i++) {
-            if (this.charactersNames[i].toLowerCase().indexOf(val) > -1) {
-                results.push(this.charactersNames[i]);
-            }
-        }
-    
-        return results;
-    }
-    
-    searchHandler(e, suggestions) {
-        const inputVal = e.currentTarget.value;
-        let results = [];
-        if (inputVal.length > 0) {
-            results = this.search(inputVal);
-        }
-        this.showSuggestions(results, inputVal, suggestions);
-    }
-    
-    showSuggestions(results, inputVal, suggestions) {
-        
-        suggestions.innerHTML = '';
-    
-        if (results.length > 0) {
-            for (let i = 0; i < results.length; i++) {
-                let item = results[i];
-                const match = item.match(new RegExp(inputVal, 'i'));
-                item = item.replace(match[0], `<strong>${match[0]}</strong>`);
-                suggestions.innerHTML += `<li>${item}</li>`;
-            }
-            suggestions.classList.add('has-suggestions');
-        } else {
-            results = [];
-            suggestions.innerHTML = '';
-            suggestions.classList.remove('has-suggestions');
-        }
-    }
-    
-    useSuggestion(e, input, suggestions) {
-        input.value = e.target.innerText;
-        input.focus();
-        suggestions.innerHTML = '';
-        suggestions.classList.remove('has-suggestions');
-    }
-    
-    searchCharacters = () => {
-        const input = document.querySelector('#character');
-        const suggestions = document.querySelector('.form__suggestions-characters');
-    
-        input.addEventListener('keyup', (e) => this.searchHandler(e, suggestions));
-        suggestions.addEventListener('click', (e) => this.useSuggestion(e, input, suggestions));
-    }
-
     letters = (type) => {
         return(
             <select id={type} name={type} className="form__input form__input--small">
@@ -152,22 +96,7 @@ class Form extends Component {
             </select>
             <label for="issuenumber" className="form__label">Issue number:</label>
             <input type="text" id="issuenumber" name="issuenumber" className="form__input"/>
-    
-            <p className="form__title">Search by:</p>
-            <hr className="form__break"/>
-            <label for="title" className="form__label">Title:</label>
-            <input type="text" id="title" name="title" className="form__input"/>
-            <label for="characters" className="form__label">Character:</label>
-            <div class="form__search-characters">
-	        <input type="text" name="character" id="character" placeholder="Search character" />
-	            <div class="form__suggestions-characters">
-		            <ul></ul>
-	            </div>
-            </div>
-            <hr className="form__break"/>
-            <label for="creators" className="form__label">Creator:</label>
-            <input type="text" id="creators" name="creators" className="form__input"/>
-            <hr className="form__break"/>
+ 
             <p className="form__title">Other options:</p>
             <hr className="form__break"/>
             <label for="order" className="form__label">Order by:</label>
@@ -190,14 +119,6 @@ class Form extends Component {
             <img src={closeIcon} alt='close icon' className="form__close"/>
             <label for="letter" className="form__label">Name starts with:</label>
             {this.letters("letter")}
-    
-            <p className="form__title">Search by:</p>
-            <label for="comic" className="form__label">Comic:</label>
-            <input type="text" id="comic" name="comic" className="form__input"/>
-            <label for="story" className="form__label">Story:</label>
-            <input type="text" id="story" name="story" className="form__input"/>
-            <label for="event" className="form__label">Event:</label>
-            <input type="text" id="event" name="event" className="form__input"/>
     
             <p className="form__title">Other options:</p>
             <label for="results" className="form__label">&#8470; of results on page:</label>
@@ -241,14 +162,6 @@ class Form extends Component {
             <label for="releaseyear" className="form__label">Initial release year:</label>
             <input type="text" id="releaseyear" name="releaseyear" className="form__input"/>
     
-            <p className="form__title">Search by:</p>
-            <label for="comic" className="form__label">Comic:</label>
-            <input type="text" id="comic" name="comic" className="form__input"/>
-            <label for="character" className="form__label">Character:</label>
-            <input type="text" id="character" name="character" className="form__input"/>
-            <label for="event" className="form__label">Event:</label>
-            <input type="text" id="event" name="event" className="form__input"/>
-    
             <p className="form__title">Other options:</p>
             <label for="order" className="form__label">Order by:</label>
             <select id="order" name="order" className="form__input">
@@ -268,13 +181,6 @@ class Form extends Component {
             <img src={closeIcon} alt='close icon' className="form__close"/>
             <label for="letter" className="form__label">Name starts with:</label>
             {this.letters("letter")}
-            <p className="form__title">Search by:</p>
-            <label for="title" className="form__label">Title:</label>
-            <input type="text" id="title" name="title" className="form__input"/>
-            <label for="characters" className="form__label">Character:</label>
-            <input type="text" id="characters" name="characters" className="form__input"/>
-            <label for="creators" className="form__label">Creator:</label>
-            <input type="text" id="creators" name="creators" className="form__input"/>
     
             <p className="form__title">Other options:</p>
             <label for="order" className="form__label">Order by:</label>
@@ -301,15 +207,6 @@ class Form extends Component {
             <hr className="form__break"/>
             <label for="lastNameLetter" className="form__label">Last name starts with:</label>
             {this.letters("lastNameLetter")}
-            <hr className="form__break"/>
-            <p className="form__title">Search by:</p>
-            <label for="title" className="form__label">Comic:</label>
-            <input type="text" id="comic" name="comic" className="form__input"/>
-            <label for="characters" className="form__label">Series:</label>
-            <input type="text" id="series" name="series" className="form__input"/>
-            <label for="creators" className="form__label">Event:</label>
-            <input type="text" id="event" name="event" className="form__input"/>
-    
             <p className="form__title">Other options:</p>
             <label for="order" className="form__label">Order by:</label>
             <select id="order" name="order" className="form__input">
@@ -323,11 +220,6 @@ class Form extends Component {
         </>
         );
     };
-
-    // componentDidMount() {
-    //     this.searchCharacters();
-    // }
-
  
     render() {
         const {type} = this.props;

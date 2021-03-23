@@ -4,7 +4,7 @@ const cutText = (text, length) => {
         text = text.replace(marker, '');
     });
 
-    if(text.split(" ").splice(0,length).length < 25) {
+    if(text.split(" ").splice(0,length).length < 20) {
         return text
     }
     else return `${text.split(" ").splice(0,length).join(" ")}...`;
