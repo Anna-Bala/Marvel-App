@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/Marvel-App/static/css/main.e4242f3b.chunk.css",
+    "main.js": "/Marvel-App/static/js/main.903cea98.chunk.js",
+    "main.js.map": "/Marvel-App/static/js/main.903cea98.chunk.js.map",
+    "runtime-main.js": "/Marvel-App/static/js/runtime-main.f88921e4.js",
+    "runtime-main.js.map": "/Marvel-App/static/js/runtime-main.f88921e4.js.map",
+    "static/js/2.a75741b1.chunk.js": "/Marvel-App/static/js/2.a75741b1.chunk.js",
+    "static/js/2.a75741b1.chunk.js.map": "/Marvel-App/static/js/2.a75741b1.chunk.js.map",
+    "index.html": "/Marvel-App/index.html",
+    "static/css/main.e4242f3b.chunk.css.map": "/Marvel-App/static/css/main.e4242f3b.chunk.css.map",
+    "static/js/2.a75741b1.chunk.js.LICENSE.txt": "/Marvel-App/static/js/2.a75741b1.chunk.js.LICENSE.txt",
+    "static/media/settings-icon.d324ef6f.png": "/Marvel-App/static/media/settings-icon.d324ef6f.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.f88921e4.js",
+    "static/js/2.a75741b1.chunk.js",
+    "static/css/main.e4242f3b.chunk.css",
+    "static/js/main.903cea98.chunk.js"
+  ]
+}
