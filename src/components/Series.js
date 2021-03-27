@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import Button  from './Button';
 import {decode} from 'html-entities';
-import cutText from "../functions/cutText";
+import fixText from "../functions/fixText";
 
 class Series extends Component {
     state = {
@@ -23,7 +23,7 @@ class Series extends Component {
         withCover: (
             <>
                 <h1 className="series__title">{this.props.title}</h1>
-                <p className="series__description">{this.description === 'null'? '' : cutText(this.description, 25)}</p>
+                <p className="series__description">{this.description === 'null'? '' : fixText(this.description, 25, true)}</p>
                 <Link to={{
                     pathname: `/series/${this.props.id}`, 
                     state: {data: this.props.data}}} 

@@ -6,6 +6,8 @@ import changeUrl from "../../functions/changeUrl";
 import fetchData from "../../functions/fetchData";
 import {Link} from 'react-router-dom';
 import Button  from '../../components/Button';
+import {decode} from 'html-entities';
+import fixText from "../../functions/fixText";
 
 class SingleCharacter extends Component {
     state = {
@@ -106,7 +108,10 @@ class SingleCharacter extends Component {
     }
 
     render() {
-        const {name, description, comics, series, events} = this.data;
+        const {name, comics, series, events} = this.data;
+        let description = decode(`${this.data.description}`, {level: 'html5', mode: 'specialChars'});
+        description = fixText(description, 0, false);
+
         const nameIndex = name.indexOf('(');
         let shortName = '';
         if(nameIndex > -1) shortName = name.slice(0, nameIndex);

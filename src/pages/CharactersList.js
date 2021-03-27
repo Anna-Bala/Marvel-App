@@ -45,7 +45,7 @@ class CharactersList extends Component {
 
     displayCharacters = () => {
         const result = this.state.charactersData;
-        const scrollElement = document.querySelector('.results__title');
+        const scrollElement = document.querySelector('.characters-list__title');
         const characters = result.map(character => {
         const index = character.thumbnail.path.indexOf('image_not_available');
         return <Character id={character.id} name={character.name} description={character.description} img={index === (-1)? character.thumbnail.path : false} extension={character.thumbnail.extension} data={character}/>

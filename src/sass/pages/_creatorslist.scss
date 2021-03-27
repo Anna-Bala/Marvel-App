@@ -8,7 +8,6 @@
 }
 
 .creator {
-  @include flex;
   width: 200px;
   height: 200px;
   margin: 5px;
@@ -17,7 +16,8 @@
   background-color: $mainGray;
   &__name {
     @include singleListItemTitle;
-    height: 30%;
+    @include flex;
+    height: 80px;
     position: absolute;
     top: 40%;
     left: 50%;

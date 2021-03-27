@@ -1,6 +1,7 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import StartPage from "../pages/StartPage";
+import ErrorPage from "../pages/ErrorPage";
 import ComicsList from "../pages/ComicsList";
 import CharactersList from "../pages/CharactersList";
 import CreatorsList from "../pages/CreatorsList";
@@ -16,7 +17,9 @@ const Main = () => {
     return (
         <div className='main'>
             <Switch>
-                <Route path='/' component={StartPage} exact />
+                <Route path='/' exact><Redirect to="/start" /></Route>
+                <Route path='/Marvel-App' component={StartPage} exact/>
+                <Route path='/start' component={StartPage} exact/> 
                 <Route path='/comics' component={ComicsList} exact/> 
                 <Route path='/comics/:id' component={SingleComic} />
                 <Route path='/characters' component={CharactersList} exact/>
@@ -27,8 +30,7 @@ const Main = () => {
                 <Route path='/series/:id' component={SingleSeries}/>
                 <Route path='/events' component={EventsList} exact/>
                 <Route path='/events/:id' component={SingleEvent} />
-
-                {/* <Route component={ErrorPage} /> */}
+                <Route component={ErrorPage} />
             </Switch>
         </div>
     )

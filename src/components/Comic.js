@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import Button  from './Button';
 import {decode} from 'html-entities';
-import cutText from "../functions/cutText";
+import fixText from "../functions/fixText";
 
 class Comic extends Component {
     state = {
@@ -23,7 +23,7 @@ class Comic extends Component {
         withCover: (
             <>
                 <h1 className="comic__title">{this.props.title}</h1>
-                <p className="comic__description">{this.description === 'null'? '' : cutText(this.description, 20)}</p>
+                <p className="comic__description">{this.description === 'null' || this.props.title.length > 50? '' : fixText(this.description, 20, true)}</p>
                 <Link to={{
                     pathname: `/comics/${this.props.id}`, 
                     state: {data: this.props.data}}} 

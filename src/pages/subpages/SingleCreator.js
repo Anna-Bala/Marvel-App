@@ -144,30 +144,33 @@ class SingleCreator extends Component {
 
     comics = () => (<>
     {this.state.comics}
+    <hr className="single-creator__break"/>
     {<Link to={{
          pathname: `/comics`, 
         state: {data: this.data.id, from: 'creators'}}} 
-         className="button">
+         className="button button--brd">
          <Button text="See all comics"/>
      </Link>}
     </>);
 
     series = () => (<>
     {this.state.series}
+    <hr className="single-creator__break"/>
     {<Link to={{
          pathname: `/series`, 
         state: {data: this.data.id, from: 'creators'}}} 
-         className="button">
+         className="button button--brd">
          <Button text="See all series"/>
      </Link>}
     </>);
 
     events = () => (<>
     {this.state.events}
+    <hr className="single-creator__break"/>
     {<Link to={{
          pathname: `/events`, 
         state: {data: this.data.id, from: 'creators'}}} 
-         className="button">
+         className="button button--brd">
          <Button text="See all events"/>
      </Link>}
     </>);

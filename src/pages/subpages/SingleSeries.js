@@ -173,10 +173,11 @@ class SingleSeries extends Component {
             return(
                 <>
                     {comics}
+                    <hr className="single-series__break"/>
                     {<Link to={{
                     pathname: `/comics`, 
                     state: {data: this.data.id, from: 'series'}}} 
-                    className="button">
+                    className="button button--brd">
                         <Button text="See all comics"/>
                     </Link>}
                 </>
@@ -230,7 +231,9 @@ class SingleSeries extends Component {
                         <img src={arrow} alt="arrow" className="panel__button panel__button--right" onClick={() => this.manageContent('next')} />
                     </div>
                 </div>
-                {this.displayContent()}
+                <div className="single-series__content--container">
+                    {this.displayContent()}
+                </div>
             </div>
         )
     }

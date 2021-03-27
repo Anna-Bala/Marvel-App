@@ -1,17 +1,5 @@
 .start-page {
-  @include flex;
-  &__title {
-    @include listTitle;
-    &--mark {
-      display: inline;
-      color: $mainRed;
-      font-weight: bold;
-    }
-  }
-  &__description {
-    width: 100%;
-    line-height: 2;
-  }
+  @include errorAndStartPage;
   &__link {
     color: $mainRed;
     font-weight: bold;

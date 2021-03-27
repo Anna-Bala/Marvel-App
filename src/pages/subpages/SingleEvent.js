@@ -28,6 +28,7 @@ class SingleEvent extends Component {
         currentContent: 0,
         previousContent: null,
         nextContent: 1,
+        test: false
     }
 
     apiKey = '9b9a40427eb372f72b3775e4f456a370';
@@ -38,7 +39,6 @@ class SingleEvent extends Component {
     endDate =  convertDate(this.data.end);
 
     fetch = async (what, url) => {
-
         const result = await fetchData(url);
         if(what === 'comics') {
             this.setState(prevState => ({comicsData: [...prevState.comicsData, result]}));
@@ -199,6 +199,7 @@ class SingleEvent extends Component {
 
     comics = () => (<>
     {this.state.comics}
+    <hr className="single-event__break"/>
     {<Link to={{
          pathname: `/comics`, 
         state: {data: this.data.id, from: 'events'}}} 
@@ -209,16 +210,18 @@ class SingleEvent extends Component {
 
     characters = () => (<>
     {this.state.characters}
+    <hr className="single-event__break"/>
     {<Link to={{
          pathname: `/characters`, 
         state: {data: this.data.id, from: 'events'}}} 
-         className="button">
+         className="button button--brd">
          <Button text="See all characters"/>
      </Link>}
     </>);
 
     creators = () => (<>
     {this.state.creators}
+    <hr className="single-event__break"/>
     {<Link to={{
          pathname: `/creators`, 
          state: {data: this.data.id, from: 'events'}}} 
@@ -229,6 +232,7 @@ class SingleEvent extends Component {
 
     series = () => (<>
     {this.state.series}
+    <hr className="single-event__break"/>
     {<Link to={{
          pathname: `/series`, 
         state: {data: this.data.id, from: 'events'}}} 
@@ -244,15 +248,19 @@ class SingleEvent extends Component {
      return (
      <div className="single-event__other">
         <div className="single-event__dates">
-            <h2 className="single-event__title single-event__title--sub">Publication dates</h2>
-            <p className="single-event__description">First issue: {this.startDate}</p>
-            <p className="single-event__description">Last issue: {this.endDate}</p>
+            <h2 className="single-event__title">Publication dates</h2>
+            <p className="single-event__info">First issue: {this.startDate}</p>
+            <p className="single-event__info">Last issue: {this.endDate}</p>
          </div>
-         <div className="single-event__other-events">
-            <h2 className="single-event__title single-event__title--sub">Explore other events</h2>
-            <p className="single-event__description">Following event</p>
+         <div className="single-event__other--margin">
+            <h2 className="single-event__title">Explore other events</h2>
+            <p className="single-event__info">Following event</p>
+            {<Link to={{
+                pathname: `/events/${this.state.nextEventData[0].id}`, 
+                state: {data: this.state.nextEventData[0]}}} onClick={() => setTimeout(window.location.reload(), 50)}>
                 {followingEvent}
-            <p className="single-event__description">Previous event</p>
+            </Link>}
+            <p className="single-event__info">Previous event</p>
          </div>
     </div>
         )

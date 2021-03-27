@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import Button  from './Button';
 import {decode} from 'html-entities';
-import cutText from "../functions/cutText";
+import fixText from "../functions/fixText";
 
 class Event extends Component {   
     state = {
@@ -24,11 +24,12 @@ class Event extends Component {
         withCover: (
             <>
                 <h1 className="event__title">{this.props.title}</h1>
-                <p className="event__description">{this.description === 'null'? '' : cutText(this.description, 25)}</p>
+                <p className="event__description">{this.description === 'null'? '' : fixText(this.description, 20, true)}</p>
                 <Link to={{
                     pathname: `/events/${this.props.id}`, 
                     state: {data: this.props.data}}} 
-                    className="button">
+                    className="button"
+                    >
                         <Button />
                 </Link>
             </>

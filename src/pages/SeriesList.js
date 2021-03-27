@@ -50,7 +50,7 @@ class SeriesList extends Component {
 
     displaySeries = () => {
         const results = this.state.seriesData;
-        const scrollElement = document.querySelector('.results__title');
+        const scrollElement = document.querySelector('.series-list__title');
         const series = results.map(series => {
         const index = series.thumbnail.path.indexOf('image_not_available');
         return <Series id={series.id} title={series.title} description={series.description} img={index === (-1)? series.thumbnail.path : false} extension={series.thumbnail.extension} data={series}/>

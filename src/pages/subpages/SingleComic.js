@@ -7,6 +7,8 @@ import followingContent from "../../functions/followingContent";
 import fetchData from "../../functions/fetchData";
 import Button from "../../components/Button";
 import arrow from "../../img/arrow.png";
+import {decode} from 'html-entities';
+import fixText from "../../functions/fixText";
 
 class SingleComic extends Component {
     state = {
@@ -237,7 +239,10 @@ class SingleComic extends Component {
     )
 
     render() {
-        const {title, description} = this.data;
+        const {title} = this.data;
+        let description = decode(`${this.data.description}`, {level: 'html5', mode: 'specialChars'});
+        description = fixText(description, 0, false);
+
         return(
             <div className="single-comic">
                 <h1 className=" single-comic__title single-comic__title--main">{title}</h1>
@@ -251,7 +256,9 @@ class SingleComic extends Component {
                         <img src={arrow} alt="arrow" className="panel__button panel__button--right" onClick={() => this.manageContent('next')} />
                     </div>
                 </div>
-                {this.displayContent()}
+                <div className="single-comic__content--container">
+                    {this.displayContent()}
+                </div>
             </div>
         )
     }

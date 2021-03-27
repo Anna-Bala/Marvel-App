@@ -6,4 +6,6 @@
     font-size: 2rem;
     width: 100%;
   }
+  @include break;
+  @include buttonBorderInSinglePages;
 }

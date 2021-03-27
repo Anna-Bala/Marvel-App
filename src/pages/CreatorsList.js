@@ -48,7 +48,7 @@ class CreatorsList extends Component {
 
     displayCreators = () => {
         const results = this.state.creatorsData;
-        const scrollElement = document.querySelector('.results__title');
+        const scrollElement = document.querySelector('.creators-list__title');
         const creators = results.map(creator => {
         return <Creator id={creator.id} name={creator.fullName} extension={creator.thumbnail.extension} data={creator}/>
         });

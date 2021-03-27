@@ -132,8 +132,5 @@
       }
     }
   }
-  &__break {
-    width: 100%;
-    border: none;
-  }
+  @include break;
 }
