@@ -13,6 +13,7 @@ class SingleSeries extends Component {
         charactersData: [],
         comicsData: [],
         eventsData: [], 
+        creatorsData: [],
         currentContent: 0,
         previousContent: null,
         nextContent: 1,
@@ -30,6 +31,11 @@ class SingleSeries extends Component {
             return url + `?ts=1&apikey=${this.apiKey}&hash=97a77a62ca6b19c0c250ad87841df189`;
         });
 
+        let creatorsUrls = this.data.creators.items.map(creator => {
+            let url = changeUrl(creator.resourceURI, 's', 4);
+            url = changeUrl(url, ':443', 26);
+            return url + `?ts=1&apikey=${this.apiKey}&hash=97a77a62ca6b19c0c250ad87841df189`;
+        });
 
         let eventsUrls = this.data.events.items.map(event => {
             let url = changeUrl(event.resourceURI, 's', 4);
@@ -63,6 +69,15 @@ class SingleSeries extends Component {
 
         });
 
+        creatorsUrls.forEach(url => {
+            const fetch = async () => {
+                const result = await fetchData(url);
+                this.setState(prevState => ({creatorsData: [...prevState.creatorsData, result.results[0]]}));
+            }
+            fetch();
+
+        });
+
         eventsUrls.forEach(url => {
             const fetch = async () => {
                 const result = await fetchData(url);
@@ -72,6 +87,8 @@ class SingleSeries extends Component {
             fetch();
         });
 
+        const scrollElement = document.querySelector('.navigation');
+        scrollElement.scrollIntoView();
 
         this.setState({
             previousContent: this.contentNames.length - 1
@@ -139,15 +156,21 @@ class SingleSeries extends Component {
         if(this.data.creators.items.length !== 0) {
             return(
                 <div className="single-series__content">
-                    {this.data.creators.items.map(result => {
+                    {this.state.creatorsData.map(result => {
                         const urlLength = result.resourceURI.length;
                         const id = result.resourceURI.slice(45, urlLength);
+                        let role = '';
+                        console.log(this.data);
+                        this.data.creators.items.forEach(creator => {
+                            if(creator.name === result.fullName) role = creator.role;
+                        });
+
                         return (
                         <Link to={{
                         pathname: `/creators/${id}`, 
                         state: {data: result}}} className="single-series__creator">
-                                <h1 className="single-series__creator-role">{result.role}</h1>
-                                <h1 className="single-series__creator-name">{result.name}</h1>
+                                <h1 className="single-series__creator-role">{role}</h1>
+                                <h1 className="single-series__creator-name">{result.fullName}</h1>
                         </Link>
                       
                     )
@@ -157,7 +180,7 @@ class SingleSeries extends Component {
         } else {
             return(
                 <div className="single-series__content">
-                    <p className="single-series__description">There are no characters to display</p>
+                    <p className="single-series__description">There are no creators to display</p>
                 </div>
             )
         }

@@ -50,7 +50,7 @@ class ComicsList extends Component {
 
     displayComics = () => {
         const results = this.state.comicData;
-        const scrollElement = document.querySelector('.comics-list__title');
+        const scrollElement = document.querySelector('.navigation');
         const comics = results.map(comic => {
         const index = comic.thumbnail.path.indexOf('image_not_available');
         return <Comic id={comic.id} title={comic.title} description={comic.description} img={index === (-1)? comic.thumbnail.path : false} extension={comic.thumbnail.extension} data={comic}/>

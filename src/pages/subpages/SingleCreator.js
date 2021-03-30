@@ -47,6 +47,7 @@ class SingleCreator extends Component {
     }
 
     componentDidMount() {
+        console.log(this.data);
         let comicsUrls = this.data.comics.collectionURI;
         comicsUrls = changeUrl(comicsUrls, 's', 4);
         comicsUrls = changeUrl(comicsUrls, ':443', 26);
@@ -80,6 +81,9 @@ class SingleCreator extends Component {
         eventsUrls.forEach(url => {
             this.fetch("events", url);
         });
+
+        const scrollElement = document.querySelector('.navigation');
+        scrollElement.scrollIntoView();
 
         this.setState({
             previousContent: this.contentNames.length - 1

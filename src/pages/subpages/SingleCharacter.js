@@ -8,6 +8,7 @@ import {Link} from 'react-router-dom';
 import Button  from '../../components/Button';
 import {decode} from 'html-entities';
 import fixText from "../../functions/fixText";
+import Loader from "../../components/Loader";
 
 class SingleCharacter extends Component {
     state = {
@@ -17,6 +18,7 @@ class SingleCharacter extends Component {
         comics: null,
         series: null,
         events : null,
+        isLoaded: false
     }
 
     apiKey = '9b9a40427eb372f72b3775e4f456a370';
@@ -69,6 +71,9 @@ class SingleCharacter extends Component {
 
         eventsUrls = new Array(eventsUrls);
 
+        const scrollElement = document.querySelector('.navigation');
+        scrollElement.scrollIntoView();
+
         eventsUrls.forEach(url => {
             this.fetch("events", url);
         });
@@ -104,6 +109,7 @@ class SingleCharacter extends Component {
         });
         this.setState({
             events,
+            isLoaded: true
         })
     }
 
@@ -117,6 +123,7 @@ class SingleCharacter extends Component {
         if(nameIndex > -1) shortName = name.slice(0, nameIndex);
         else shortName = name;
         const characterImg = this.data.thumbnail.path + '/standard_fantastic.' + this.data.thumbnail.extension;
+        if(this.state.isLoaded) {
         return (
             <div className="single-character">
                 <h1 className="single-character__name">{name}</h1>
@@ -166,7 +173,8 @@ class SingleCharacter extends Component {
                     }
                 </div>
             </div>
-        )
+        )}
+        else return <Loader />
     }
 }
 

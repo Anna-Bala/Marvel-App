@@ -44,7 +44,7 @@ class EventsList extends Component {
 
     displayEvents = () => {
         const results = this.state.eventsData;
-        const scrollElement = document.querySelector('.events-list__title');
+        const scrollElement = document.querySelector('.navigation');
         const events = results.map(event => {
         const index = event.thumbnail.path.indexOf('image_not_available');
         return <Event id={event.id} title={event.title} description={event.description} img={index === (-1)? event.thumbnail.path : false} extension={event.thumbnail.extension} data={event}/>

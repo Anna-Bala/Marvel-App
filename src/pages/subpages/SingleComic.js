@@ -9,21 +9,25 @@ import Button from "../../components/Button";
 import arrow from "../../img/arrow.png";
 import {decode} from 'html-entities';
 import fixText from "../../functions/fixText";
+import Loader from "../../components/Loader";
 
 class SingleComic extends Component {
     state = {
         charactersData: [],
         seriesData: [],
         eventsData: [], 
+        creatorsData: [], 
         currentContent: 0,
         previousContent: null,
         nextContent: 1,
+        isLoaded: false
     }
 
     apiKey = '9b9a40427eb372f72b3775e4f456a370';
     data = this.props.location.state.data;
     contentNames = ['characters', 'creators', 'series', 'events', 'other info'];
-    
+
+
     printDate = this.data.dates.map(date => {
         if(date.type === "onsaleDate") return convertDate(date.date);
         else return null;
@@ -51,6 +55,12 @@ class SingleComic extends Component {
             return url + `?ts=1&apikey=${this.apiKey}&hash=97a77a62ca6b19c0c250ad87841df189`;
         });
 
+        let creatorsUrls = this.data.creators.items.map(creator => {
+            let url = changeUrl(creator.resourceURI, 's', 4);
+            url = changeUrl(url, ':443', 26);
+            return url + `?ts=1&apikey=${this.apiKey}&hash=97a77a62ca6b19c0c250ad87841df189`;
+        });
+
 
         let seriesUrl = changeUrl(this.data.series.resourceURI, 's', 4);
         seriesUrl = changeUrl(seriesUrl, ':443', 26);
@@ -70,16 +80,22 @@ class SingleComic extends Component {
                 this.setState(prevState => ({charactersData: [...prevState.charactersData, result.results[0]]}));
             }
             fetch();
-
         });
 
+        creatorsUrls.forEach(url => {
+            const fetch = async () => {
+                const result = await fetchData(url);
+                this.setState(prevState => ({creatorsData: [...prevState.creatorsData, result.results[0]]}));
+            }
+            fetch();
+
+        });
 
         seriesUrl.forEach(url => {
             const fetch = async () => {
                 const result = await fetchData(url);
                 this.setState(prevState => ({seriesData: [...prevState.seriesData, result.results[0]]}));
             }
-
             fetch();
         });
 
@@ -88,13 +104,16 @@ class SingleComic extends Component {
                 const result = await fetchData(url);
                 this.setState(prevState => ({eventsData: [...prevState.eventsData, result.results[0]]}));
             }
-
             fetch();
         });
 
+        
+        const scrollElement = document.querySelector('.navigation');
+        scrollElement.scrollIntoView();
 
         this.setState({
-            previousContent: this.contentNames.length - 1
+            previousContent: this.contentNames.length - 1,
+            isLoaded: true
         });
     }
 
@@ -111,7 +130,6 @@ class SingleComic extends Component {
     displayContent = () => {
         const current = this.state.currentContent;
         const name = this.contentNames[current];
-
         switch(name) {
             case 'characters': return this.characters();
             case 'creators': return this.creators();
@@ -131,7 +149,6 @@ class SingleComic extends Component {
                         const titleIndex = result.name.indexOf('(');
                         const name = result.name.slice(0, titleIndex) + "\n" + result.name.slice(titleIndex);
                     return (
-
                         <Link to={{
                         pathname: `/characters/${result.id}`, 
                         state: {data: result}}} className="single-comic__character">
@@ -142,7 +159,6 @@ class SingleComic extends Component {
                                 </div>
                                 <img className="single-comic__image" src={imgPath} alt="character"/>
                         </Link>
-                      
                     )
                     })}
                 </div>
@@ -160,15 +176,21 @@ class SingleComic extends Component {
         if(this.data.creators.items.length !== 0) {
             return(
                 <div className="single-comic__content">
-                    {this.data.creators.items.map(result => {
+                    {this.state.creatorsData.map(result => {
                         const urlLength = result.resourceURI.length;
                         const id = result.resourceURI.slice(45, urlLength);
+                        let role = '';
+                        console.log(this.data);
+                        this.data.creators.items.forEach(creator => {
+                            if(creator.name === result.fullName) role = creator.role;
+                        });
+
                         return (
                         <Link to={{
                         pathname: `/creators/${id}`, 
                         state: {data: result}}} className="single-comic__creator">
-                                <h1 className="single-comic__creator-role"><p className="single-comic__creator-text">{result.role}</p></h1>
-                                <h1 className="single-comic__creator-name"><p className="single-comic__creator-text">{result.name}</p></h1>
+                                <h1 className="single-comic__creator-role"><p className="single-comic__creator-text">{role}</p></h1>
+                                <h1 className="single-comic__creator-name"><p className="single-comic__creator-text">{result.fullName}</p></h1>
                         </Link>
                       
                     )
@@ -257,7 +279,7 @@ class SingleComic extends Component {
                     </div>
                 </div>
                 <div className="single-comic__content--container">
-                    {this.displayContent()}
+                    {this.state.isLoaded? <>{this.displayContent()}</> : <Loader/>}
                 </div>
             </div>
         )

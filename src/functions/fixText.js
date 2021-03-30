@@ -4,6 +4,10 @@ const fixText = (text, length, cut) => {
         text = text.replaceAll(marker, '');
     });
 
+    if(text === null || text === 'null') {
+        return '';
+    }
+
     if(cut) {
         if(text.split(" ").splice(0,length).length < 20) {
             return text

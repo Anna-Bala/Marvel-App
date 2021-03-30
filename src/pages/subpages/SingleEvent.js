@@ -123,10 +123,19 @@ class SingleEvent extends Component {
 
         this.fetch("nextEvent", nextEventUrl);
 
+        const scrollElement = document.querySelector('.navigation');
+        scrollElement.scrollIntoView();
+
         this.setState({
             previousContent: this.contentNames.length - 1
         });
     }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.location !== prevProps.location) {
+            window.location.reload();
+        }
+      }
 
     manageContent = (where) => {
         const {currentContent, previousContent, nextContent} = this.state;
@@ -203,7 +212,7 @@ class SingleEvent extends Component {
     {<Link to={{
          pathname: `/comics`, 
         state: {data: this.data.id, from: 'events'}}} 
-         className="button">
+         className="button button--brd">
          <Button text="See all comics"/>
      </Link>}
     </>);
@@ -225,7 +234,7 @@ class SingleEvent extends Component {
     {<Link to={{
          pathname: `/creators`, 
          state: {data: this.data.id, from: 'events'}}} 
-         className="button">
+         className="button button--brd">
          <Button text="See all creators"/>
      </Link>}
     </>);
@@ -236,16 +245,19 @@ class SingleEvent extends Component {
     {<Link to={{
          pathname: `/series`, 
         state: {data: this.data.id, from: 'events'}}} 
-         className="button">
+         className="button button--brd">
          <Button text="See all series"/>
      </Link>}
     </>);
     
     otherInfo = () => {
-    const {id, title, description, thumbnail} = this.state.nextEventData[0];
+    const {id: nextID, title: nextTitle, description: nextDescription, thumbnail: nextThumbnail} = this.state.nextEventData[0];
+    const {id: prevID, title: prevTitle, description: prevDescription, thumbnail: prevThumbnail} = this.state.prevEventData[0];
     const index = this.state.nextEventData[0].thumbnail.path.indexOf('image_not_available');
-    const followingEvent = <Event id={id} title={title} description={description} img={index === (-1)? thumbnail.path : false} extension={thumbnail.extension} data={this.state.nextEventData[0]}/>;
-     return (
+    const followingEvent = <Event id={nextID} title={nextTitle} description={nextDescription} img={index === (-1)? nextThumbnail.path : false} extension={nextThumbnail.extension} data={this.state.nextEventData[0]}/>;
+    const previousEvent = <Event id={prevID} title={prevTitle} description={prevDescription} img={index === (-1)? prevThumbnail.path : false} extension={prevThumbnail.extension} data={this.state.prevEventData[0]}/>;
+    
+    return (
      <div className="single-event__other">
         <div className="single-event__dates">
             <h2 className="single-event__title">Publication dates</h2>
@@ -254,13 +266,10 @@ class SingleEvent extends Component {
          </div>
          <div className="single-event__other--margin">
             <h2 className="single-event__title">Explore other events</h2>
-            <p className="single-event__info">Following event</p>
-            {<Link to={{
-                pathname: `/events/${this.state.nextEventData[0].id}`, 
-                state: {data: this.state.nextEventData[0]}}} onClick={() => setTimeout(window.location.reload(), 50)}>
+            <p className="single-event__title--sub">Following event</p>
                 {followingEvent}
-            </Link>}
-            <p className="single-event__info">Previous event</p>
+            <p className="single-event__title--sub">Previous event</p>
+                {previousEvent}
          </div>
     </div>
         )
