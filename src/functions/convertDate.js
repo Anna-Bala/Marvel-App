@@ -1,6 +1,5 @@
 const convertDate = (date) => {
-    const converted = date.substring(0, 10);
-    return converted
+       return date.substring(0, 10);
 }
 
 export default convertDate;

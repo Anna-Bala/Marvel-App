@@ -35,7 +35,7 @@ class EventsList extends Component {
                 icon[0].classList.toggle('form__icon--closed');
                 text[0].classList.toggle('form__search--closed');
           });
-            closeIcon[0].addEventListener("click", () => {
+        closeIcon[0].addEventListener("click", () => {
             formPanel[0].classList.toggle('form__main--open');
             icon[0].classList.toggle('form__icon--closed');
             text[0].classList.toggle('form__search--closed');
@@ -47,8 +47,9 @@ class EventsList extends Component {
         const scrollElement = document.querySelector('.navigation');
         const events = results.map(event => {
         const index = event.thumbnail.path.indexOf('image_not_available');
-        return <Event id={event.id} title={event.title} description={event.description} img={index === (-1)? event.thumbnail.path : false} extension={event.thumbnail.extension} data={event}/>
+        return <Event id={event.id} title={event.title} description={event.description} img={index === (-1)? event.thumbnail.path : false} extension={event.thumbnail.extension} data={event} key={event.id}/>
         });
+        
         this.setState({
             events,
             isLoaded: true
@@ -136,7 +137,7 @@ class EventsList extends Component {
                     {this.state.isLoaded? <>{this.state.events}</> : <Loader/>}
                 </div>
                 <div className="results-nav">
-                    <label for="page" className="results-nav__label">Choose page:</label>
+                    <label htmlFor="page" className="results-nav__label">Choose page:</label>
                     <input type="page" id="page" name="page" className="results-nav__input"/>
                     <button className="results-nav__button results-nav__button--small" onClick={(e) => this.changeUrl(e,"value")}>Go</button>
                     <p className="results-nav__error"></p>

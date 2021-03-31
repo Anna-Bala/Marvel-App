@@ -50,7 +50,7 @@ class CreatorsList extends Component {
         const results = this.state.creatorsData;
         const scrollElement = document.querySelector('.navigation');
         const creators = results.map(creator => {
-        return <Creator id={creator.id} name={creator.fullName} extension={creator.thumbnail.extension} data={creator}/>
+        return <Creator id={creator.id} name={creator.fullName} extension={creator.thumbnail.extension} data={creator} key={creator.id}/>
         });
         this.setState({
             creators,
@@ -141,7 +141,7 @@ class CreatorsList extends Component {
                     {this.state.isLoaded? <>{this.state.creators}</> : <Loader/>}
                 </div>
                 <div className="results-nav">
-                    <label for="page" className="results-nav__label">Choose page:</label>
+                    <label htmlFor="page" className="results-nav__label">Choose page:</label>
                     <input type="page" id="page" name="page" className="results-nav__input"/>
                     <button className="results-nav__button results-nav__button--small" onClick={(e) => this.changeUrl(e,"value")}>Go</button>
                     <p className="results-nav__error"></p>

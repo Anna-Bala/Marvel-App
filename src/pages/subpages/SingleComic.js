@@ -151,7 +151,7 @@ class SingleComic extends Component {
                     return (
                         <Link to={{
                         pathname: `/characters/${result.id}`, 
-                        state: {data: result}}} className="single-comic__character">
+                        state: {data: result}}} className="single-comic__character" key={result.id}>
                                 <div className="single-comic__character-txtcontainer">
                                     <h1 className="single-comic__character-name">
                                     {titleIndex > -1? name : result.name}
@@ -180,7 +180,6 @@ class SingleComic extends Component {
                         const urlLength = result.resourceURI.length;
                         const id = result.resourceURI.slice(45, urlLength);
                         let role = '';
-                        console.log(this.data);
                         this.data.creators.items.forEach(creator => {
                             if(creator.name === result.fullName) role = creator.role;
                         });
@@ -188,7 +187,7 @@ class SingleComic extends Component {
                         return (
                         <Link to={{
                         pathname: `/creators/${id}`, 
-                        state: {data: result}}} className="single-comic__creator">
+                        state: {data: result}}} className="single-comic__creator" key={id}>
                                 <h1 className="single-comic__creator-role"><p className="single-comic__creator-text">{role}</p></h1>
                                 <h1 className="single-comic__creator-name"><p className="single-comic__creator-text">{result.fullName}</p></h1>
                         </Link>
@@ -214,7 +213,7 @@ class SingleComic extends Component {
                     <Link to={{
                         pathname: `/series/${this.state.seriesData[0].id}`, 
                         state: {data: this.state.seriesData[0]}}}
-                        className="button">
+                        className="button" key={this.state.seriesData[0].id}>
                             <Button/>
                     </Link>
                 </div>

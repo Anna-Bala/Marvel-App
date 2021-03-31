@@ -9,6 +9,7 @@ import followingContent from "../../functions/followingContent";
 import {Link} from 'react-router-dom';
 import Button  from '../../components/Button';
 import arrow from "../../img/arrow.png";
+import Loader from "../../components/Loader";
 
 class SingleCreator extends Component {
     state = {
@@ -23,6 +24,7 @@ class SingleCreator extends Component {
         currentContent: 0,
         previousContent: null,
         nextContent: 1,
+        isLoaded: false
     }
 
     apiKey = '9b9a40427eb372f72b3775e4f456a370';
@@ -47,7 +49,6 @@ class SingleCreator extends Component {
     }
 
     componentDidMount() {
-        console.log(this.data);
         let comicsUrls = this.data.comics.collectionURI;
         comicsUrls = changeUrl(comicsUrls, 's', 4);
         comicsUrls = changeUrl(comicsUrls, ':443', 26);
@@ -117,10 +118,11 @@ class SingleCreator extends Component {
         const results = this.state.comicsData[0].results;
         const comics = results.map(comic => {
         const index = comic.thumbnail.path.indexOf('image_not_available');
-        return <Comic id={comic.id} title={comic.title} description={comic.description} img={index === (-1)? comic.thumbnail.path : false} extension={comic.thumbnail.extension} data={comic}/>;
+        return <Comic id={comic.id} title={comic.title} description={comic.description} img={index === (-1)? comic.thumbnail.path : false} extension={comic.thumbnail.extension} data={comic} key={comic.id}/>;
         });
         this.setState({
             comics,
+            isLoaded: true
         })
     }
 
@@ -128,7 +130,7 @@ class SingleCreator extends Component {
         const results = this.state.seriesData[0].results;
         const series = results.map(series => {
         const index = 1;
-        return <Series id={series.id} title={series.title} description={series.description} img={index === (-1)? series.thumbnail.path : false} extension={series.thumbnail.extension} data={series}/>
+        return <Series id={series.id} title={series.title} description={series.description} img={index === (-1)? series.thumbnail.path : false} extension={series.thumbnail.extension} data={series} key={series.id} />
         });
         this.setState({
             series,
@@ -139,7 +141,7 @@ class SingleCreator extends Component {
         const results = this.state.eventsData[0].results;
         const events = results.map(event => {
         const index = event.thumbnail.path.indexOf('image_not_available');
-        return <Event id={event.id} title={event.title} description={event.description} img={index === (-1)? event.thumbnail.path : false} extension={event.thumbnail.extension} data={event}/>
+        return <Event id={event.id} title={event.title} description={event.description} img={index === (-1)? event.thumbnail.path : false} extension={event.thumbnail.extension} data={event} key={event.id}/>
         });
         this.setState({
             events,
@@ -193,7 +195,7 @@ class SingleCreator extends Component {
                         <img src={arrow} alt="arrow" className="panel__button panel__button--right" onClick={() => this.manageContent('next')} />
                     </div>
                 </div>
-                {this.displayContent()}
+                {this.state.isLoaded? <>{this.displayContent()}</> : <Loader/>}
             </div>
         )
     }

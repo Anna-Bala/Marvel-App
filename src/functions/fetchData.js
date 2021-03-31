@@ -6,7 +6,7 @@ function fetchData(url)
         })
         .then(response => response.json())
         .then(result => result.data)
-        .catch(error => console.log(error));
+        .catch(() => window.location.href += '-error')
         return fetchData;
     }
 

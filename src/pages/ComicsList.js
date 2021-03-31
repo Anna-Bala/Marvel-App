@@ -53,14 +53,14 @@ class ComicsList extends Component {
         const scrollElement = document.querySelector('.navigation');
         const comics = results.map(comic => {
         const index = comic.thumbnail.path.indexOf('image_not_available');
-        return <Comic id={comic.id} title={comic.title} description={comic.description} img={index === (-1)? comic.thumbnail.path : false} extension={comic.thumbnail.extension} data={comic}/>
+        return <Comic id={comic.id} title={comic.title} description={comic.description} img={index === (-1)? comic.thumbnail.path : false} extension={comic.thumbnail.extension} data={comic} key={comic.id}/>
         });
         this.setState({
             comics,
             isLoaded: true
-        })
+        });
         scrollElement.scrollIntoView();
-    }
+    };
 
     fetch = async () => {
         let result = null;
@@ -145,7 +145,7 @@ class ComicsList extends Component {
                 </div>
                 <div className="results-nav">
                     <hr className="results-nav__line"/>
-                    <label for="page" className="results-nav__label">Choose page:</label>
+                    <label htmlFor="page" className="results-nav__label">Choose page:</label>
                     <input type="page" id="page" name="page" className="results-nav__input"/>
                     <button className="results-nav__button results-nav__button--small" onClick={(e) => this.changeUrl(e,"value")}>Go</button>
                     <p className="results-nav__error"></p>

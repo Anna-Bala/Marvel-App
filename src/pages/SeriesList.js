@@ -53,7 +53,7 @@ class SeriesList extends Component {
         const scrollElement = document.querySelector('.navigation');
         const series = results.map(series => {
         const index = series.thumbnail.path.indexOf('image_not_available');
-        return <Series id={series.id} title={series.title} description={series.description} img={index === (-1)? series.thumbnail.path : false} extension={series.thumbnail.extension} data={series}/>
+        return <Series id={series.id} title={series.title} description={series.description} img={index === (-1)? series.thumbnail.path : false} extension={series.thumbnail.extension} data={series} key={series.id}/>
         });
         this.setState({
             series,
@@ -144,7 +144,7 @@ class SeriesList extends Component {
                     {this.state.isLoaded? <>{this.state.series}</> : <Loader/>}
                 </div>
                 <div className="results-nav">
-                    <label for="page" className="results-nav__label">Choose page:</label>
+                    <label htmlFor="page" className="results-nav__label">Choose page:</label>
                     <input type="page" id="page" name="page" className="results-nav__input"/>
                     <button className="results-nav__button results-nav__button--small" onClick={(e) => this.changeUrl(e,"value")}>Go</button>
                     <p className="results-nav__error"></p>

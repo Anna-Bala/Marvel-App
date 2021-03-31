@@ -48,7 +48,7 @@ class CharactersList extends Component {
         const scrollElement = document.querySelector('.navigation');
         const characters = result.map(character => {
         const index = character.thumbnail.path.indexOf('image_not_available');
-        return <Character id={character.id} name={character.name} description={character.description} img={index === (-1)? character.thumbnail.path : false} extension={character.thumbnail.extension} data={character}/>
+        return <Character id={character.id} name={character.name} description={character.description} img={index === (-1)? character.thumbnail.path : false} extension={character.thumbnail.extension} data={character} key={character.id}/>
         });
         this.setState({
             characters,
@@ -148,7 +148,7 @@ class CharactersList extends Component {
                     {this.state.isLoaded? <>{this.state.characters}</> : <Loader/>}
                 </div>
                 <div className="results-nav">
-                    <label for="page" className="results-nav__label">Choose page:</label>
+                    <label htmlFor="page" className="results-nav__label">Choose page:</label>
                     <input type="page" id="page" name="page" className="results-nav__input"/>
                     <button className="results-nav__button results-nav__button--small" onClick={(e) => this.changeUrl(e,"value")}>Go</button>
                     <p className="results-nav__error"></p>

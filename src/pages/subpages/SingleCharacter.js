@@ -83,7 +83,7 @@ class SingleCharacter extends Component {
         const results = this.state.comicsData[0].results;
         const comics = results.map(comic => {
         const index = comic.thumbnail.path.indexOf('image_not_available');
-        return <Comic id={comic.id} title={comic.title} description={comic.description} img={index === (-1)? comic.thumbnail.path : false} extension={comic.thumbnail.extension} data={comic}/>
+        return <Comic id={comic.id} title={comic.title} description={comic.description} img={index === (-1)? comic.thumbnail.path : false} extension={comic.thumbnail.extension} data={comic} key={comic.id}/>
         });
         this.setState({
             comics,
@@ -94,7 +94,7 @@ class SingleCharacter extends Component {
         const results = this.state.seriesData[0].results;
         const series = results.map(series => {
         const index = 1;
-        return <Series id={series.id} title={series.title} description={series.description} img={index === (-1)? series.thumbnail.path : false} extension={series.thumbnail.extension} data={series}/>
+        return <Series id={series.id} title={series.title} description={series.description} img={index === (-1)? series.thumbnail.path : false} extension={series.thumbnail.extension} data={series} key={series.id}/>
         });
         this.setState({
             series,
@@ -105,7 +105,7 @@ class SingleCharacter extends Component {
         const results = this.state.eventsData[0].results;
         const events = results.map(event => {
         const index = event.thumbnail.path.indexOf('image_not_available');
-        return <Event id={event.id} title={event.title} description={event.description} img={index === (-1)? event.thumbnail.path : false} extension={event.thumbnail.extension} data={event}/>
+        return <Event id={event.id} title={event.title} description={event.description} img={index === (-1)? event.thumbnail.path : false} extension={event.thumbnail.extension} data={event} key={event.id}/>
         });
         this.setState({
             events,

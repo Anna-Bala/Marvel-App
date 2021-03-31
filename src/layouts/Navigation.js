@@ -33,8 +33,9 @@ class Navigation extends Component {
                 pathname: `/${item.name}`, 
                 state: {data: null}}}
             exact={item.exact ? item.exact : false} 
-            className="navigation__link">{item.name}
-            <li key={item.name} className=" navigation__item"></li>
+            className="navigation__link"
+            key={item.name}>{item.name}
+            <li className=" navigation__item"></li>
                  </NavLink>
         )
     })

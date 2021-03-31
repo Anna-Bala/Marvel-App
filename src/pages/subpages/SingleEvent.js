@@ -12,6 +12,7 @@ import followingContent from "../../functions/followingContent";
 import {Link} from 'react-router-dom';
 import Button  from '../../components/Button';
 import arrow from "../../img/arrow.png";
+import Loader from "../../components/Loader";
 
 class SingleEvent extends Component {
     state = {
@@ -28,7 +29,7 @@ class SingleEvent extends Component {
         currentContent: 0,
         previousContent: null,
         nextContent: 1,
-        test: false
+        isLoaded: false
     }
 
     apiKey = '9b9a40427eb372f72b3775e4f456a370';
@@ -166,10 +167,11 @@ class SingleEvent extends Component {
         const results = this.state.comicsData[0].results;
         const comics = results.map(comic => {
         const index = comic.thumbnail.path.indexOf('image_not_available');
-        return <Comic id={comic.id} title={comic.title} description={comic.description} img={index === (-1)? comic.thumbnail.path : false} extension={comic.thumbnail.extension} data={comic}/>;
+        return <Comic id={comic.id} title={comic.title} description={comic.description} img={index === (-1)? comic.thumbnail.path : false} extension={comic.thumbnail.extension} data={comic} key={comic.id}/>;
         });
         this.setState({
             comics,
+            isLoaded: true
         })
     }
 
@@ -177,7 +179,7 @@ class SingleEvent extends Component {
         const results = this.state.seriesData[0].results;
         const series = results.map(series => {
         const index = 1;
-        return <Series id={series.id} title={series.title} description={series.description} img={index === (-1)? series.thumbnail.path : false} extension={series.thumbnail.extension} data={series}/>
+        return <Series id={series.id} title={series.title} description={series.description} img={index === (-1)? series.thumbnail.path : false} extension={series.thumbnail.extension} data={series} key={series.id}/>
         });
         this.setState({
             series,
@@ -188,7 +190,7 @@ class SingleEvent extends Component {
         const results = this.state.charactersData[0].results;
         const characters = results.map(character => {
         const index = character.thumbnail.path.indexOf('image_not_available');
-        return <Character id={character.id} name={character.name} description={character.description} img={index === (-1)? character.thumbnail.path : false} extension={character.thumbnail.extension} data={character}/>
+        return <Character id={character.id} name={character.name} description={character.description} img={index === (-1)? character.thumbnail.path : false} extension={character.thumbnail.extension} data={character} key={character.id}/>
         });
         this.setState({
             characters,
@@ -199,7 +201,7 @@ class SingleEvent extends Component {
         const results = this.state.creatorsData[0].results;
         const creators = results.map(creator => {
         const index = creator.thumbnail.path.indexOf('image_not_available');
-        return <Creator id={creator.id} name={creator.fullName} img={index === (-1)? creator.thumbnail.path : false} extension={creator.thumbnail.extension} data={creator}/>;
+        return <Creator id={creator.id} name={creator.fullName} img={index === (-1)? creator.thumbnail.path : false} extension={creator.thumbnail.extension} data={creator} key={creator.id}/>;
         });
         this.setState({
             creators,
@@ -254,8 +256,8 @@ class SingleEvent extends Component {
     const {id: nextID, title: nextTitle, description: nextDescription, thumbnail: nextThumbnail} = this.state.nextEventData[0];
     const {id: prevID, title: prevTitle, description: prevDescription, thumbnail: prevThumbnail} = this.state.prevEventData[0];
     const index = this.state.nextEventData[0].thumbnail.path.indexOf('image_not_available');
-    const followingEvent = <Event id={nextID} title={nextTitle} description={nextDescription} img={index === (-1)? nextThumbnail.path : false} extension={nextThumbnail.extension} data={this.state.nextEventData[0]}/>;
-    const previousEvent = <Event id={prevID} title={prevTitle} description={prevDescription} img={index === (-1)? prevThumbnail.path : false} extension={prevThumbnail.extension} data={this.state.prevEventData[0]}/>;
+    const followingEvent = <Event id={nextID} title={nextTitle} description={nextDescription} img={index === (-1)? nextThumbnail.path : false} extension={nextThumbnail.extension} data={this.state.nextEventData[0]} key={nextID}/>;
+    const previousEvent = <Event id={prevID} title={prevTitle} description={prevDescription} img={index === (-1)? prevThumbnail.path : false} extension={prevThumbnail.extension} data={this.state.prevEventData[0]} key={prevID}/>;
     
     return (
      <div className="single-event__other">
@@ -290,7 +292,7 @@ class SingleEvent extends Component {
                         <img src={arrow} alt="arrow" className="panel__button panel__button--right" onClick={() => this.manageContent('next')} />
                     </div>
                 </div>
-                {this.displayContent()}
+                {this.state.isLoaded? <>{this.displayContent()}</> : <Loader/>}
             </div>
         )
     }

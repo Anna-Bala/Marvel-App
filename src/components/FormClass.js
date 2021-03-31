@@ -5,7 +5,7 @@ class Form extends Component {
     letters = (type) => {
         return(
             <select id={type} name={type} className="form__input form__input--small">
-                <option value="" selected></option>
+                <option value="" defaultValue></option>
                 <option value="A">A</option>
                 <option value="B">B</option>
                 <option value="C">C</option>
@@ -48,7 +48,7 @@ class Form extends Component {
    options = () => {
         return(
             <select id="options" name="options" className="form__input form__input--small">
-                <option value="10" selected>10</option>
+                <option value="10" defaultValue>10</option>
                 <option value="20">20</option>
                 <option value="30">30</option>
                 <option value="40">40</option>
@@ -68,14 +68,14 @@ class Form extends Component {
             <h2 className="form__title form__title--big">Search options: </h2>
             <hr className="form__break"/>
             <img src={closeIcon} alt='close icon' className="form__close"/>
-            <label for="letter" className="form__label">Title starts with:</label>
+            <label htmlFor="letter" className="form__label">Title starts with:</label>
             {this.letters("letter")}
             <hr className="form__break"/>
             <p className="form__title">Filter by:</p>
             <hr className="form__break"/>
-            <label for="format" className="form__label">Format:</label>
+            <label htmlFor="format" className="form__label">Format:</label>
             <select id="format" name="format" className="form__input">
-                <option value="" selected></option>
+                <option value="" defaultValue></option>
                 <option value="comic">Comic</option>
                 <option value="magazine">Magazine</option>
                 <option value="trade paperback">Trade paperback</option>
@@ -85,27 +85,27 @@ class Form extends Component {
                 <option value="digital comic">Digital comic</option>
                 <option value="infinite comic">Infinite comic</option>
             </select>
-            <label for="releaseyear" className="form__label">Initial release year:</label>
+            <label htmlFor="releaseyear" className="form__label">Initial release year:</label>
             <input type="text" id="releaseyear" name="releaseyear" className="form__input"/>
             <hr className="form__break"/>
-            <label for="digitalissue" className="form__label">Has digital issue:</label>
+            <label htmlFor="digitalissue" className="form__label">Has digital issue:</label>
             <select id="digitalissue" name="digitalissue" className="form__input">
-                <option value="" selected></option>
+                <option value="" defaultValue></option>
                 <option value="true">Yes</option>
                 <option value="false">No</option>
             </select>
-            <label for="issuenumber" className="form__label">Issue number:</label>
+            <label htmlFor="issuenumber" className="form__label">Issue number:</label>
             <input type="text" id="issuenumber" name="issuenumber" className="form__input"/>
  
             <p className="form__title">Other options:</p>
             <hr className="form__break"/>
-            <label for="order" className="form__label">Order by:</label>
+            <label htmlFor="order" className="form__label">Order by:</label>
             <select id="order" name="order" className="form__input">
-                <option value="title" selected>Title</option>
+                <option value="title" defaultValue>Title</option>
                 <option value="onsaleDate">On sale date</option>
                 <option value="issueNumber">Issue number</option>
             </select>
-            <label for="results" className="form__label">&#8470; of results on page:</label>
+            <label htmlFor="results" className="form__label">&#8470; of results on page:</label>
             {this.options()}
             <hr className="form__break"/>
         </>
@@ -117,11 +117,11 @@ class Form extends Component {
             <>
             <h2 className="form__title form__title--big">Search options: </h2>
             <img src={closeIcon} alt='close icon' className="form__close"/>
-            <label for="letter" className="form__label">Name starts with:</label>
+            <label htmlFor="letter" className="form__label">Name starts with:</label>
             {this.letters("letter")}
     
             <p className="form__title">Other options:</p>
-            <label for="results" className="form__label">&#8470; of results on page:</label>
+            <label htmlFor="results" className="form__label">&#8470; of results on page:</label>
             {this.options()}
             <hr className="form__break"/>
         </>
@@ -133,22 +133,22 @@ class Form extends Component {
             <>
             <h2 className="form__title form__title--big">Search options: </h2>
             <img src={closeIcon} alt='close icon' className="form__close"/>
-            <label for="letter" className="form__label">Name starts with:</label>
+            <label htmlFor="letter" className="form__label">Name starts with:</label>
             {this.letters("letter")}
     
             <p className="form__title">Filter by:</p>
-            <label for="type" className="form__label">Type:</label>
+            <label htmlFor="type" className="form__label">Type:</label>
             <select id="type" name="type" className="form__input">
-                <option value="" selected></option>
+                <option value="" defaultValue></option>
                 <option value="collection">Collection</option>
                 <option value="one shot">One shot</option>
                 <option value="limited">Limited</option>
                 <option value="ongoing">Ongoing</option>
             </select>
     
-            <label for="contains" className="form__label">Has to contain:</label>
+            <label htmlFor="contains" className="form__label">Has to contain:</label>
             <select id="contains" name="contains" className="form__input">
-                <option value="" selected></option>
+                <option value="" defaultValue></option>
                 <option value="comic">Comic</option>
                 <option value="magazine">Magazine</option>
                 <option value="trade paperback">Trade paperback</option>
@@ -159,16 +159,16 @@ class Form extends Component {
                 <option value="infinite comic">Infinite comic</option>
             </select>
             <hr className="form__break"/>
-            <label for="releaseyear" className="form__label">Initial release year:</label>
+            <label htmlFor="releaseyear" className="form__label">Initial release year:</label>
             <input type="text" id="releaseyear" name="releaseyear" className="form__input"/>
     
             <p className="form__title">Other options:</p>
-            <label for="order" className="form__label">Order by:</label>
+            <label htmlFor="order" className="form__label">Order by:</label>
             <select id="order" name="order" className="form__input">
-                <option value="title" selected>Title</option>
+                <option value="title" defaultValue>Title</option>
                 <option value="startYear">Initial release year</option>
             </select>
-            <label for="results" className="form__label">&#8470; of results on page:</label>
+            <label htmlFor="results" className="form__label">&#8470; of results on page:</label>
             {this.options()}
         </>
         );   
@@ -179,16 +179,16 @@ class Form extends Component {
             <>
             <h2 className="form__title form__title--big">Search options: </h2>
             <img src={closeIcon} alt='close icon' className="form__close"/>
-            <label for="letter" className="form__label">Name starts with:</label>
+            <label htmlFor="letter" className="form__label">Name starts with:</label>
             {this.letters("letter")}
     
             <p className="form__title">Other options:</p>
-            <label for="order" className="form__label">Order by:</label>
+            <label htmlFor="order" className="form__label">Order by:</label>
             <select id="order" name="order" className="form__input">
-                <option value="name" selected>Name</option>
+                <option value="name" defaultValue>Name</option>
                 <option value="startDate">Initial release date</option>
             </select>
-            <label for="results" className="form__label">&#8470; of results on page:</label>
+            <label htmlFor="results" className="form__label">&#8470; of results on page:</label>
             {this.options()}
         </>
         );
@@ -199,23 +199,23 @@ class Form extends Component {
             <>
             <h2 className="form__title form__title--big">Search options: </h2>
             <img src={closeIcon} alt='close icon' className="form__close"/>
-            <label for="firstNameLetter" className="form__label">First name starts with:</label>
+            <label htmlFor="firstNameLetter" className="form__label">First name starts with:</label>
             {this.letters("firstNameLetter")}
             <hr className="form__break"/>
-            <label for="middleNameLetter" className="form__label">Middle name starts with:</label>
+            <label htmlFor="middleNameLetter" className="form__label">Middle name starts with:</label>
             {this.letters("middleNameLetter")}
             <hr className="form__break"/>
-            <label for="lastNameLetter" className="form__label">Last name starts with:</label>
+            <label htmlFor="lastNameLetter" className="form__label">Last name starts with:</label>
             {this.letters("lastNameLetter")}
             <p className="form__title">Other options:</p>
-            <label for="order" className="form__label">Order by:</label>
+            <label htmlFor="order" className="form__label">Order by:</label>
             <select id="order" name="order" className="form__input">
-                <option value="firstName" selected>First name</option>
+                <option value="firstName" defaultValue>First name</option>
                 <option value="lastName">Last name</option>
                 <option value="middleName">Middle name</option>
                 <option value="suffix">Suffix</option>
             </select>
-            <label for="results" className="form__label">&#8470; of results on page:</label>
+            <label htmlFor="results" className="form__label">&#8470; of results on page:</label>
             {this.options()}
         </>
         );

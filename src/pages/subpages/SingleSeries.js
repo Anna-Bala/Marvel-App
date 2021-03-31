@@ -7,6 +7,7 @@ import followingContent from "../../functions/followingContent";
 import fetchData from "../../functions/fetchData";
 import Button from "../../components/Button";
 import arrow from "../../img/arrow.png";
+import Loader from "../../components/Loader";
 
 class SingleSeries extends Component {
     state = {
@@ -18,6 +19,7 @@ class SingleSeries extends Component {
         previousContent: null,
         nextContent: 1,
         comics: null,
+        isLoaded: false
     }
 
     apiKey = '9b9a40427eb372f72b3775e4f456a370';
@@ -62,7 +64,7 @@ class SingleSeries extends Component {
             if(id <= 5) {
                 const fetch = async () => {
                     const result = await fetchData(url);
-                    this.setState(prevState => ({comicsData: [...prevState.comicsData, result.results[0]]}));
+                    this.setState(prevState => ({comicsData: [...prevState.comicsData, result.results[0]], isLoaded: true}));
                 }
                 fetch();
             }
@@ -130,7 +132,7 @@ class SingleSeries extends Component {
 
                         <Link to={{
                         pathname: `/characters/${result.id}`, 
-                        state: {data: result}}} className="single-series__character">
+                        state: {data: result}}} className="single-series__character" key={result.id}>
                                 <div className="single-series__character-txtcontainer">
                                     <h1 className="single-series__character-name">
                                     {titleIndex > -1? name : result.name}
@@ -160,7 +162,6 @@ class SingleSeries extends Component {
                         const urlLength = result.resourceURI.length;
                         const id = result.resourceURI.slice(45, urlLength);
                         let role = '';
-                        console.log(this.data);
                         this.data.creators.items.forEach(creator => {
                             if(creator.name === result.fullName) role = creator.role;
                         });
@@ -168,7 +169,7 @@ class SingleSeries extends Component {
                         return (
                         <Link to={{
                         pathname: `/creators/${id}`, 
-                        state: {data: result}}} className="single-series__creator">
+                        state: {data: result}}} className="single-series__creator" key={id}>
                                 <h1 className="single-series__creator-role">{role}</h1>
                                 <h1 className="single-series__creator-name">{result.fullName}</h1>
                         </Link>
@@ -191,7 +192,7 @@ class SingleSeries extends Component {
             const results = this.state.comicsData;
             const comics = results.map(comic => {
             const index = comic.thumbnail.path.indexOf('image_not_available');
-            return <Comic id={comic.id} title={comic.title} description={comic.description} img={index === (-1)? comic.thumbnail.path : false} extension={comic.thumbnail.extension} data={comic}/>
+            return <Comic id={comic.id} title={comic.title} description={comic.description} img={index === (-1)? comic.thumbnail.path : false} extension={comic.thumbnail.extension} data={comic} key={comic.id}/>
             });
             return(
                 <>
@@ -200,7 +201,7 @@ class SingleSeries extends Component {
                     {<Link to={{
                     pathname: `/comics`, 
                     state: {data: this.data.id, from: 'series'}}} 
-                    className="button button--brd">
+                    className="button button--brd" key={this.data.id}>
                         <Button text="See all comics"/>
                     </Link>}
                 </>
@@ -255,7 +256,7 @@ class SingleSeries extends Component {
                     </div>
                 </div>
                 <div className="single-series__content--container">
-                    {this.displayContent()}
+                    {this.state.isLoaded? <>{this.displayContent()}</> : <Loader/>}
                 </div>
             </div>
         )
