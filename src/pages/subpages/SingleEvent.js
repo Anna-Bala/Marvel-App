@@ -3,7 +3,6 @@ import Comic from "../../components/Comic";
 import Series from "../../components/Series";
 import Character from "../../components/Character";
 import Creator from "../../components/Creator";
-import Event from "../../components/Event";
 import changeUrl from "../../functions/changeUrl";
 import fetchData from "../../functions/fetchData";
 import prevContent from "../../functions/prevContent";
@@ -20,8 +19,6 @@ class SingleEvent extends Component {
         seriesData: [],
         charactersData: [],
         creatorsData: [],
-        prevEventData: [],
-        nextEventData: [],
         comics: null,
         series: null,
         characters : null,
@@ -56,12 +53,6 @@ class SingleEvent extends Component {
         else if(what === 'creators') {
             this.setState(prevState => ({creatorsData: [...prevState.creatorsData, result]}));
             this.displayCreators();
-        }
-        else if(what === 'prevEvent') {
-            this.setState(prevState => ({prevEventData: [...prevState.prevEventData, result.results[0]]}));
-        }
-        else if(what === 'nextEvent') {
-            this.setState(prevState => ({nextEventData: [...prevState.nextEventData, result.results[0]]}));
         }
     }
 
@@ -109,20 +100,6 @@ class SingleEvent extends Component {
         creatorsUrls.forEach(url => {
             this.fetch("creators", url);
         });
-
-        let prevEventUrl = this.data.previous.resourceURI;
-        prevEventUrl = changeUrl(prevEventUrl, 's', 4);
-        prevEventUrl = changeUrl(prevEventUrl, ':443', 26);
-        prevEventUrl += `?ts=1&apikey=${this.apiKey}&hash=97a77a62ca6b19c0c250ad87841df189`;
-
-        this.fetch("prevEvent", prevEventUrl);
-
-        let nextEventUrl = this.data.next.resourceURI;
-        nextEventUrl = changeUrl(nextEventUrl, 's', 4);
-        nextEventUrl = changeUrl(nextEventUrl, ':443', 26);
-        nextEventUrl += `?ts=1&apikey=${this.apiKey}&hash=97a77a62ca6b19c0c250ad87841df189`;
-
-        this.fetch("nextEvent", nextEventUrl);
 
         const scrollElement = document.querySelector('.navigation');
         scrollElement.scrollIntoView();
@@ -253,25 +230,12 @@ class SingleEvent extends Component {
     </>);
     
     otherInfo = () => {
-    const {id: nextID, title: nextTitle, description: nextDescription, thumbnail: nextThumbnail} = this.state.nextEventData[0];
-    const {id: prevID, title: prevTitle, description: prevDescription, thumbnail: prevThumbnail} = this.state.prevEventData[0];
-    const index = this.state.nextEventData[0].thumbnail.path.indexOf('image_not_available');
-    const followingEvent = <Event id={nextID} title={nextTitle} description={nextDescription} img={index === (-1)? nextThumbnail.path : false} extension={nextThumbnail.extension} data={this.state.nextEventData[0]} key={nextID}/>;
-    const previousEvent = <Event id={prevID} title={prevTitle} description={prevDescription} img={index === (-1)? prevThumbnail.path : false} extension={prevThumbnail.extension} data={this.state.prevEventData[0]} key={prevID}/>;
-    
     return (
      <div className="single-event__other">
         <div className="single-event__dates">
             <h2 className="single-event__title">Publication dates</h2>
             <p className="single-event__info">First issue: {this.startDate}</p>
             <p className="single-event__info">Last issue: {this.endDate}</p>
-         </div>
-         <div className="single-event__other--margin">
-            <h2 className="single-event__title">Explore other events</h2>
-            <p className="single-event__title--sub">Following event</p>
-                {followingEvent}
-            <p className="single-event__title--sub">Previous event</p>
-                {previousEvent}
          </div>
     </div>
         )

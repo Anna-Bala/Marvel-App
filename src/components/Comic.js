@@ -34,7 +34,7 @@ class Comic extends Component {
         ),
         withoutCover: (
             <>
-                <h1 className="comic__title">{this.props.title}</h1>
+                {this.props.title.length > 80? <h1 className="comic__title" style={{fontSize: '1rem'}}>{this.props.title}</h1> : <h1 className="comic__title">{this.props.title}</h1>}
                 <Link to={`/comics/${this.props.id}`} className="button"><Button /></Link>
             </>
         )

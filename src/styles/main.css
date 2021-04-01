@@ -2370,11 +2370,6 @@ a {
   margin: 4% 0 2% 0;
 }
 
-.single-event__title--sub {
-  margin: 4% 0 2% 0;
-  font-size: 1.2rem;
-}
-
 .single-event__description {
   font-size: 1rem;
   margin-top: 2%;
@@ -2410,10 +2405,6 @@ a {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-}
-
-.single-event__other--margin {
-  margin-top: 10px;
 }
 
 .single-event__dates {
